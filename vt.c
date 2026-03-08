@@ -7,83 +7,110 @@
 #define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: UNIMPLEMENTED: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
 #define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
 
-typedef enum
-{
-    VT_STATE_GROUND,
-    VT_STATE_ESCAPE,
-    VT_STATE_ESCAPE_INTERMEDIATE,
-    VT_STATE_OSC_STRING,
-    VT_STATE_CSI_ENTRY,
-    VT_STATE_CSI_PARAM,
-    VT_STATE_CSI_IGNORE,
-    VT_STATE_CSI_INTERMEDIATE,
-    VT_STATE_SOS_PM_APC_STRING,
-    VT_STATE_DCS_ENTRY,
-    VT_STATE_DCS_IGNORE,
-    VT_STATE_DCS_PARAM,
-    VT_STATE_DCS_INTERMEDIATE,
-    VT_STATE_DCS_PASSTHROUGH,
-    VT_NUM_STATES
-} vt_state;
-static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
+#define VT_STATE_LIST \
+    X(VT_STATE_GROUND) \
+    X(VT_STATE_ESCAPE) \
+    X(VT_STATE_ESCAPE_INTERMEDIATE) \
+    X(VT_STATE_OSC_STRING) \
+    X(VT_STATE_CSI_ENTRY) \
+    X(VT_STATE_CSI_PARAM) \
+    X(VT_STATE_CSI_IGNORE) \
+    X(VT_STATE_CSI_INTERMEDIATE) \
+    X(VT_STATE_SOS_PM_APC_STRING) \
+    X(VT_STATE_DCS_ENTRY) \
+    X(VT_STATE_DCS_IGNORE) \
+    X(VT_STATE_DCS_PARAM) \
+    X(VT_STATE_DCS_INTERMEDIATE) \
+    X(VT_STATE_DCS_PASSTHROUGH)
 
-static const char *vt_state_strings[] = {
-    [VT_STATE_GROUND] = "VT_STATE_GROUND",
-    [VT_STATE_ESCAPE] = "VT_STATE_ESCAPE",
-    [VT_STATE_ESCAPE_INTERMEDIATE] = "VT_STATE_ESCAPE_INTERMEDIATE",
-    [VT_STATE_OSC_STRING] = "VT_STATE_OSC_STRING",
-    [VT_STATE_CSI_ENTRY] = "VT_STATE_CSI_ENTRY",
-    [VT_STATE_CSI_PARAM] = "VT_STATE_CSI_PARAM",
-    [VT_STATE_CSI_IGNORE] = "VT_STATE_CSI_IGNORE",
-    [VT_STATE_CSI_INTERMEDIATE] = "VT_STATE_CSI_INTERMEDIATE",
-    [VT_STATE_SOS_PM_APC_STRING] = "VT_STATE_SOS_PM_APC_STRING",
-    [VT_STATE_DCS_ENTRY] = "VT_STATE_DCS_ENTRY",
-    [VT_STATE_DCS_IGNORE] = "VT_STATE_DCS_IGNORE",
-    [VT_STATE_DCS_PARAM] = "VT_STATE_DCS_PARAM",
-    [VT_STATE_DCS_INTERMEDIATE] = "VT_STATE_DCS_INTERMEDIATE",
-    [VT_STATE_DCS_PASSTHROUGH] = "VT_STATE_DCS_PASSTHROUGH",
-};
+#define VT_ACTION_LIST \
+    X(VT_ACTION_IGNORE) \
+    X(VT_ACTION_PRINT) \
+    X(VT_ACTION_EXECUTE) \
+    X(VT_ACTION_CLEAR) \
+    X(VT_ACTION_COLLECT) \
+    X(VT_ACTION_PARAM) \
+    X(VT_ACTION_ESC_DISPATCH) \
+    X(VT_ACTION_CSI_DISPATCH) \
+    X(VT_ACTION_HOOK) \
+    X(VT_ACTION_PUT) \
+    X(VT_ACTION_UNHOOK) \
+    X(VT_ACTION_OSC_START) \
+    X(VT_ACTION_OSC_PUT) \
+    X(VT_ACTION_OSC_END)
+
+#define X(name) name,
+typedef enum { VT_STATE_LIST VT_NUM_STATES } vt_state;
+typedef enum { VT_ACTION_LIST VT_NUM_ACTIONS } vt_action;
+#undef X
+
+#define X(name) [name] = #name,
+static const char *vt_state_strings[] = { VT_STATE_LIST };
+static const char *vt_action_strings[] = { VT_ACTION_LIST };
 
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
+#define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
+#undef X
 
-typedef enum
-{
-    VT_ACTION_IGNORE,
-    VT_ACTION_PRINT,
-    VT_ACTION_EXECUTE,
-    VT_ACTION_CLEAR,
-    VT_ACTION_COLLECT,
-    VT_ACTION_PARAM,
-    VT_ACTION_ESC_DISPATCH,
-    VT_ACTION_CSI_DISPATCH,
-    VT_ACTION_HOOK,
-    VT_ACTION_PUT,
-    VT_ACTION_UNHOOK,
-    VT_ACTION_OSC_START,
-    VT_ACTION_OSC_PUT,
-    VT_ACTION_OSC_END,
-    VT_NUM_ACTIONS
-} vt_action;
+static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
 static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
 
-static const char *vt_action_strings[] = {
-    [VT_ACTION_IGNORE] = "VT_ACTION_IGNORE",
-    [VT_ACTION_PRINT] = "VT_ACTION_PRINT",
-    [VT_ACTION_EXECUTE] = "VT_ACTION_EXECUTE",
-    [VT_ACTION_CLEAR] = "VT_ACTION_CLEAR",
-    [VT_ACTION_COLLECT] = "VT_ACTION_COLLECT",
-    [VT_ACTION_PARAM] = "VT_ACTION_PARAM",
-    [VT_ACTION_ESC_DISPATCH] = "VT_ACTION_ESC_DISPATCH",
-    [VT_ACTION_CSI_DISPATCH] = "VT_ACTION_CSI_DISPATCH",
-    [VT_ACTION_HOOK] = "VT_ACTION_HOOK",
-    [VT_ACTION_PUT] = "VT_ACTION_PUT",
-    [VT_ACTION_UNHOOK] = "VT_ACTION_UNHOOK",
-    [VT_ACTION_OSC_START] = "VT_ACTION_OSC_START",
-    [VT_ACTION_OSC_PUT] = "VT_ACTION_OSC_PUT",
-    [VT_ACTION_OSC_END] = "VT_ACTION_OSC_END",
-};
+#define VT_EXECUTE_FUNCTION_LIST \
+   X(VT_EXECUTE_NULL)   C(0x00) \
+   X(VT_EXECUTE_ENQ)    C(0x05) \
+   X(VT_EXECUTE_BEL)    C(0x07) \
+   X(VT_EXECUTE_BS)     C(0x08) \
+   X(VT_EXECUTE_HT)     C(0x09) \
+   X(VT_EXECUTE_LF)     C(0x0A) \
+   X(VT_EXECUTE_VT)     C(0x0B) \
+   X(VT_EXECUTE_FF)     C(0x0C) \
+   X(VT_EXECUTE_CR)     C(0x0D) \
+   X(VT_EXECUTE_SO)     C(0x0E) \
+   X(VT_EXECUTE_SI)     C(0x0F) \
+   X(VT_EXECUTE_DC1)    C(0x11) \
+   X(VT_EXECUTE_DC3)    C(0x13) \
+   X(VT_EXECUTE_CAN)    C(0x18) \
+   X(VT_EXECUTE_SUB)    C(0x1A) \
+   X(VT_EXECUTE_ESC)    C(0x1B) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   X(VT_EXECUTE_DEL)    C(0x7F) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
+   X(VT_EXECUTE_IND)    C(0x84) \
+   X(VT_EXECUTE_NEL)    C(0x85) \
+   X(VT_EXECUTE_HTS)    C(0x88) \
+   X(VT_EXECUTE_RI)     C(0x8D) \
+   X(VT_EXECUTE_SS2)    C(0x8E) \
+   X(VT_EXECUTE_SS3)    C(0x8F) \
+   X(VT_EXECUTE_DCS)    C(0x90) \
+   X(VT_EXECUTE_SOS)    C(0x98) \
+   X(VT_EXECUTE_DECID)  C(0x9A) \
+   X(VT_EXECUTE_CSI)    C(0x9B) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   X(VT_EXECUTE_ST)     C(0x9C) \
+   X(VT_EXECUTE_OSC)    C(0x9D) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   X(VT_EXECUTE_PM)     C(0x9E) \
+   X(VT_EXECUTE_APC)    C(0x9F)
 
-#define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
+#define C(name)
+
+#define X(name) name,
+typedef enum { VT_EXECUTE_FUNCTION_LIST VT_NUM_EXECUTE_FUNCTIONS } vt_execute_function;
+#undef X
+
+#define X(name) [name] = #name,
+static const char *vt_execute_function_strings[] = { VT_EXECUTE_FUNCTION_LIST };
+#define VT_EXECUTE_FUNCTION_STRING(fun) (((fun) >= 0 && (fun) < VT_NUM_EXECUTE_FUNCTIONS) ? vt_execute_function_strings[(fun)] : "(execute_function out of bounds)")
+#undef X
+
+#undef C
+
+static inline vt_execute_function vt_execute_function_code(uint8_t code) {
+    switch (code) {
+#define X(name) case name:
+#define C(code) return code;
+        VT_EXECUTE_FUNCTION_LIST;
+#undef X
+#undef C
+    }
+    UNREACHABLE("Unexpected code 0x%02X for EXECUTE action", code);
+}
 
 typedef struct
 {
@@ -95,17 +122,64 @@ typedef struct
 void vt_process(vt *vt, uint8_t input);
 
 
-void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
+void _vt_action_execute(vt *vt, vt_execute_function func)
+{
+    if (!vt) return;
+
+    fprintf(stderr, "state %s, execute %s\n", VT_STATE_STRING(vt->state), VT_EXECUTE_FUNCTION_STRING(func));
+
+    /* All cases in this switch must return */
+    static_assert(VT_NUM_EXECUTE_FUNCTIONS == 31, "Not all functions handled");
+    switch (func) {
+        case VT_EXECUTE_NULL: UNIMPL("VT_EXECUTE_NULL");
+        case VT_EXECUTE_ENQ: UNIMPL("VT_EXECUTE_ENQ");
+        case VT_EXECUTE_BEL: UNIMPL("VT_EXECUTE_BEL");
+        case VT_EXECUTE_BS: UNIMPL("VT_EXECUTE_BS");
+        case VT_EXECUTE_HT: UNIMPL("VT_EXECUTE_HT");
+        case VT_EXECUTE_LF: UNIMPL("VT_EXECUTE_LF");
+        case VT_EXECUTE_VT: UNIMPL("VT_EXECUTE_VT");
+        case VT_EXECUTE_FF: UNIMPL("VT_EXECUTE_FF");
+        case VT_EXECUTE_CR: UNIMPL("VT_EXECUTE_CR");
+        case VT_EXECUTE_SO: UNIMPL("VT_EXECUTE_SO");
+        case VT_EXECUTE_SI: UNIMPL("VT_EXECUTE_SI");
+        case VT_EXECUTE_DC1: UNIMPL("VT_EXECUTE_DC1");
+        case VT_EXECUTE_DC3: UNIMPL("VT_EXECUTE_DC3");
+        case VT_EXECUTE_CAN: UNIMPL("VT_EXECUTE_CAN");
+        case VT_EXECUTE_SUB: UNIMPL("VT_EXECUTE_SUB");
+        case VT_EXECUTE_ESC: UNREACHABLE("VT_EXECUTE_ESC should be handled by anywhere transitions");
+        case VT_EXECUTE_DEL: UNREACHABLE("VT_EXECUTE_DEL should be handled only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE");
+        case VT_EXECUTE_IND: UNIMPL("VT_EXECUTE_IND");
+        case VT_EXECUTE_NEL: UNIMPL("VT_EXECUTE_NEL");
+        case VT_EXECUTE_HTS: UNIMPL("VT_EXECUTE_HTS");
+        case VT_EXECUTE_RI: UNIMPL("VT_EXECUTE_RI");
+        case VT_EXECUTE_SS2: UNIMPL("VT_EXECUTE_SS2");
+        case VT_EXECUTE_SS3: UNIMPL("VT_EXECUTE_SS3");
+        case VT_EXECUTE_DCS: UNIMPL("VT_EXECUTE_DCS");
+        case VT_EXECUTE_SOS: UNIMPL("VT_EXECUTE_SOS");
+        case VT_EXECUTE_DECID: UNIMPL("VT_EXECUTE_DECID");
+        case VT_EXECUTE_CSI: UNREACHABLE("VT_EXECUTE_CSI should be handled by anywhere transitions");
+        case VT_EXECUTE_ST: UNIMPL("VT_EXECUTE_ST");
+        case VT_EXECUTE_OSC: UNREACHABLE("VT_EXECUTE_OSC should be handled by anywhere transitions");
+        case VT_EXECUTE_PM: UNIMPL("VT_EXECUTE_PM");
+        case VT_EXECUTE_APC: UNIMPL("VT_EXECUTE_APC");
+        case VT_NUM_EXECUTE_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected EXECUTE function %d", func);
+}
+
+
+void _vt_action(vt *vt, vt_action action, uint8_t input)
 {
     if (!vt) return;
 
     fprintf(stderr, "state %s, action %s, input %02X\n", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action), input);
 
+    /* All cases in this switch must return */
     static_assert(VT_NUM_ACTIONS == 14, "Not all actions handled");
     switch (action) {
         case VT_ACTION_IGNORE: UNIMPL("VT_ACTION_IGNORE");
         case VT_ACTION_PRINT: UNIMPL("VT_ACTION_PRINT");
-        case VT_ACTION_EXECUTE: UNIMPL("VT_ACTION_EXECUTE");
+        case VT_ACTION_EXECUTE: _vt_action_execute(vt, vt_execute_function_code(input)); return;
         case VT_ACTION_CLEAR: UNIMPL("VT_ACTION_CLEAR");
         case VT_ACTION_COLLECT: UNIMPL("VT_ACTION_COLLECT");
         case VT_ACTION_PARAM: UNIMPL("VT_ACTION_PARAM");
@@ -117,8 +191,9 @@ void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
         case VT_ACTION_OSC_START: UNIMPL("VT_ACTION_OSC_START");
         case VT_ACTION_OSC_PUT: UNIMPL("VT_ACTION_OSC_PUT");
         case VT_ACTION_OSC_END: UNIMPL("VT_ACTION_OSC_END");
-        default: UNREACHABLE("Unexpected action %d", action);
+        case VT_NUM_ACTIONS: break;
     }
+    UNREACHABLE("Unexpected action %d", action);
 }
 
 void _vt_transition(vt *vt, vt_state to)
@@ -188,6 +263,7 @@ void vt_process(vt *vt, uint8_t input)
         case 0x9D: _vt_transition(vt, VT_STATE_OSC_STRING); return;
     }
 
+    /* All cases in this switch must return */
     static_assert(VT_NUM_STATES == 14, "Not all states handled");
     switch (vt->state) {
         case VT_STATE_GROUND:
@@ -201,7 +277,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_action(vt, VT_ACTION_PRINT, input);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_ESCAPE:
             switch (input) {
@@ -229,7 +305,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_ESCAPE_INTERMEDIATE:
             switch (input) {
@@ -249,7 +325,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_OSC_STRING:
             switch (input) {
@@ -264,7 +340,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_ENTRY:
             switch (input) {
@@ -297,7 +373,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_PARAM:
             switch (input) {
@@ -326,7 +402,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_IGNORE:
             switch (input) {
@@ -342,7 +418,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_GROUND);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_INTERMEDIATE:
             switch (input) {
@@ -366,7 +442,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_SOS_PM_APC_STRING:
             switch (input) {
@@ -376,7 +452,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_ENTRY:
             switch (input) {
@@ -406,7 +482,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_IGNORE:
             switch (input) {
@@ -416,7 +492,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_PARAM:
             switch (input) {
@@ -442,7 +518,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_INTERMEDIATE:
             switch (input) {
@@ -463,7 +539,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_PASSTHROUGH:
             switch (input) {
@@ -475,10 +551,11 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
-        default: UNREACHABLE("Unexpected state %d", vt->state);
+        case VT_NUM_STATES: break;
     }
+    UNREACHABLE("Unexpected state %d", vt->state);
 }
 
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
