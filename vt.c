@@ -1,99 +1,155 @@
+#include <assert.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <assert.h>
+#include <sys/ioctl.h>
+#include <sys/signalfd.h>
+#include <termios.h>
+#include <unistd.h>
 
-#define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: UNIMPLEMENTED: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
+#define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
 #define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
 
-typedef enum
-{
-    VT_STATE_GROUND,
-    VT_STATE_ESCAPE,
-    VT_STATE_ESCAPE_INTERMEDIATE,
-    VT_STATE_OSC_STRING,
-    VT_STATE_CSI_ENTRY,
-    VT_STATE_CSI_PARAM,
-    VT_STATE_CSI_IGNORE,
-    VT_STATE_CSI_INTERMEDIATE,
-    VT_STATE_SOS_PM_APC_STRING,
-    VT_STATE_DCS_ENTRY,
-    VT_STATE_DCS_IGNORE,
-    VT_STATE_DCS_PARAM,
-    VT_STATE_DCS_INTERMEDIATE,
-    VT_STATE_DCS_PASSTHROUGH,
-    VT_NUM_STATES
-} vt_state;
-static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
+#define VT_STATES_LIST \
+    X(VT_STATE_GROUND) \
+    X(VT_STATE_ESCAPE) \
+    X(VT_STATE_ESCAPE_INTERMEDIATE) \
+    X(VT_STATE_OSC_STRING) \
+    X(VT_STATE_CSI_ENTRY) \
+    X(VT_STATE_CSI_PARAM) \
+    X(VT_STATE_CSI_IGNORE) \
+    X(VT_STATE_CSI_INTERMEDIATE) \
+    X(VT_STATE_SOS_PM_APC_STRING) \
+    X(VT_STATE_DCS_ENTRY) \
+    X(VT_STATE_DCS_IGNORE) \
+    X(VT_STATE_DCS_PARAM) \
+    X(VT_STATE_DCS_INTERMEDIATE) \
+    X(VT_STATE_DCS_PASSTHROUGH)
 
-static const char *vt_state_strings[] = {
-    [VT_STATE_GROUND] = "VT_STATE_GROUND",
-    [VT_STATE_ESCAPE] = "VT_STATE_ESCAPE",
-    [VT_STATE_ESCAPE_INTERMEDIATE] = "VT_STATE_ESCAPE_INTERMEDIATE",
-    [VT_STATE_OSC_STRING] = "VT_STATE_OSC_STRING",
-    [VT_STATE_CSI_ENTRY] = "VT_STATE_CSI_ENTRY",
-    [VT_STATE_CSI_PARAM] = "VT_STATE_CSI_PARAM",
-    [VT_STATE_CSI_IGNORE] = "VT_STATE_CSI_IGNORE",
-    [VT_STATE_CSI_INTERMEDIATE] = "VT_STATE_CSI_INTERMEDIATE",
-    [VT_STATE_SOS_PM_APC_STRING] = "VT_STATE_SOS_PM_APC_STRING",
-    [VT_STATE_DCS_ENTRY] = "VT_STATE_DCS_ENTRY",
-    [VT_STATE_DCS_IGNORE] = "VT_STATE_DCS_IGNORE",
-    [VT_STATE_DCS_PARAM] = "VT_STATE_DCS_PARAM",
-    [VT_STATE_DCS_INTERMEDIATE] = "VT_STATE_DCS_INTERMEDIATE",
-    [VT_STATE_DCS_PASSTHROUGH] = "VT_STATE_DCS_PASSTHROUGH",
-};
+#define VT_ACTIONS_LIST \
+    X(VT_ACTION_IGNORE) \
+    X(VT_ACTION_PRINT) \
+    X(VT_ACTION_EXECUTE) \
+    X(VT_ACTION_CLEAR) \
+    X(VT_ACTION_COLLECT) \
+    X(VT_ACTION_PARAM) \
+    X(VT_ACTION_ESC_DISPATCH) \
+    X(VT_ACTION_CSI_DISPATCH) \
+    X(VT_ACTION_HOOK) \
+    X(VT_ACTION_PUT) \
+    X(VT_ACTION_UNHOOK) \
+    X(VT_ACTION_OSC_START) \
+    X(VT_ACTION_OSC_PUT) \
+    X(VT_ACTION_OSC_END)
+
+#define VT_EXECUTE_FUNCTIONS_LIST \
+   C(0x00) X(VT_EXECUTE_NULL)   S(UNIMPL("VT_EXECUTE_NULL")) \
+   C(0x05) X(VT_EXECUTE_ENQ)    S(UNIMPL("VT_EXECUTE_ENQ")) \
+   C(0x07) X(VT_EXECUTE_BEL)    S(UNIMPL("VT_EXECUTE_BEL")) \
+   C(0x08) X(VT_EXECUTE_BS)     S(UNIMPL("VT_EXECUTE_BS")) \
+   C(0x09) X(VT_EXECUTE_HT)     S(UNIMPL("VT_EXECUTE_HT")) \
+   C(0x0A) X(VT_EXECUTE_LF)     S(UNIMPL("VT_EXECUTE_LF")) \
+   C(0x0B) X(VT_EXECUTE_VT)     S(UNIMPL("VT_EXECUTE_VT")) \
+   C(0x0C) X(VT_EXECUTE_FF)     S(UNIMPL("VT_EXECUTE_FF")) \
+   C(0x0D) X(VT_EXECUTE_CR)     S(UNIMPL("VT_EXECUTE_CR")) \
+   C(0x0E) X(VT_EXECUTE_SO)     S(UNIMPL("VT_EXECUTE_SO")) \
+   C(0x0F) X(VT_EXECUTE_SI)     S(UNIMPL("VT_EXECUTE_SI")) \
+   C(0x11) X(VT_EXECUTE_DC1)    S(UNIMPL("VT_EXECUTE_DC1")) \
+   C(0x13) X(VT_EXECUTE_DC3)    S(UNIMPL("VT_EXECUTE_DC3")) \
+   C(0x18) X(VT_EXECUTE_CAN)    S(UNIMPL("VT_EXECUTE_CAN")) \
+   C(0x1A) X(VT_EXECUTE_SUB)    S(UNIMPL("VT_EXECUTE_SUB")) \
+   C(0x1B) X(VT_EXECUTE_ESC)    S(UNIMPL("VT_EXECUTE_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x7F) X(VT_EXECUTE_DEL)    S(UNIMPL("VT_EXECUTE_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
+   C(0x84) X(VT_EXECUTE_IND)    S(UNIMPL("VT_EXECUTE_IND")) \
+   C(0x85) X(VT_EXECUTE_NEL)    S(UNIMPL("VT_EXECUTE_NEL")) \
+   C(0x88) X(VT_EXECUTE_HTS)    S(UNIMPL("VT_EXECUTE_HTS")) \
+   C(0x8D) X(VT_EXECUTE_RI)     S(UNIMPL("VT_EXECUTE_RI")) \
+   C(0x8E) X(VT_EXECUTE_SS2)    S(UNIMPL("VT_EXECUTE_SS2")) \
+   C(0x8F) X(VT_EXECUTE_SS3)    S(UNIMPL("VT_EXECUTE_SS3")) \
+   C(0x90) X(VT_EXECUTE_DCS)    S(UNIMPL("VT_EXECUTE_DCS")) \
+   C(0x98) X(VT_EXECUTE_SOS)    S(UNIMPL("VT_EXECUTE_SOS")) \
+   C(0x9A) X(VT_EXECUTE_DECID)  S(UNIMPL("VT_EXECUTE_DECID")) \
+   C(0x9B) X(VT_EXECUTE_CSI)    S(UNIMPL("VT_EXECUTE_CSI")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x9C) X(VT_EXECUTE_ST)     S(UNIMPL("VT_EXECUTE_ST")) \
+   C(0x9D) X(VT_EXECUTE_OSC)    S(UNIMPL("VT_EXECUTE_OSC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x9E) X(VT_EXECUTE_PM)     S(UNIMPL("VT_EXECUTE_PM")) \
+   C(0x9F) X(VT_EXECUTE_APC)    S(UNIMPL("VT_EXECUTE_APC"))
+
+#define C(code)
+#define S(code)
+
+#define X(name) name, 
+typedef enum { VT_STATES_LIST VT_NUM_STATES } vt_state;
+typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
+typedef enum { VT_EXECUTE_FUNCTIONS_LIST VT_NUM_EXECUTE_FUNCTIONS } vt_execute_function;
+#undef X
+
+#define X(name) [name] = #name, 
+static const char *vt_state_strings[] = { VT_STATES_LIST };
+static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
+static const char *vt_execute_function_strings[] = { VT_EXECUTE_FUNCTIONS_LIST };
 
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
-
-typedef enum
-{
-    VT_ACTION_IGNORE,
-    VT_ACTION_PRINT,
-    VT_ACTION_EXECUTE,
-    VT_ACTION_CLEAR,
-    VT_ACTION_COLLECT,
-    VT_ACTION_PARAM,
-    VT_ACTION_ESC_DISPATCH,
-    VT_ACTION_CSI_DISPATCH,
-    VT_ACTION_HOOK,
-    VT_ACTION_PUT,
-    VT_ACTION_UNHOOK,
-    VT_ACTION_OSC_START,
-    VT_ACTION_OSC_PUT,
-    VT_ACTION_OSC_END,
-    VT_NUM_ACTIONS
-} vt_action;
-static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
-
-static const char *vt_action_strings[] = {
-    [VT_ACTION_IGNORE] = "VT_ACTION_IGNORE",
-    [VT_ACTION_PRINT] = "VT_ACTION_PRINT",
-    [VT_ACTION_EXECUTE] = "VT_ACTION_EXECUTE",
-    [VT_ACTION_CLEAR] = "VT_ACTION_CLEAR",
-    [VT_ACTION_COLLECT] = "VT_ACTION_COLLECT",
-    [VT_ACTION_PARAM] = "VT_ACTION_PARAM",
-    [VT_ACTION_ESC_DISPATCH] = "VT_ACTION_ESC_DISPATCH",
-    [VT_ACTION_CSI_DISPATCH] = "VT_ACTION_CSI_DISPATCH",
-    [VT_ACTION_HOOK] = "VT_ACTION_HOOK",
-    [VT_ACTION_PUT] = "VT_ACTION_PUT",
-    [VT_ACTION_UNHOOK] = "VT_ACTION_UNHOOK",
-    [VT_ACTION_OSC_START] = "VT_ACTION_OSC_START",
-    [VT_ACTION_OSC_PUT] = "VT_ACTION_OSC_PUT",
-    [VT_ACTION_OSC_END] = "VT_ACTION_OSC_END",
-};
-
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
+#define VT_EXECUTE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_EXECUTE_FUNCTIONS) ? vt_execute_function_strings[(func)] : "(execute_function out of bounds)")
+#undef X
+
+#undef C
+
+static vt_execute_function _vt_execute_function(uint8_t input)
+{
+    switch (input) {
+#define C(code) case code:
+#define X(name) return name;
+        VT_EXECUTE_FUNCTIONS_LIST
+#undef X
+#undef C
+    }
+    UNREACHABLE("Unexpected function input 0x%02X", input);
+}
+
+#define C(code)
+
+static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
+static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
 
 typedef struct
 {
     vt_state state;
-
+    struct termios original_ios;
+    bool raw;
+    bool nonblocking;
+    FILE *tty;
+    struct winsize winsize;
 } vt;
-
 
 void vt_process(vt *vt, uint8_t input);
 
+#undef S
+
+void _vt_execute(vt *vt, vt_execute_function func)
+{
+    if (!vt) return;
+
+    fprintf(stderr, "state %s, execute %s\n", VT_STATE_STRING(vt->state), VT_EXECUTE_FUNCTION_STRING(func));
+
+    /* all cases must return */
+    static_assert(VT_NUM_EXECUTE_FUNCTIONS == 31, "Not all functions handled");
+    switch (func) {
+#define X(name) case name:
+#define S(code) code; return;
+        VT_EXECUTE_FUNCTIONS_LIST
+#undef X
+#undef S
+        case VT_NUM_EXECUTE_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected func %d", func);
+}
 
 void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
 {
@@ -101,11 +157,12 @@ void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
 
     fprintf(stderr, "state %s, action %s, input %02X\n", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action), input);
 
+    /* all cases must return */
     static_assert(VT_NUM_ACTIONS == 14, "Not all actions handled");
     switch (action) {
         case VT_ACTION_IGNORE: UNIMPL("VT_ACTION_IGNORE");
         case VT_ACTION_PRINT: UNIMPL("VT_ACTION_PRINT");
-        case VT_ACTION_EXECUTE: UNIMPL("VT_ACTION_EXECUTE");
+        case VT_ACTION_EXECUTE: _vt_execute(vt, _vt_execute_function(input)); return;
         case VT_ACTION_CLEAR: UNIMPL("VT_ACTION_CLEAR");
         case VT_ACTION_COLLECT: UNIMPL("VT_ACTION_COLLECT");
         case VT_ACTION_PARAM: UNIMPL("VT_ACTION_PARAM");
@@ -117,8 +174,10 @@ void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
         case VT_ACTION_OSC_START: UNIMPL("VT_ACTION_OSC_START");
         case VT_ACTION_OSC_PUT: UNIMPL("VT_ACTION_OSC_PUT");
         case VT_ACTION_OSC_END: UNIMPL("VT_ACTION_OSC_END");
-        default: UNREACHABLE("Unexpected action %d", action);
+
+        case VT_NUM_ACTIONS: break;
     }
+    UNREACHABLE("Unexpected action %d", action);
 }
 
 void _vt_transition(vt *vt, vt_state to)
@@ -133,9 +192,7 @@ void _vt_transition(vt *vt, vt_state to)
         case VT_STATE_OSC_STRING: _vt_action(vt, VT_ACTION_OSC_END, 0); break;
         case VT_STATE_DCS_PASSTHROUGH: _vt_action(vt, VT_ACTION_UNHOOK, 0); break;
 
-        case VT_STATE_GROUND: case VT_STATE_ESCAPE: case VT_STATE_ESCAPE_INTERMEDIATE: case VT_STATE_CSI_ENTRY: case VT_STATE_CSI_PARAM: case VT_STATE_CSI_IGNORE: case VT_STATE_CSI_INTERMEDIATE: case VT_STATE_SOS_PM_APC_STRING: case VT_STATE_DCS_ENTRY: case VT_STATE_DCS_IGNORE: case VT_STATE_DCS_PARAM: case VT_STATE_DCS_INTERMEDIATE:
-        case VT_NUM_STATES:
-           break;
+        default: break;
     }
 
     vt->state = to;
@@ -149,17 +206,10 @@ void _vt_transition(vt *vt, vt_state to)
             _vt_action(vt, VT_ACTION_CLEAR, 0);
             break;
 
-        case VT_STATE_OSC_STRING:
-            _vt_action(vt, VT_ACTION_OSC_START, 0);
-            break;
+        case VT_STATE_OSC_STRING: _vt_action(vt, VT_ACTION_OSC_START, 0); break;
+        case VT_STATE_DCS_PASSTHROUGH: _vt_action(vt, VT_ACTION_UNHOOK, 0); break;
 
-        case VT_STATE_DCS_PASSTHROUGH:
-            _vt_action(vt, VT_ACTION_UNHOOK, 0);
-            break;
-
-        case VT_STATE_GROUND: case VT_STATE_ESCAPE_INTERMEDIATE: case VT_STATE_CSI_PARAM: case VT_STATE_CSI_IGNORE: case VT_STATE_CSI_INTERMEDIATE: case VT_STATE_SOS_PM_APC_STRING: case VT_STATE_DCS_IGNORE: case VT_STATE_DCS_PARAM: case VT_STATE_DCS_INTERMEDIATE:
-        case VT_NUM_STATES:
-           break;
+        default: break;
     }
 }
 
@@ -188,6 +238,7 @@ void vt_process(vt *vt, uint8_t input)
         case 0x9D: _vt_transition(vt, VT_STATE_OSC_STRING); return;
     }
 
+    /* all cases must return */
     static_assert(VT_NUM_STATES == 14, "Not all states handled");
     switch (vt->state) {
         case VT_STATE_GROUND:
@@ -201,7 +252,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_action(vt, VT_ACTION_PRINT, input);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_ESCAPE:
             switch (input) {
@@ -229,7 +280,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_ESCAPE_INTERMEDIATE:
             switch (input) {
@@ -249,7 +300,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_OSC_STRING:
             switch (input) {
@@ -264,7 +315,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_ENTRY:
             switch (input) {
@@ -297,7 +348,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_PARAM:
             switch (input) {
@@ -326,7 +377,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_IGNORE:
             switch (input) {
@@ -342,7 +393,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_GROUND);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_CSI_INTERMEDIATE:
             switch (input) {
@@ -366,7 +417,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
             }
-            break;
+            return;
 
         case VT_STATE_SOS_PM_APC_STRING:
             switch (input) {
@@ -376,7 +427,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_ENTRY:
             switch (input) {
@@ -406,7 +457,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_IGNORE:
             switch (input) {
@@ -416,7 +467,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_PARAM:
             switch (input) {
@@ -442,7 +493,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_INTERMEDIATE:
             switch (input) {
@@ -463,7 +514,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
                     break;
             }
-            break;
+            return;
 
         case VT_STATE_DCS_PASSTHROUGH:
             switch (input) {
@@ -475,17 +526,198 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
             }
-            break;
+            return;
 
-        default: UNREACHABLE("Unexpected state %d", vt->state);
+        case VT_NUM_STATES: break;
+    }
+    UNREACHABLE("Unexpected state %d", vt->state);
+}
+
+int setup_io(vt *vt)
+{
+    if (!vt) return -1;
+
+    if (isatty(STDOUT_FILENO)) {
+        vt->tty = stdout;
+    } else if (isatty(STDERR_FILENO)) {
+        vt->tty = stderr;
+    } else {
+        vt->tty = fopen("/dev/tty", "wb");
+    }
+
+    if (tcgetattr(STDIN_FILENO, &vt->original_ios) == 0) {
+        struct termios new_ios = vt->original_ios;
+        cfmakeraw(&new_ios);
+        if (tcsetattr(STDIN_FILENO, TCSANOW, &new_ios) == 0) {
+            vt->raw = true;
+        } else {
+            tcsetattr(STDIN_FILENO, TCSANOW, &vt->original_ios);
+        }
+    }
+
+    int fl = fcntl(STDIN_FILENO, F_GETFL);
+    if (fl != -1 && !(fl & O_NONBLOCK)) {
+        if (fcntl(STDIN_FILENO, F_SETFL, fl | O_NONBLOCK) == 0) {
+            vt->nonblocking = true;
+        }
+    }
+
+    return 0;
+}
+
+void restore_io(vt *vt)
+{
+    if (!vt) return;
+
+    if (vt->tty && vt->tty != stdout && vt->tty != stderr) {
+        fclose(vt->tty);
+        vt->tty = NULL;
+    }
+
+    if (vt->raw) {
+        if (tcsetattr(STDIN_FILENO, TCSANOW, &vt->original_ios) == 0) {
+            vt->raw = false;
+        }
+    }
+
+    if (vt->nonblocking) {
+        int fl = fcntl(STDIN_FILENO, F_GETFL);
+        if (fl != -1) {
+            if (fcntl(STDIN_FILENO, F_SETFL, fl & ~O_NONBLOCK) == 0) {
+                vt->nonblocking = false;
+            }
+        }
     }
 }
 
+void setup_window(vt *vt)
+{
+    struct winsize w = {0};
+    int fds[] = { STDOUT_FILENO, STDERR_FILENO, STDIN_FILENO };
+    for (size_t i = 0; i < sizeof(fds)/sizeof(*fds); i++) {
+        if (ioctl(fds[i], TIOCGWINSZ, &w) == 0 && w.ws_col && w.ws_row)
+            break;
+        w = (struct winsize){0};
+    }
+
+    if (w.ws_col && w.ws_row) {
+        vt->winsize = w;
+    } else {
+        vt->winsize = (struct winsize){.ws_col = 80, .ws_row = 24};
+    }
+    fprintf(stderr, "window size %ux%u\n", vt->winsize.ws_col, vt->winsize.ws_row);
+}
+
+#define _signalfd(...) __signalfd(-1, ##__VA_ARGS__, NULL)
+int __signalfd(int fd, ...)
+{
+    va_list va;
+    sigset_t mask;
+    sigemptyset(&mask);
+    va_start(va, fd);
+    while (true) {
+        int signo = va_arg(va, int);
+        if (!signo) break;
+        sigaddset(&mask, signo);
+    }
+    va_end(va);
+
+    if (sigprocmask(SIG_BLOCK, &mask, NULL) == -1)
+        return -1;
+
+    return signalfd(fd, &mask, SFD_NONBLOCK | SFD_CLOEXEC);
+}
+
+#define _select(...) __select(0, ##__VA_ARGS__, -1)
+int __select(int dummy, ...)
+{
+    va_list va;
+    int nfds = 0;
+    fd_set readables;
+    FD_ZERO(&readables);
+    va_start(va, dummy);
+    while (true) {
+        int fd = va_arg(va, int);
+        if (fd == -1) break;
+        if (fd >= nfds) nfds = fd + 1;
+        FD_SET(fd, &readables);
+    }
+    va_end(va);
+
+    int sel = select(nfds, &readables, NULL, NULL, NULL);
+    while (sel == -1 && errno == EINTR) {
+        sel = select(nfds, &readables, NULL, NULL, NULL);
+    }
+    int ret = -1;
+    if (sel) {
+        va_start(va, dummy);
+        while (true) {
+            int fd = va_arg(va, int);
+            if (fd == -1) break;
+            if (FD_ISSET(fd, &readables)) {
+                ret = fd;
+                break;
+            }
+        }
+        va_end(va);
+    }
+    return ret;
+}
+
+int handle_signal(vt *vt, int signo)
+{
+    switch (signo) {
+        case SIGWINCH:
+            setup_window(vt);
+            return 0;
+    }
+    UNREACHABLE("Unhandled signal %d", signo);
+}
+
+int main_loop(vt *vt)
+{
+    if (!vt) return 1;
+
+    int sigfd = _signalfd(SIGWINCH, SIGINT);
+    while (true) {
+        int fd = _select(sigfd, STDIN_FILENO);
+        if (fd == sigfd) {
+            struct signalfd_siginfo siginfo;
+            ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
+            if (red != sizeof(siginfo)) {
+                perror("read(sigfd)");
+                return 1;
+            }
+
+            int ret = handle_signal(vt, siginfo.ssi_signo);
+            if (ret) return ret;
+        } else {
+            uint8_t buf[512];
+            ssize_t red = read(STDIN_FILENO, buf, sizeof(buf));
+            fprintf(stderr, "red = %ld\n", red);
+            if (red == -1) {
+                perror("read()");
+                return 1;
+            } else if (red == 0) {
+                break;
+            }
+            for (size_t i = 0; i < (unsigned)red; i ++) {
+                printf("vt_process(.., 0x%02X)\n", buf[i]);
+                vt_process(vt, buf[i]);
+                printf("state now %s\n", VT_STATE_STRING(vt->state));
+            }
+        }
+    }
+
+    fprintf(stderr, "EOF\n");
+    return 0;
+}
 int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
 {
     vt vt = {0};
-    printf("start in state %s\n", VT_STATE_STRING(vt.state));
-    vt_process(&vt, '\033');
-    printf("state now %s\n", VT_STATE_STRING(vt.state));
-    return 0;
+    setup_io(&vt);
+    setup_window(&vt);
+    int ret = main_loop(&vt);
+    restore_io(&vt);
+    return ret;
 }
