@@ -35,7 +35,7 @@
     X(VT_STATE_DCS_PASSTHROUGH)
 
 #define VT_ACTIONS_LIST \
-    X(VT_ACTION_IGNORE)       S((void)NULL;) \
+    X(VT_ACTION_IGNORE)       S((void)NULL) \
     X(VT_ACTION_PRINT)        S(_vt_print(vt, input)) \
     X(VT_ACTION_EXECUTE)      S(_vt_execute(vt, _vt_control_function(input))) \
     X(VT_ACTION_CLEAR)        S(_vt_clear(vt)) \
@@ -228,13 +228,15 @@ void _vt_param(vt *vt, uint8_t input)
 
    vt_param *param = NULL;
    if (isdigit(input)) {
-      if (vt->num_params) {
-         param = &vt->params[vt->num_params - 1];
-         param->value *= 10;
-         param->value += input - '0';
-      } else if (vt->num_params != sizeof(vt->params)/sizeof(*vt->params)) {
-         param = &vt->params[vt->num_params ++];
-         param->value = input - '0';
+      if (vt->num_params != sizeof(vt->params)/sizeof(*vt->params)) {
+          if (vt->num_params) {
+             param = &vt->params[vt->num_params - 1];
+             param->value *= 10;
+             param->value += input - '0';
+          } else {
+             param = &vt->params[vt->num_params ++];
+             param->value = input - '0';
+          }
       }
       if (param) param->non_default = true;
    } else if (vt->num_params != sizeof(vt->params)/sizeof(*vt->params)) {
@@ -275,7 +277,7 @@ void _vt_csi_dispatch(vt *vt, vt_csi_function func)
        if (vt->params[i].non_default) {
           fprintf(stderr, " %u", vt->params[i].value);
        } else {
-          fprintf(stderr, " DEFAULT");
+          fprintf(stderr, " [D]");
        }
     }
     fprintf(stderr, "\n");
