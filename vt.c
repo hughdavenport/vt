@@ -35,53 +35,61 @@
     X(VT_STATE_DCS_PASSTHROUGH)
 
 #define VT_ACTIONS_LIST \
-    X(VT_ACTION_IGNORE) \
-    X(VT_ACTION_PRINT) \
-    X(VT_ACTION_EXECUTE) \
-    X(VT_ACTION_CLEAR) \
-    X(VT_ACTION_COLLECT) \
-    X(VT_ACTION_PARAM) \
-    X(VT_ACTION_ESC_DISPATCH) \
-    X(VT_ACTION_CSI_DISPATCH) \
-    X(VT_ACTION_HOOK) \
-    X(VT_ACTION_PUT) \
-    X(VT_ACTION_UNHOOK) \
-    X(VT_ACTION_OSC_START) \
-    X(VT_ACTION_OSC_PUT) \
-    X(VT_ACTION_OSC_END)
+    X(VT_ACTION_IGNORE)       S((void)NULL;) \
+    X(VT_ACTION_PRINT)        S(_vt_print(vt, input)) \
+    X(VT_ACTION_EXECUTE)      S(_vt_execute(vt, _vt_control_function(input))) \
+    X(VT_ACTION_CLEAR)        S(_vt_clear(vt)) \
+    X(VT_ACTION_COLLECT)      S(UNIMPL("VT_ACTION_COLLECT")) \
+    X(VT_ACTION_PARAM)        S(_vt_param(vt, input)) \
+    X(VT_ACTION_ESC_DISPATCH) S(UNIMPL("VT_ACTION_ESC_DISPATCH")) \
+    X(VT_ACTION_CSI_DISPATCH) S(_vt_csi_dispatch(vt, _vt_csi_function(input))) \
+    X(VT_ACTION_HOOK)         S(UNIMPL("VT_ACTION_HOOK")) \
+    X(VT_ACTION_PUT)          S(UNIMPL("VT_ACTION_PUT")) \
+    X(VT_ACTION_UNHOOK)       S(UNIMPL("VT_ACTION_UNHOOK")) \
+    X(VT_ACTION_OSC_START)    S(UNIMPL("VT_ACTION_OSC_START")) \
+    X(VT_ACTION_OSC_PUT)      S(UNIMPL("VT_ACTION_OSC_PUT")) \
+    X(VT_ACTION_OSC_END)      S(UNIMPL("VT_ACTION_OSC_END"))
 
-#define VT_EXECUTE_FUNCTIONS_LIST \
-   C(0x00) X(VT_EXECUTE_NULL)   S(UNIMPL("VT_EXECUTE_NULL")) \
-   C(0x05) X(VT_EXECUTE_ENQ)    S(UNIMPL("VT_EXECUTE_ENQ")) \
-   C(0x07) X(VT_EXECUTE_BEL)    S(UNIMPL("VT_EXECUTE_BEL")) \
-   C(0x08) X(VT_EXECUTE_BS)     S(UNIMPL("VT_EXECUTE_BS")) \
-   C(0x09) X(VT_EXECUTE_HT)     S(UNIMPL("VT_EXECUTE_HT")) \
-   C(0x0A) X(VT_EXECUTE_LF)     S(UNIMPL("VT_EXECUTE_LF")) \
-   C(0x0B) X(VT_EXECUTE_VT)     S(UNIMPL("VT_EXECUTE_VT")) \
-   C(0x0C) X(VT_EXECUTE_FF)     S(UNIMPL("VT_EXECUTE_FF")) \
-   C(0x0D) X(VT_EXECUTE_CR)     S(UNIMPL("VT_EXECUTE_CR")) \
-   C(0x0E) X(VT_EXECUTE_SO)     S(UNIMPL("VT_EXECUTE_SO")) \
-   C(0x0F) X(VT_EXECUTE_SI)     S(UNIMPL("VT_EXECUTE_SI")) \
-   C(0x11) X(VT_EXECUTE_DC1)    S(UNIMPL("VT_EXECUTE_DC1")) \
-   C(0x13) X(VT_EXECUTE_DC3)    S(UNIMPL("VT_EXECUTE_DC3")) \
-   C(0x18) X(VT_EXECUTE_CAN)    S(UNIMPL("VT_EXECUTE_CAN")) \
-   C(0x1A) X(VT_EXECUTE_SUB)    S(UNIMPL("VT_EXECUTE_SUB")) \
-   C(0x1B) X(VT_EXECUTE_ESC)    S(UNIMPL("VT_EXECUTE_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x7F) X(VT_EXECUTE_DEL)    S(UNIMPL("VT_EXECUTE_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
-   C(0x84) X(VT_EXECUTE_IND)    S(UNIMPL("VT_EXECUTE_IND")) \
-   C(0x85) X(VT_EXECUTE_NEL)    S(UNIMPL("VT_EXECUTE_NEL")) \
-   C(0x88) X(VT_EXECUTE_HTS)    S(UNIMPL("VT_EXECUTE_HTS")) \
-   C(0x8D) X(VT_EXECUTE_RI)     S(UNIMPL("VT_EXECUTE_RI")) \
-   C(0x8E) X(VT_EXECUTE_SS2)    S(UNIMPL("VT_EXECUTE_SS2")) \
-   C(0x8F) X(VT_EXECUTE_SS3)    S(UNIMPL("VT_EXECUTE_SS3")) \
-   C(0x90) X(VT_EXECUTE_DCS)    S(UNIMPL("VT_EXECUTE_DCS")) \
-   C(0x98) X(VT_EXECUTE_SOS)    S(UNIMPL("VT_EXECUTE_SOS")) \
-   C(0x9A) X(VT_EXECUTE_DECID)  S(UNIMPL("VT_EXECUTE_DECID")) \
-   C(0x9B) X(VT_EXECUTE_CSI)    S(UNIMPL("VT_EXECUTE_CSI")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x9C) X(VT_EXECUTE_ST)     S(UNIMPL("VT_EXECUTE_ST")) \
-   C(0x9D) X(VT_EXECUTE_OSC)    S(UNIMPL("VT_EXECUTE_OSC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x9E) X(VT_EXECUTE_PM)     S(UNIMPL("VT_EXECUTE_PM")) \
-   C(0x9F) X(VT_EXECUTE_APC)    S(UNIMPL("VT_EXECUTE_APC"))
+#define VT_CONTROL_FUNCTIONS_LIST \
+   C(0x00) X(VT_CONTROL_NULL)  S(UNIMPL("VT_CONTROL_NULL")) \
+   C(0x05) X(VT_CONTROL_ENQ)   S(UNIMPL("VT_CONTROL_ENQ")) \
+   C(0x07) X(VT_CONTROL_BEL)   S(UNIMPL("VT_CONTROL_BEL")) \
+   C(0x08) X(VT_CONTROL_BS)    S(UNIMPL("VT_CONTROL_BS")) \
+   C(0x09) X(VT_CONTROL_HT)    S(UNIMPL("VT_CONTROL_HT")) \
+   C(0x0A) X(VT_CONTROL_LF)    S(UNIMPL("VT_CONTROL_LF")) \
+   C(0x0B) X(VT_CONTROL_VT)    S(UNIMPL("VT_CONTROL_VT")) \
+   C(0x0C) X(VT_CONTROL_FF)    S(UNIMPL("VT_CONTROL_FF")) \
+   C(0x0D) X(VT_CONTROL_CR)    S(UNIMPL("VT_CONTROL_CR")) \
+   C(0x0E) X(VT_CONTROL_SO)    S(UNIMPL("VT_CONTROL_SO")) \
+   C(0x0F) X(VT_CONTROL_SI)    S(UNIMPL("VT_CONTROL_SI")) \
+   C(0x11) X(VT_CONTROL_DC1)   S(UNIMPL("VT_CONTROL_DC1")) \
+   C(0x13) X(VT_CONTROL_DC3)   S(UNIMPL("VT_CONTROL_DC3")) \
+   C(0x18) X(VT_CONTROL_CAN)   S(UNIMPL("VT_CONTROL_CAN")) \
+   C(0x1A) X(VT_CONTROL_SUB)   S(UNIMPL("VT_CONTROL_SUB")) \
+   C(0x1B) X(VT_CONTROL_ESC)   S(UNIMPL("VT_CONTROL_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x7F) X(VT_CONTROL_DEL)   S(UNIMPL("VT_CONTROL_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
+   C(0x84) X(VT_CONTROL_IND)   S(UNIMPL("VT_CONTROL_IND")) \
+   C(0x85) X(VT_CONTROL_NEL)   S(UNIMPL("VT_CONTROL_NEL")) \
+   C(0x88) X(VT_CONTROL_HTS)   S(UNIMPL("VT_CONTROL_HTS")) \
+   C(0x8D) X(VT_CONTROL_RI)    S(UNIMPL("VT_CONTROL_RI")) \
+   C(0x8E) X(VT_CONTROL_SS2)   S(UNIMPL("VT_CONTROL_SS2")) \
+   C(0x8F) X(VT_CONTROL_SS3)   S(UNIMPL("VT_CONTROL_SS3")) \
+   C(0x90) X(VT_CONTROL_DCS)   S(UNIMPL("VT_CONTROL_DCS")) \
+   C(0x98) X(VT_CONTROL_SOS)   S(UNIMPL("VT_CONTROL_SOS")) \
+   C(0x9A) X(VT_CONTROL_DECID) S(UNIMPL("VT_CONTROL_DECID")) \
+   C(0x9B) X(VT_CONTROL_CSI)   S(UNIMPL("VT_CONTROL_CSI")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x9C) X(VT_CONTROL_ST)    S(UNIMPL("VT_CONTROL_ST")) \
+   C(0x9D) X(VT_CONTROL_OSC)   S(UNIMPL("VT_CONTROL_OSC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x9E) X(VT_CONTROL_PM)    S(UNIMPL("VT_CONTROL_PM")) \
+   C(0x9F) X(VT_CONTROL_APC)   S(UNIMPL("VT_CONTROL_APC"))
+
+#define VT_PARAM(vt, idx, def) ((idx) < (vt)->num_params && (vt)->params[(idx)].non_default ? (vt)->params[(idx)].value : (def))
+
+#define VT_CSI_FUNCTIONS_LIST \
+   C(0x41) X(VT_CSI_CUU)   S(vt->cursor.y = vt->cursor.y > VT_PARAM(vt, 0, 1) ? vt->cursor.y - VT_PARAM(vt, 0, 1) : 1; vt->dirty = true) \
+   C(0x42) X(VT_CSI_CUD)   S(vt->cursor.y = vt->cursor.y + VT_PARAM(vt, 0, 1) <= vt->window.ws_row ? vt->cursor.y + VT_PARAM(vt, 0, 1) : (unsigned)vt->window.ws_row; vt->dirty = true) \
+   C(0x43) X(VT_CSI_CUF)   S(vt->cursor.x = vt->cursor.x + VT_PARAM(vt, 0, 1) <= vt->window.ws_col ? vt->cursor.x + VT_PARAM(vt, 0, 1) : (unsigned)vt->window.ws_col; vt->dirty = true) \
+   C(0x44) X(VT_CSI_CUB)   S(vt->cursor.x = vt->cursor.x > VT_PARAM(vt, 0, 1) ? vt->cursor.x - VT_PARAM(vt, 0, 1) : 1; vt->dirty = true)
 
 #define C(code)
 #define S(code)
@@ -89,32 +97,39 @@
 #define X(name) name, 
 typedef enum { VT_STATES_LIST VT_NUM_STATES } vt_state;
 typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
-typedef enum { VT_EXECUTE_FUNCTIONS_LIST VT_NUM_EXECUTE_FUNCTIONS } vt_execute_function;
+typedef enum { VT_CONTROL_FUNCTIONS_LIST VT_NUM_CONTROL_FUNCTIONS } vt_control_function;
+typedef enum { VT_CSI_FUNCTIONS_LIST VT_NUM_CSI_FUNCTIONS } vt_csi_function;
 #undef X
 
 #define X(name) [name] = #name, 
 static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
-static const char *vt_execute_function_strings[] = { VT_EXECUTE_FUNCTIONS_LIST };
+static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
+static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
-#define VT_EXECUTE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_EXECUTE_FUNCTIONS) ? vt_execute_function_strings[(func)] : "(execute_function out of bounds)")
+#define VT_CONTROL_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings[(func)] : "(control_function out of bounds)")
+#define VT_CSI_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings[(func)] : "(csi_function out of bounds)")
 #undef X
 
 #undef C
 
-static vt_execute_function _vt_execute_function(uint8_t input)
-{
-    switch (input) {
 #define C(code) case code:
 #define X(name) return name;
-        VT_EXECUTE_FUNCTIONS_LIST
+static vt_control_function _vt_control_function(uint8_t input)
+{
+    switch (input) { VT_CONTROL_FUNCTIONS_LIST }
+    UNREACHABLE("Unexpected control function input 0x%02X", input);
+}
+
+static vt_csi_function _vt_csi_function(uint8_t input)
+{
+    switch (input) { VT_CSI_FUNCTIONS_LIST }
+    UNREACHABLE("Unexpected csi function input 0x%02X", input);
+}
 #undef X
 #undef C
-    }
-    UNREACHABLE("Unexpected function input 0x%02X", input);
-}
 
 #define C(code)
 
@@ -135,6 +150,12 @@ typedef struct
 
 typedef struct
 {
+   bool non_default;
+   uint16_t value;
+} vt_param;
+
+typedef struct
+{
     vt_state state;
     struct termios original_ios;
     bool raw;
@@ -149,30 +170,13 @@ typedef struct
     } cursor;
     vt_attribute current_attribute;
     bool dirty;
+    vt_param params[16];
+    size_t num_params;
 } vt;
 
 void vt_process(vt *vt, uint8_t input);
 
 #undef S
-
-void _vt_execute(vt *vt, vt_execute_function func)
-{
-    if (!vt) return;
-
-    fprintf(stderr, "state %s, execute %s\n", VT_STATE_STRING(vt->state), VT_EXECUTE_FUNCTION_STRING(func));
-
-    /* all cases must return */
-    static_assert(VT_NUM_EXECUTE_FUNCTIONS == 31, "Not all functions handled");
-    switch (func) {
-#define X(name) case name:
-#define S(code) code; return;
-        VT_EXECUTE_FUNCTIONS_LIST
-#undef X
-#undef S
-        case VT_NUM_EXECUTE_FUNCTIONS: break;
-    }
-    UNREACHABLE("Unexpected func %d", func);
-}
 
 void _vt_print(vt *vt, char input)
 {
@@ -208,34 +212,99 @@ void _vt_print(vt *vt, char input)
     vt->dirty = true;
 }
 
-void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
+void _vt_clear(vt *vt)
+{
+    /* UNIMPL("sizeof(*vt) = %zu", sizeof(*vt)); */
+    static_assert(sizeof(*vt) == 200, "State added, may need clearing");
+    if (!vt) return;
+
+    memset(vt->params, '\0', sizeof(*vt->params) * vt->num_params);
+    vt->num_params = 0;
+}
+
+void _vt_param(vt *vt, uint8_t input)
+{
+   if (!vt) return;
+
+   vt_param *param = NULL;
+   if (isdigit(input)) {
+      if (vt->num_params) {
+         param = &vt->params[vt->num_params - 1];
+         param->value *= 10;
+         param->value += input - '0';
+      } else if (vt->num_params != sizeof(vt->params)/sizeof(*vt->params)) {
+         param = &vt->params[vt->num_params ++];
+         param->value = input - '0';
+      }
+      if (param) param->non_default = true;
+   } else if (vt->num_params != sizeof(vt->params)/sizeof(*vt->params)) {
+      param = &vt->params[vt->num_params ++];
+      param->non_default = false;
+   }
+
+   if (param) {
+      fprintf(stderr, "in _vt_param, input %02X (%c), num params %zu, param so far %d (default=%d)\n", input, input, vt->num_params, param->value, !param->non_default);
+   } else {
+      fprintf(stderr, "in _vt_param, input %02X (%c), num params %zu, ignoring more\n", input, input, vt->num_params);
+   }
+}
+
+#define X(name) case name:
+#define S(code) code; return;
+void _vt_execute(vt *vt, vt_control_function func)
+{
+    if (!vt) return;
+
+    fprintf(stderr, "state %s, execute %s\n", VT_STATE_STRING(vt->state), VT_CONTROL_FUNCTION_STRING(func));
+
+    /* all cases must return */
+    static_assert(VT_NUM_CONTROL_FUNCTIONS == 31, "Not all functions handled");
+    switch (func) {
+        VT_CONTROL_FUNCTIONS_LIST
+        case VT_NUM_CONTROL_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected func %d", func);
+}
+
+void _vt_csi_dispatch(vt *vt, vt_csi_function func)
+{
+    if (!vt) return;
+
+    fprintf(stderr, "state %s, csi %s, %zu params:", VT_STATE_STRING(vt->state), VT_CSI_FUNCTION_STRING(func), vt->num_params);
+    for (size_t i = 0; i < vt->num_params; i ++) {
+       if (vt->params[i].non_default) {
+          fprintf(stderr, " %u", vt->params[i].value);
+       } else {
+          fprintf(stderr, " DEFAULT");
+       }
+    }
+    fprintf(stderr, "\n");
+
+    /* all cases must return */
+    static_assert(VT_NUM_CSI_FUNCTIONS == 4, "Not all functions handled");
+    switch (func) {
+        VT_CSI_FUNCTIONS_LIST
+        case VT_NUM_CSI_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected func %d", func);
+}
+
+void _vt_action(vt *vt, vt_action action, uint8_t input)
 {
     if (!vt) return;
 
     fprintf(stderr, "state %s, action %s, input %02X\n", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action), input);
 
     /* all cases must return */
-    static_assert(VT_NUM_ACTIONS == 14, "Not all actions handled");
+    static_assert(VT_NUM_ACTIONS == 14, "Not all functions handled");
     switch (action) {
-        case VT_ACTION_IGNORE: UNIMPL("VT_ACTION_IGNORE");
-        case VT_ACTION_PRINT: _vt_print(vt, input); return;
-        case VT_ACTION_EXECUTE: _vt_execute(vt, _vt_execute_function(input)); return;
-        case VT_ACTION_CLEAR: UNIMPL("VT_ACTION_CLEAR");
-        case VT_ACTION_COLLECT: UNIMPL("VT_ACTION_COLLECT");
-        case VT_ACTION_PARAM: UNIMPL("VT_ACTION_PARAM");
-        case VT_ACTION_ESC_DISPATCH: UNIMPL("VT_ACTION_ESC_DISPATCH");
-        case VT_ACTION_CSI_DISPATCH: UNIMPL("VT_ACTION_CSI_DISPATCH");
-        case VT_ACTION_HOOK: UNIMPL("VT_ACTION_HOOK");
-        case VT_ACTION_PUT: UNIMPL("VT_ACTION_PUT");
-        case VT_ACTION_UNHOOK: UNIMPL("VT_ACTION_UNHOOK");
-        case VT_ACTION_OSC_START: UNIMPL("VT_ACTION_OSC_START");
-        case VT_ACTION_OSC_PUT: UNIMPL("VT_ACTION_OSC_PUT");
-        case VT_ACTION_OSC_END: UNIMPL("VT_ACTION_OSC_END");
-
+        VT_ACTIONS_LIST
         case VT_NUM_ACTIONS: break;
     }
     UNREACHABLE("Unexpected action %d", action);
 }
+#undef X
+#undef S
 
 void _vt_transition(vt *vt, vt_state to)
 {
@@ -747,6 +816,18 @@ void vt_resize_window(vt *vt)
         size_t min_size = orig_size > new_size ? new_size : orig_size;
         memcpy(vt->cells, original, min_size * sizeof(*vt->cells));
         free(original);
+
+        size_t cursor = (vt->cursor.y - 1) * original_size.ws_col + vt->cursor.x - 1;
+
+        vt->cursor.x = cursor % vt->window.ws_col + 1;
+        vt->cursor.y = cursor / vt->window.ws_col + 1;
+
+        if (vt->cursor.wrap_pending) {
+            if (vt->cursor.x != vt->window.ws_col) {
+                vt->cursor.x ++;
+            }
+        }
+        vt->cursor.wrap_pending = vt->cursor.x == vt->window.ws_col;
     }
 
     if (!(vt->cursor.x && vt->cursor.y)) {
