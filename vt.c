@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -7,8 +8,10 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <sys/signalfd.h>
+#include <sys/stat.h>
 #include <termios.h>
 #include <unistd.h>
 
@@ -118,6 +121,18 @@ static vt_execute_function _vt_execute_function(uint8_t input)
 static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
 static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
 
+typedef enum
+{
+    VT_ATTRIBUTE_NONE
+} vt_attribute;
+
+typedef struct
+{
+    bool used;
+    char c;
+    vt_attribute attribute;
+} vt_cell;
+
 typedef struct
 {
     vt_state state;
@@ -125,7 +140,15 @@ typedef struct
     bool raw;
     bool nonblocking;
     FILE *tty;
-    struct winsize winsize;
+    struct winsize window;
+    vt_cell *cells;
+    struct {
+        size_t x;
+        size_t y;
+        bool wrap_pending;
+    } cursor;
+    vt_attribute current_attribute;
+    bool dirty;
 } vt;
 
 void vt_process(vt *vt, uint8_t input);
@@ -151,6 +174,40 @@ void _vt_execute(vt *vt, vt_execute_function func)
     UNREACHABLE("Unexpected func %d", func);
 }
 
+void _vt_print(vt *vt, char input)
+{
+    if (!vt) return;
+
+    if (!isprint(input)) {
+        UNREACHABLE("Unexpected non printable char 0x%02X", input);
+    }
+
+    if (vt->cursor.wrap_pending) {
+        fprintf(stderr, "at end of row\n");
+        if (vt->cursor.y == vt->window.ws_row) {
+            fprintf(stderr, "at end of screen\n");
+            UNIMPL("scroll up");
+        } else {
+            vt->cursor.y ++;
+            vt->cursor.x = 1;
+        }
+        vt->cursor.wrap_pending = false;
+    }
+
+    vt_cell *cell = &vt->cells[(vt->cursor.y - 1) * vt->window.ws_col + vt->cursor.x - 1];
+    cell->used = true;
+    cell->c = input;
+    cell->attribute = vt->current_attribute;
+
+    if (vt->cursor.x == vt->window.ws_col) {
+        vt->cursor.wrap_pending = true;
+    } else {
+        vt->cursor.x ++;
+    }
+
+    vt->dirty = true;
+}
+
 void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
 {
     if (!vt) return;
@@ -161,7 +218,7 @@ void _vt_action(vt *vt, vt_action action, __attribute__((unused)) uint8_t input)
     static_assert(VT_NUM_ACTIONS == 14, "Not all actions handled");
     switch (action) {
         case VT_ACTION_IGNORE: UNIMPL("VT_ACTION_IGNORE");
-        case VT_ACTION_PRINT: UNIMPL("VT_ACTION_PRINT");
+        case VT_ACTION_PRINT: _vt_print(vt, input); return;
         case VT_ACTION_EXECUTE: _vt_execute(vt, _vt_execute_function(input)); return;
         case VT_ACTION_CLEAR: UNIMPL("VT_ACTION_CLEAR");
         case VT_ACTION_COLLECT: UNIMPL("VT_ACTION_COLLECT");
@@ -533,15 +590,18 @@ void vt_process(vt *vt, uint8_t input)
     UNREACHABLE("Unexpected state %d", vt->state);
 }
 
-int setup_io(vt *vt)
+int vt_setup_io(vt *vt)
 {
     if (!vt) return -1;
 
     if (isatty(STDOUT_FILENO)) {
+        fprintf(stderr, "tty is stdout\n");
         vt->tty = stdout;
     } else if (isatty(STDERR_FILENO)) {
+        fprintf(stderr, "tty is stderr\n");
         vt->tty = stderr;
     } else {
+        fprintf(stderr, "Opening /dev/tty\n");
         vt->tty = fopen("/dev/tty", "wb");
     }
 
@@ -565,7 +625,7 @@ int setup_io(vt *vt)
     return 0;
 }
 
-void restore_io(vt *vt)
+void vt_restore_io(vt *vt)
 {
     if (!vt) return;
 
@@ -590,8 +650,71 @@ void restore_io(vt *vt)
     }
 }
 
-void setup_window(vt *vt)
+void vt_draw_window(vt *vt)
 {
+#define VT_ED "\033[%dJ"
+#define VT_CUP "\033[%d;%dH"
+
+#define CLEAR_SCREEN fprintf(vt->tty, VT_ED, 2)
+#define GOTO(x, y) fprintf(vt->tty, VT_CUP, (int)(y), (int)(x))
+
+    if (!vt) return;
+
+    if (!vt->dirty) return;
+
+    CLEAR_SCREEN;
+    for (int y = 10; y <= vt->window.ws_col; y += 10) {
+        GOTO(3 + y, 1);
+        fprintf(vt->tty, "%d", (y / 10) % 10);
+    }
+    GOTO(4, 2);
+    for (int y = 1; y <= vt->window.ws_col; y ++) {
+        fprintf(vt->tty, "%d", y % 10);
+    }
+    GOTO(3, 3);
+    fprintf(vt->tty, "+");
+    for (int y = 1; y <= vt->window.ws_col; y ++) {
+        fprintf(vt->tty, "-");
+    }
+    for (int x = 1; x <= vt->window.ws_row; x ++) {
+        GOTO(1, 3 + x);
+        int mod = x % 10;
+        if (mod) {
+            fprintf(vt->tty, " %d|", mod);
+        } else {
+            fprintf(vt->tty, "%02d|", x % 100);
+        }
+    }
+
+    vt_attribute last_attribute = VT_ATTRIBUTE_NONE;
+
+    for (int y = 1; y <= vt->window.ws_row; y ++) {
+        for (int x = 1; x <= vt->window.ws_col; x ++) {
+            vt_cell *cell = &vt->cells[(y - 1) * vt->window.ws_col + x - 1];
+            if (cell->used) {
+                if (cell->attribute != last_attribute) {
+                    UNIMPL("set attribute");
+                }
+                if (x == 1 || !vt->cells[(y - 1) * vt->window.ws_col + x - 2].used) {
+                    GOTO(x + 3, y + 3);
+                }
+                fprintf(vt->tty, "%c", cell->c);
+            }
+        }
+    }
+
+    GOTO(vt->cursor.x + 3, vt->cursor.y + 3);
+
+    fflush(vt->tty);
+    vt->dirty = false;
+}
+
+void vt_resize_window(vt *vt)
+{
+    vt_cell *original = vt->cells;
+    struct winsize original_size = vt->window;
+    size_t orig_size = original_size.ws_col * original_size.ws_row;
+
     struct winsize w = {0};
     int fds[] = { STDOUT_FILENO, STDERR_FILENO, STDIN_FILENO };
     for (size_t i = 0; i < sizeof(fds)/sizeof(*fds); i++) {
@@ -600,12 +723,39 @@ void setup_window(vt *vt)
         w = (struct winsize){0};
     }
 
-    if (w.ws_col && w.ws_row) {
-        vt->winsize = w;
+    fprintf(stderr, "outer window size %ux%u\r\n", w.ws_col, w.ws_row);
+
+    if (w.ws_col > 3 && w.ws_row > 3) {
+        vt->window.ws_col = w.ws_col - 3;
+        vt->window.ws_row = w.ws_row - 3;
     } else {
-        vt->winsize = (struct winsize){.ws_col = 80, .ws_row = 24};
+        vt->window = (struct winsize){.ws_col = 80, .ws_row = 24};
     }
-    fprintf(stderr, "window size %ux%u\n", vt->winsize.ws_col, vt->winsize.ws_row);
+
+    fprintf(stderr, "inner window size %ux%u\r\n", vt->window.ws_col, vt->window.ws_row);
+
+    size_t new_size = vt->window.ws_col * vt->window.ws_row;
+    if (new_size == orig_size) return;
+
+    vt->cells = calloc(vt->window.ws_col * vt->window.ws_row, sizeof(*vt->cells));
+    if (!vt->cells) {
+        if (original) free(original);
+        return;
+    }
+
+    if (original) {
+        size_t min_size = orig_size > new_size ? new_size : orig_size;
+        memcpy(vt->cells, original, min_size * sizeof(*vt->cells));
+        free(original);
+    }
+
+    if (!(vt->cursor.x && vt->cursor.y)) {
+        vt->cursor.x = 1;
+        vt->cursor.y = 1;
+    }
+
+    vt->dirty = true;
+    vt_draw_window(vt);
 }
 
 #define _signalfd(...) __signalfd(-1, ##__VA_ARGS__, NULL)
@@ -668,13 +818,13 @@ int handle_signal(vt *vt, int signo)
 {
     switch (signo) {
         case SIGWINCH:
-            setup_window(vt);
+            vt_resize_window(vt);
             return 0;
     }
     UNREACHABLE("Unhandled signal %d", signo);
 }
 
-int main_loop(vt *vt)
+int vt_main_loop(vt *vt)
 {
     if (!vt) return 1;
 
@@ -702,9 +852,10 @@ int main_loop(vt *vt)
                 break;
             }
             for (size_t i = 0; i < (unsigned)red; i ++) {
-                printf("vt_process(.., 0x%02X)\n", buf[i]);
+                fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
                 vt_process(vt, buf[i]);
-                printf("state now %s\n", VT_STATE_STRING(vt->state));
+                if (vt->dirty) vt_draw_window(vt);
+                fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state));
             }
         }
     }
@@ -712,12 +863,45 @@ int main_loop(vt *vt)
     fprintf(stderr, "EOF\n");
     return 0;
 }
-int main(__attribute__((unused)) int argc, __attribute__((unused)) char **argv)
+
+void vt_rebuild_if_source_newer(const char *program, char * const *argv)
 {
+    struct stat prog_stat;
+    struct stat file_stat;
+    /* FIXME this won't work if program is called via PATH */
+    if (stat(program, &prog_stat) == -1) return;
+    if (stat(__FILE__, &file_stat) == -1) return;
+    if (prog_stat.st_mtim.tv_sec < file_stat.st_mtim.tv_sec ||
+            (prog_stat.st_mtim.tv_sec == file_stat.st_mtim.tv_sec &&
+             prog_stat.st_mtim.tv_nsec < file_stat.st_mtim.tv_nsec)) {
+        const char *cc = "cc";
+        const char *cflags = "-Wall -Werror -Wextra -Wpedantic -fsanitize=address -ggdb";
+        int len = strlen(cc) + 1 + strlen(cflags) + 1 + strlen(__FILE__) + 4 + strlen(program) + 1;
+        char *str = malloc(len);
+        if (!str) return;
+        if (snprintf(str, len, "%s %s %s -o %s", cc, cflags, __FILE__, program) != len - 1) {
+            free(str);
+            return;
+        }
+        int ret = system(str);
+        free(str);
+        if (ret) exit(ret);
+        fprintf(stderr, "Reloading as newer source\n");
+        execvp(program, argv);
+    }
+}
+
+int main(__attribute__((unused)) int argc, char * const *argv)
+{
+    vt_rebuild_if_source_newer(*argv, argv);
     vt vt = {0};
-    setup_io(&vt);
-    setup_window(&vt);
-    int ret = main_loop(&vt);
-    restore_io(&vt);
+    vt_setup_io(&vt);
+    vt_resize_window(&vt);
+    int ret = vt_main_loop(&vt);
+    vt_restore_io(&vt);
+    if (vt.cells) {
+        free(vt.cells);
+        vt.cells = NULL;
+    }
     return ret;
 }
