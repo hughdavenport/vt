@@ -1,0 +1,8 @@
+tty is stdout
+outer window size 93x19
+inner window size 90x16
+fd = 5
+red from fd 5 = 0, || (00)
+got eof on fd 5
+fd = 0
+red from fd 0 = 1, || (03)
