@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>
@@ -5,6 +6,7 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -12,6 +14,7 @@
 #include <sys/ioctl.h>
 #include <sys/signalfd.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <termios.h>
 #include <unistd.h>
 
@@ -172,6 +175,9 @@ typedef struct
     bool dirty;
     vt_param params[16];
     size_t num_params;
+    pid_t child_pid;
+    int stdin[2];
+    int stdout[2];
 } vt;
 
 void vt_process(vt *vt, uint8_t input);
@@ -215,7 +221,7 @@ void _vt_print(vt *vt, char input)
 void _vt_clear(vt *vt)
 {
     /* UNIMPL("sizeof(*vt) = %zu", sizeof(*vt)); */
-    static_assert(sizeof(*vt) == 200, "State added, may need clearing");
+    static_assert(sizeof(*vt) == 224, "State added, may need clearing");
     if (!vt) return;
 
     memset(vt->params, '\0', sizeof(*vt->params) * vt->num_params);
@@ -946,7 +952,7 @@ int handle_signal(vt *vt, int signo)
 
         case SIGINT:
             fprintf(vt->tty, "^C");
-            fflushe(vt->tty);
+            fflush(vt->tty);
             vt_resize_window(vt);
             return 130;
     }
@@ -958,35 +964,101 @@ int vt_main_loop(vt *vt)
     if (!vt) return 1;
 
     int sigfd = _signalfd(SIGWINCH, SIGINT);
+    bool stdin_eof = false;
+    bool stdout_eof = false;
     while (true) {
-        int fd = _select(sigfd, STDIN_FILENO);
-        if (fd == sigfd) {
-            struct signalfd_siginfo siginfo;
-            ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
-            if (red != sizeof(siginfo)) {
-                perror("read(sigfd)");
-                return 1;
-            }
+       int fd;
+       if (vt->child_pid) {
+          if (stdin_eof && stdout_eof) break;
 
-            int ret = handle_signal(vt, siginfo.ssi_signo);
-            if (ret != -1) return ret;
-        } else {
-            uint8_t buf[512];
-            ssize_t red = read(STDIN_FILENO, buf, sizeof(buf));
-            fprintf(stderr, "red = %ld\n", red);
-            if (red == -1) {
-                perror("read()");
-                return 1;
-            } else if (red == 0) {
-                break;
-            }
-            for (size_t i = 0; i < (unsigned)red; i ++) {
+          int wstatus;
+          pid_t waited = waitpid(vt->child_pid, &wstatus, WNOHANG);
+          if (waited == -1) {
+             perror("waitpid(child, NOHANG)");
+             return 1;
+          } else if (waited) {
+             if (WIFEXITED(wstatus)) {
+                int ret = WEXITSTATUS(wstatus);
+                fprintf(stderr, "child exited with code %d\n", ret);
+             } else if (WIFSIGNALED(wstatus)) {
+                int sig = WTERMSIG(wstatus);
+                fprintf(stderr, "child was terminated by signal %d (%s)\n", sig, strsignal(sig));
+             }
+             stdin_eof = true;
+             vt->child_pid = 0;
+          }
+
+          if (stdin_eof && stdout_eof) break;
+
+          if (stdin_eof) {
+             fd = _select(sigfd, vt->stdout[0]);
+          } else if (stdout_eof) {
+             fd = _select(sigfd, STDIN_FILENO);
+          } else {
+             fd = _select(sigfd, STDIN_FILENO, vt->stdout[0]);
+          }
+          fprintf(stderr, "fd = %d\n", fd);
+       } else {
+          if (stdin_eof) break;
+
+          fd = _select(sigfd, STDIN_FILENO);
+       }
+       if (fd == sigfd) {
+          struct signalfd_siginfo siginfo;
+          ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
+          if (red != sizeof(siginfo)) {
+             perror("read(sigfd)");
+             return 1;
+          }
+
+          int ret = handle_signal(vt, siginfo.ssi_signo);
+          if (ret != -1) return ret;
+       } else {
+          uint8_t buf[512];
+          ssize_t red = read(fd, buf, sizeof(buf));
+          fprintf(stderr, "red from fd %d = %ld, |%.*s| (%02x)\n", fd, red, (int)red, buf, *buf);
+          if (red == -1) {
+             perror("read()");
+             return 1;
+          } else if (red == 0) {
+             fprintf(stderr, "got eof on fd %d\n", fd);
+             if (fd == STDIN_FILENO) {
+                stdin_eof = true;
+             } else if (fd == vt->stdout[0]) {
+                stdout_eof = true;
+             } else break;
+          }
+          if (vt->child_pid) {
+             if (fd == STDIN_FILENO) {
+                size_t written = 0;
+                while (written != (unsigned)red) {
+                   ssize_t writ = write(vt->stdin[1], buf + written, red - written);
+                   if (writ == -1) {
+                      perror("write(child stdin)");
+                      return 1;
+                   }
+                   written += writ;
+                   if (written > (unsigned)red) UNREACHABLE("kernel wrote too much");
+                }
+
+                /* FIXME have another vt model which can be used to determine pressed keys */
+             } else {
+                for (size_t i = 0; i < (unsigned)red; i ++) {
+                   fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
+                   vt_process(vt, buf[i]);
+                   if (vt->dirty) vt_draw_window(vt);
+                   fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state));
+                }
+             }
+          } else {
+             for (size_t i = 0; i < (unsigned)red; i ++) {
                 fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
                 vt_process(vt, buf[i]);
                 if (vt->dirty) vt_draw_window(vt);
                 fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state));
-            }
-        }
+             }
+          }
+       }
     }
 
     fprintf(stderr, "EOF\n");
@@ -1020,17 +1092,78 @@ void vt_rebuild_if_source_newer(const char *program, char * const *argv)
     }
 }
 
-int main(__attribute__((unused)) int argc, char * const *argv)
+int main(int argc, char * const *argv)
 {
     vt_rebuild_if_source_newer(*argv, argv);
+
+    printf("argc = %d\n", argc);
+#define NEXT_ARG (*(argv++)) + 0 * (argc--)
+    __attribute__((unused)) const char *program = NEXT_ARG;
     vt vt = {0};
+
+    /* FIXME process args */
+
+    if (argc) {
+       if (pipe2(vt.stdin, O_NONBLOCK) != 0) {
+          perror("pipe2(stdin)");
+          return 1;
+       }
+
+       if (pipe2(vt.stdout, O_NONBLOCK) != 0) {
+          perror("pipe2(stdout)");
+          return 1;
+       }
+
+       vt.child_pid = fork();
+
+       if (vt.child_pid == -1) {
+          perror("fork()");
+          return 1;
+       }
+
+       if (!vt.child_pid) {
+          if (dup2(vt.stdin[0], STDIN_FILENO) == -1) {
+             perror("dup2(stdin)");
+             exit(1);
+          }
+
+          if (dup2(vt.stdout[1], STDOUT_FILENO) == -1) {
+             perror("dup2(stdout)");
+             exit(1);
+          }
+
+          close(vt.stdout[0]);
+          close(vt.stdin[1]);
+
+          int ret = execvp(*argv, argv);
+          if (ret == -1) {
+             perror("execvp");
+          }
+          exit(1);
+       }
+
+       close(vt.stdout[1]);
+       close(vt.stdin[0]);
+    }
+
     vt_setup_io(&vt);
     vt_resize_window(&vt);
     int ret = vt_main_loop(&vt);
+    if (vt.child_pid) {
+       close(vt.stdin[1]);
+       close(vt.stdout[0]);
+       int wstatus;
+       if (waitpid(vt.child_pid, &wstatus, 0) != vt.child_pid) {
+          perror("waitpid(child)");
+          return 1;
+       }
+       vt.child_pid = 0;
+    }
     vt_restore_io(&vt);
     if (vt.cells) {
         free(vt.cells);
         vt.cells = NULL;
     }
     return ret;
+#undef NEXT_ARG
 }
