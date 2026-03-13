@@ -1852,22 +1852,24 @@ int __select(int dummy, ...)
     while (true) {
         int fd = va_arg(va, int);
         if (fd == -1) break;
-        if (fd >= nfds) nfds = fd + 1;
-        FD_SET(fd, &readables);
+        if (fcntl(fd, F_GETFD) != -1) {
+           if (fd >= nfds) nfds = fd + 1;
+           FD_SET(fd, &readables);
+        }
     }
     va_end(va);
 
-    int sel = select(nfds, &readables, NULL, NULL, NULL);
-    while (sel == -1 && errno == EINTR) {
+    int sel;
+    do {
         sel = select(nfds, &readables, NULL, NULL, NULL);
-    }
+    } while (sel == -1 && errno == EINTR);
     int ret = -1;
     if (sel) {
         va_start(va, dummy);
         while (true) {
             int fd = va_arg(va, int);
             if (fd == -1) break;
-            if (FD_ISSET(fd, &readables)) {
+            if (fcntl(fd, F_GETFD) != -1 && FD_ISSET(fd, &readables)) {
                 ret = fd;
                 break;
             }
