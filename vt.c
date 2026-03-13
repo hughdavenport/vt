@@ -47,7 +47,7 @@
     X(VT_ACTION_COLLECT)      S(UNIMPL("VT_ACTION_COLLECT")) \
     X(VT_ACTION_PARAM)        S(_vt_param(vt, input)) \
     X(VT_ACTION_ESC_DISPATCH) S(UNIMPL("VT_ACTION_ESC_DISPATCH")) \
-    X(VT_ACTION_CSI_DISPATCH) S(_vt_csi_dispatch(vt, _vt_csi_function(input))) \
+    X(VT_ACTION_CSI_DISPATCH) S(_vt_csi_dispatch(vt, input)) \
     X(VT_ACTION_HOOK)         S(UNIMPL("VT_ACTION_HOOK")) \
     X(VT_ACTION_PUT)          S(UNIMPL("VT_ACTION_PUT")) \
     X(VT_ACTION_UNHOOK)       S(UNIMPL("VT_ACTION_UNHOOK")) \
@@ -93,13 +93,19 @@
 #define VT_PARAM(vt, idx, def) ((idx) < (vt)->num_params && (vt)->params[(idx)].non_default ? (vt)->params[(idx)].value : (def))
 
 #define VT_CSI_FUNCTIONS_LIST \
-   C(0x41) X(VT_CSI_CUU)   S(vt->cursor.y = vt->cursor.y > VT_PARAM(vt, 0, 1) ? vt->cursor.y - VT_PARAM(vt, 0, 1) : 1; vt->dirty = true) \
-   C(0x42) X(VT_CSI_CUD)   S(vt->cursor.y = vt->cursor.y + VT_PARAM(vt, 0, 1) <= vt->window.ws_row ? vt->cursor.y + VT_PARAM(vt, 0, 1) : (unsigned)vt->window.ws_row; vt->dirty = true) \
-   C(0x43) X(VT_CSI_CUF)   S(vt->cursor.x = vt->cursor.x + VT_PARAM(vt, 0, 1) <= vt->window.ws_col ? vt->cursor.x + VT_PARAM(vt, 0, 1) : (unsigned)vt->window.ws_col; vt->dirty = true) \
-   C(0x44) X(VT_CSI_CUB)   S(vt->cursor.x = vt->cursor.x > VT_PARAM(vt, 0, 1) ? vt->cursor.x - VT_PARAM(vt, 0, 1) : 1; vt->dirty = true)
+   C(0x00)         X(VT_CSI_NONE)          L("NONE")              S(UNREACHABLE("Unexpected CSI function")) \
+   C(0x41 /* A */) X(VT_CSI_CUU)           L("Cursor Up")         S(_vt_move_cursor_offset(vt, 0, -VT_PARAM(vt, 0, 1))) \
+   C(0x42 /* B */) X(VT_CSI_CUD)           L("Cursor Down")       S(_vt_move_cursor_offset(vt, 0, VT_PARAM(vt, 0, 1))) \
+   C(0x43 /* C */) X(VT_CSI_CUF)           L("Cursor Forward")    S(_vt_move_cursor_offset(vt, VT_PARAM(vt, 0, 1), 0)) \
+   C(0x44 /* D */) X(VT_CSI_CUB)           L("Cursor Backward")   S(_vt_move_cursor_offset(vt, -VT_PARAM(vt, 0, 1), 0)) \
+   C(0x48 /* H */) X(VT_CSI_CUP)           L("Cursor Position")   S(_vt_move_cursor(vt, VT_PARAM(vt, 1, 1), VT_PARAM(vt, 0, 1))) \
+   C(0x4A /* J */) X(VT_CSI_ED)            L("Erase In Page")     S(_vt_erase_in_page(vt, VT_PARAM(vt, 0, 0))) \
+   C(0x4B /* K */) X(VT_CSI_EL)            L("Erase In Line")     S(_vt_erase_in_line(vt, VT_PARAM(vt, 0, 0))) \
+   C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) L("CSI Private Tilde") S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
 #define C(code)
 #define S(code)
+#define L(code)
 
 #define X(name) name, 
 typedef enum { VT_STATES_LIST VT_NUM_STATES } vt_state;
@@ -120,29 +126,17 @@ static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 #define VT_CSI_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings[(func)] : "(csi_function out of bounds)")
 #undef X
 
-#undef C
-
-#define C(code) case code:
-#define X(name) return name;
-
-static vt_csi_function _vt_csi_function(uint8_t input)
-{
-    switch (input) { VT_CSI_FUNCTIONS_LIST }
-    UNREACHABLE("Unexpected csi function input 0x%02X", input);
-}
-#undef X
-#undef C
 #define X(code)
 #undef L
 #define L(name) name, 
+static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
 static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
 
+#define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings_long[(func)] : "(control_function out of bounds)")
 #undef L
 #undef X
-#undef C
-
-#define C(code)
+#define L(name)
 
 static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
 static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
@@ -190,7 +184,6 @@ typedef struct
 
 void vt_process(vt *vt, uint8_t input);
 
-#undef S
 
 void _vt_print(vt *vt, char input)
 {
@@ -299,27 +292,42 @@ void _vt_execute(vt *vt, uint8_t input)
 #undef C
 }
 
-void _vt_csi_dispatch(vt *vt, vt_csi_function func)
+void _vt_csi_dispatch(vt *vt, uint8_t input)
 {
     if (!vt) return;
 
-    fprintf(stderr, "state %s, csi %s, %zu param(s):", VT_STATE_STRING(vt->state), VT_CSI_FUNCTION_STRING(func), vt->num_params);
-    for (size_t i = 0; i < vt->num_params; i ++) {
-       if (vt->params[i].non_default) {
-          fprintf(stderr, " %u", vt->params[i].value);
-       } else {
-          fprintf(stderr, " [D]");
+#define S(code)
+#define C(code) case code:
+#define X(name) func = name; break;
+    vt_csi_function func = -1;
+    switch (input) { VT_CSI_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown csi function input 0x%02X '%c'", input, input);
+#undef C
+#undef S
+#undef X
+
+    fprintf(stderr, "state %s, csi function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_FUNCTION_STRING(func), VT_CSI_FUNCTION_STRING_LONG(func));
+    for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
+       if (vt->sequence_state.params[param].non_default) {
+          if (param) fputc(',', stderr);
+          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
        }
     }
     fprintf(stderr, "\n");
 
+#define C(name)
+#define X(name) case name:
+#define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_FUNCTIONS == 4, "Not all functions handled");
+    static_assert(VT_NUM_CSI_FUNCTIONS == 9, "Not all functions handled");
     switch (func) {
         VT_CSI_FUNCTIONS_LIST
         case VT_NUM_CSI_FUNCTIONS: break;
     }
     UNREACHABLE("Unexpected func %d", func);
+#undef X
+#undef S
+#undef C
 }
 
 void _vt_action(vt *vt, vt_action action, uint8_t input)
