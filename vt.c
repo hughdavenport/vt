@@ -1414,13 +1414,15 @@ void vt_process(vt *vt, uint8_t input)
         case VT_STATE_GROUND:
             switch (input) {
                 NUM_00_0F
-                case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17:
+               case 0x10: case 0x11: case 0x12: case 0x13: case 0x14: case 0x15: case 0x16: case 0x17: case 0x19: case 0x1C: case 0x1D: case 0x1E: case 0x1F:
                     _vt_action(vt, VT_ACTION_EXECUTE, input);
                     break;
 
                 NUM_20_2F NUM_30_3F NUM_40_4F NUM_50_5F NUM_60_6F NUM_70_7F
                     _vt_action(vt, VT_ACTION_PRINT, input);
                     break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_GROUND: %02X", input);
             }
             return;
 
@@ -1438,6 +1440,8 @@ void vt_process(vt *vt, uint8_t input)
 
                 NUM_30_3F NUM_40_4F
                 case 0x51: case 0x52: case 0x53: case 0x54: case 0x55: case 0x56: case 0x57: case 0x59: case 0x5A:
+                NUM_60_6F
+                case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_action(vt, VT_ACTION_ESC_DISPATCH, input);
                     _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
@@ -1451,6 +1455,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_ESCAPE: %02X", input);
             }
             return;
 
@@ -1472,6 +1478,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_ESCAPE_INTERMEDIATE: %02X", input);
             }
             return;
 
@@ -1487,6 +1495,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_OSC_STRING: %02X", input);
             }
             return;
 
@@ -1521,6 +1531,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_CSI_ENTRY: %02X", input);
             }
             return;
 
@@ -1551,6 +1563,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_CSI_PARAM: %02X", input);
             }
             return;
 
@@ -1570,6 +1584,8 @@ void vt_process(vt *vt, uint8_t input)
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_CSI_IGNORE: %02X", input);
             }
             return;
 
@@ -1595,6 +1611,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_CSI_INTERMEDIATE: %02X", input);
             }
             return;
 
@@ -1606,6 +1624,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_SOS_PM_APC_STRING: %02X", input);
             }
             return;
 
@@ -1638,6 +1658,8 @@ void vt_process(vt *vt, uint8_t input)
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH, input);
                     break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_DCS_ENTRY: %02X", input);
             }
             return;
 
@@ -1649,6 +1671,8 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_DCS_IGNORE: %02X", input);
             }
             return;
 
@@ -1678,6 +1702,8 @@ void vt_process(vt *vt, uint8_t input)
 
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH, input);
                     break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_DCS_PARAM: %02X", input);
             }
             return;
 
@@ -1702,6 +1728,8 @@ void vt_process(vt *vt, uint8_t input)
 
                     _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH, input);
                     break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_DCS_INTERMEDIATE: %02X", input);
             }
             return;
 
@@ -1716,6 +1744,8 @@ void vt_process(vt *vt, uint8_t input)
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
 
                 case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
+
+                default: UNREACHABLE("Missing case for VT_STATE_DCS_PASSTHROUGH: %02X", input);
             }
             return;
 
