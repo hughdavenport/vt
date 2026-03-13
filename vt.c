@@ -248,6 +248,8 @@ typedef struct
     bool used;
     char c;
     vt_attribute attribute;
+    bool cr;
+    bool lf;
 } vt_cell;
 
 typedef struct
@@ -1737,14 +1739,14 @@ int vt_setup_io(vt *vt)
         fprintf(stderr, "Opening /dev/tty\n");
         vt->tty = fopen("/dev/tty", "wb");
     }
+    setbuf(vt->tty, NULL);
+
 
     if (tcgetattr(STDIN_FILENO, &vt->original_ios) == 0) {
         struct termios new_ios = vt->original_ios;
         cfmakeraw(&new_ios);
         if (tcsetattr(STDIN_FILENO, TCSANOW, &new_ios) == 0) {
             vt->raw = true;
-        } else {
-            tcsetattr(STDIN_FILENO, TCSANOW, &vt->original_ios);
         }
     }
 
@@ -1768,7 +1770,7 @@ void vt_restore_io(vt *vt)
     }
 
     if (vt->raw) {
-        if (tcsetattr(STDIN_FILENO, TCSANOW, &vt->original_ios) == 0) {
+        if (tcsetattr(STDOUT_FILENO, TCSANOW, &vt->original_ios) == 0) {
             vt->raw = false;
         }
     }
@@ -1847,6 +1849,7 @@ int __select(int dummy, ...)
 
 int handle_signal(vt *vt, int signo)
 {
+    fprintf(stderr, "signal %d (%s)\n", signo, strsignal(signo));
     switch (signo) {
         case SIGWINCH:
             vt_resize_window(vt);
