@@ -44,7 +44,7 @@
     X(VT_ACTION_PRINT)        S(_vt_print(vt, input)) \
     X(VT_ACTION_EXECUTE)      S(_vt_execute(vt, input)) \
     X(VT_ACTION_CLEAR)        S(_vt_clear(vt)) \
-    X(VT_ACTION_COLLECT)      S(UNIMPL("VT_ACTION_COLLECT")) \
+    X(VT_ACTION_COLLECT)      S(_vt_collect(vt, input)) \
     X(VT_ACTION_PARAM)        S(_vt_param(vt, input)) \
     X(VT_ACTION_ESC_DISPATCH) S(UNIMPL("VT_ACTION_ESC_DISPATCH")) \
     X(VT_ACTION_CSI_DISPATCH) S(_vt_csi_dispatch(vt, input)) \
@@ -159,6 +159,15 @@ typedef struct
    uint16_t value;
 } vt_param;
 
+
+typedef struct
+{
+    vt_param params[16];
+    size_t num_params;
+    char collected[2];
+    size_t num_collected;
+} vt_sequence_state;
+
 typedef struct
 {
     vt_state state;
@@ -175,8 +184,7 @@ typedef struct
     } cursor;
     vt_attribute current_attribute;
     bool dirty;
-    vt_param params[16];
-    size_t num_params;
+    vt_sequence_state sequence_state;
     pid_t child_pid;
     int stdin[2];
     int stdout[2];
@@ -221,12 +229,21 @@ void _vt_print(vt *vt, char input)
 
 void _vt_clear(vt *vt)
 {
-    /* UNIMPL("sizeof(*vt) = %zu", sizeof(*vt)); */
-    static_assert(sizeof(*vt) == 224, "State added, may need clearing");
+    /* UNIMPL("sizeof(vt_sequence_state) = %zu", sizeof(vt_sequence_state)); */
+    static_assert(sizeof(vt_sequence_state) == 104, "State added, may need clearing");
     if (!vt) return;
 
-    memset(vt->params, '\0', sizeof(*vt->params) * vt->num_params);
-    vt->num_params = 0;
+    memset(&vt->sequence_state, '\0', sizeof(vt->sequence_state));
+}
+
+void _vt_collect(vt *vt, uint8_t input)
+{
+   if (!vt) return;
+
+   if (vt->sequence_state.num_collected == C_ARRAY_LEN(vt->sequence_state.collected)) {
+      UNIMPL("Collect more than %lu things", C_ARRAY_LEN(vt->sequence_state.collected));
+   }
+   vt->sequence_state.collected[vt->sequence_state.num_collected++] = input;
 }
 
 void _vt_param(vt *vt, uint8_t input)
@@ -281,7 +298,7 @@ void _vt_execute(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CONTROL_FUNCTIONS == 31, "Not all functions handled");
+    static_assert(VT_NUM_CONTROL_FUNCTIONS == 33, "Not all functions handled");
     switch (func) {
         VT_CONTROL_FUNCTIONS_LIST
         case VT_NUM_CONTROL_FUNCTIONS: break;
