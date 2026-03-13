@@ -193,6 +193,23 @@ typedef struct
    uint16_t value;
 } vt_param;
 
+typedef struct
+{
+    size_t x;
+    size_t y;
+    bool wrap_pending;
+    vt_attribute current_attribute;
+} vt_cursor;
+
+typedef struct
+{
+    vt_cell *cells;
+    vt_cursor cursor;
+    vt_cursor *saved_cursor;
+    size_t height;
+    size_t width;
+    bool dirty;
+} vt_buffer;
 
 typedef struct
 {
@@ -209,15 +226,9 @@ typedef struct
     bool raw;
     bool nonblocking;
     FILE *tty;
-    struct winsize window;
-    vt_cell *cells;
-    struct {
-        size_t x;
-        size_t y;
-        bool wrap_pending;
-    } cursor;
-    vt_attribute current_attribute;
-    bool dirty;
+    struct winsize outer_window;
+    vt_buffer primary_buffer;
+    vt_buffer *alternate_buffer;
     vt_sequence_state sequence_state;
     pid_t child_pid;
     int stdin[2];
@@ -230,35 +241,42 @@ void vt_process(vt *vt, uint8_t input);
 void _vt_print(vt *vt, char input)
 {
     if (!vt) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
 
     if (!isprint(input)) {
+        if (input == 0x7F) {
+           // depends what is mapped into GL whether this (and space 0x20 which may differ in another set but defaults to ' ') is printed or not
+           return;
+        }
         UNREACHABLE("Unexpected non printable char 0x%02X", input);
     }
 
-    if (vt->cursor.wrap_pending) {
-        fprintf(stderr, "at end of row\n");
-        if (vt->cursor.y == vt->window.ws_row) {
-            fprintf(stderr, "at end of screen\n");
-            UNIMPL("scroll up");
+    if (buffer->cursor.wrap_pending) {
+        if (buffer->cursor.y == buffer->height) {
+           fprintf(stderr, "screen wrap\n");
+            _vt_scroll(vt, VT_SCROLL_UP);
         } else {
-            vt->cursor.y ++;
-            vt->cursor.x = 1;
+           fprintf(stderr, "line wrap\n");
         }
-        vt->cursor.wrap_pending = false;
+        buffer->cursor.y ++;
+        buffer->cursor.x = 1;
+        buffer->cursor.wrap_pending = false;
     }
 
-    vt_cell *cell = &vt->cells[(vt->cursor.y - 1) * vt->window.ws_col + vt->cursor.x - 1];
+    vt_cell *cell = &buffer->cells[(buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1];
     cell->used = true;
     cell->c = input;
-    cell->attribute = vt->current_attribute;
+    cell->attribute = buffer->cursor.current_attribute;
 
-    if (vt->cursor.x == vt->window.ws_col) {
-        vt->cursor.wrap_pending = true;
+    if (buffer->cursor.x == buffer->width) {
+       fprintf(stderr, "line wrap pending\n");
+        buffer->cursor.wrap_pending = true;
     } else {
-        vt->cursor.x ++;
+        buffer->cursor.x ++;
     }
 
-    vt->dirty = true;
+    buffer->dirty = true;
 }
 
 void _vt_clear(vt *vt)
@@ -498,14 +516,24 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #undef X
 #undef S
 #undef C
+#undef K
 }
 
 void _vt_action(vt *vt, vt_action action, uint8_t input)
 {
     if (!vt) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
 
-    fprintf(stderr, "state %s, action %s, input %02X\n", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action), input);
+    /* fprintf(stderr, "state %s, action %s, input ", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action)); */
+    /* vt_fprintc(stderr, input); */
+    /* fprintf(stderr, ", cell %lux%lu", buffer->cursor.x, buffer->cursor.y); */
+    /* if (buffer == vt->alternate_buffer) fprintf(stderr, " on alternate buffer"); */
+    /* fprintf(stderr, "\n"); */
 
+#define C(name)
+#define X(name) case name:
+#define S(code) code; return;
     /* all cases must return */
     static_assert(VT_NUM_ACTIONS == 14, "Not all functions handled");
     switch (action) {
@@ -513,9 +541,10 @@ void _vt_action(vt *vt, vt_action action, uint8_t input)
         case VT_NUM_ACTIONS: break;
     }
     UNREACHABLE("Unexpected action %d", action);
-}
 #undef X
 #undef S
+#undef C
+}
 
 void _vt_transition(vt *vt, vt_state to, uint8_t input)
 {
