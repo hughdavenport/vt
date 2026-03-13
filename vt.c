@@ -109,6 +109,19 @@
    C(0x4B /* K */) X(VT_CSI_EL)            L("Erase In Line")     S(_vt_erase_in_line(vt, VT_PARAM(vt, 0, 0))) \
    C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) L("CSI Private Tilde") S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
+#define VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST \
+   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private tilde function")) \
+   C(1)    X(VT_CSI_PRIVATE_TILDE_HOME)   L("Home")   S(UNIMPL("VT_CSI_PRIVATE_TILDE_HOME")) \
+   C(2)    X(VT_CSI_PRIVATE_TILDE_INSERT) L("Insert") S(UNIMPL("VT_CSI_PRIVATE_TILDE_INSERT")) \
+   C(3)    X(VT_CSI_PRIVATE_TILDE_DELETE) L("Delete") S(UNIMPL("VT_CSI_PRIVATE_TILDE_DELETE")) \
+   C(4)    X(VT_CSI_PRIVATE_TILDE_END)    L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END"))
+
+#define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
+   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)        L("NONE")                      S(UNREACHABLE("Unexpected CSI private question function")) \
+   C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)     L("Show Cursor")               S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
+   C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)      L("Alternative Screen Buffer") S(_vt_alternate_buffer(vt, input)) \
+   C(1000) X(VT_CSI_PRIVATE_QUESTION_VT200_MOUSE) L("VT200 Mouse Reporting")     S(UNIMPL("VT_CSI_PRIVATE_VT200_MOUSE"))
+
 #define C(code)
 #define S(code)
 #define L(code)
@@ -119,6 +132,8 @@ typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
 typedef enum { VT_ESCAPE_FUNCTIONS_LIST VT_NUM_ESCAPE_FUNCTIONS } vt_escape_function;
 typedef enum { VT_CONTROL_FUNCTIONS_LIST VT_NUM_CONTROL_FUNCTIONS } vt_control_function;
 typedef enum { VT_CSI_FUNCTIONS_LIST VT_NUM_CSI_FUNCTIONS } vt_csi_function;
+typedef enum { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS } vt_csi_private_question_function;
+typedef enum { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS } vt_csi_private_tilde_function;
 #undef X
 
 #define X(name) [name] = #name, 
@@ -127,22 +142,30 @@ static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
 static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
+static const char *vt_csi_private_question_function_strings[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
+static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
 #define VT_ESCAPE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings[(func)] : "(escape_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings[(func)] : "(control_function out of bounds)")
 #define VT_CSI_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings[(func)] : "(csi_function out of bounds)")
+#define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings[(func)] : "(csi_private_question_function out of bounds)")
+#define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings[(func)] : "(csi_private_tilde_function out of bounds)")
 #undef X
 
 #define X(code)
 #undef L
 #define L(name) name, 
 static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
+static const char *vt_csi_private_question_function_strings_long[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
+static const char *vt_csi_private_tilde_function_strings_long[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 static const char *vt_escape_function_strings_long[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
 
 #define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
+#define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings_long[(func)] : "(csi_private_question_function out of bounds)")
+#define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings_long[(func)] : "(csi_private_tilde_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings_long[(func)] : "(control_function out of bounds)")
 #define VT_ESCAPE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings_long[(func)] : "(escape_function out of bounds)")
 #undef L
@@ -351,9 +374,97 @@ void _vt_escape_dispatch(vt *vt, uint8_t input)
 #undef C
 }
 
+void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
+{
+    if (!vt) return;
+
+#define S(code)
+#define C(code) case code:
+#define K(code)
+#define X(name) func = name; break;
+    vt_csi_private_tilde_function func = -1;
+    switch (param) { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown csi private tilde function param %d", param);
+#undef C
+#undef S
+#undef X
+
+    fprintf(stderr, "state %s, csi private tilde %s (%s)\n", VT_STATE_STRING(vt->state),VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func), VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func));
+    for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
+       if (vt->sequence_state.params[param].non_default) {
+          if (param) fputc(',', stderr);
+          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+       }
+    }
+    fprintf(stderr, "\n");
+
+#define C(name)
+#define X(name) case name:
+#define S(code) code; return;
+    /* all cases must return */
+    static_assert(VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS == 5, "Not all functions handled");
+    switch (func) {
+       VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST
+       case VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected csi private tilde func %d", func);
+#undef X
+#undef S
+#undef C
+}
+
+void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
+{
+    if (!vt) return;
+
+#define S(code)
+#define C(code) case code:
+#define X(name) func = name; break;
+    vt_csi_private_question_function func = -1;
+    switch (param) { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown csi private question function param %d", param);
+#undef C
+#undef S
+#undef X
+
+    fprintf(stderr, "state %s, csi private question %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
+    for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
+       if (vt->sequence_state.params[param].non_default) {
+          if (param) fputc(',', stderr);
+          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+       }
+    }
+    fprintf(stderr, "\n");
+
+    if (input != 'h' && input != 'l') UNREACHABLE("Invalid CSI terminator for private sequence"); 
+
+#define C(name)
+#define X(name) case name:
+#define S(code) code; return;
+    /* all cases must return */
+    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 4, "Not all functions handled");
+    switch (func) {
+       VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
+       case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected csi private question func %d", func);
+#undef X
+#undef S
+#undef C
+}
+
 void _vt_csi_dispatch(vt *vt, uint8_t input)
 {
     if (!vt) return;
+
+    if (vt->sequence_state.num_collected) {
+       if (vt->sequence_state.num_collected == 1 && vt->sequence_state.collected[0] == '?') {
+          _vt_csi_private_question_dispatch(vt, VT_PARAM(vt, 0, 0), input);
+          return;
+       } else {
+          UNIMPL("CSI non private collected string");
+       }
+    }
 
 #define S(code)
 #define C(code) case code:
