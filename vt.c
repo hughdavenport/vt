@@ -314,11 +314,13 @@ void _vt_action(vt *vt, vt_action action, uint8_t input)
 #undef X
 #undef S
 
-void _vt_transition(vt *vt, vt_state to)
+void _vt_transition(vt *vt, vt_state to, uint8_t input)
 {
     if (!vt) return;
 
-    fprintf(stderr, "transition from state %s to state %s\n", VT_STATE_STRING(vt->state), VT_STATE_STRING(to));
+    fprintf(stderr, "transition from state %s to state %s, input ", VT_STATE_STRING(vt->state), VT_STATE_STRING(to));
+    vt_fprintc(stderr, input);
+    fprintf(stderr, "\n");
 
     /* exit event */
     static_assert(VT_NUM_STATES == 14, "Not all states handled");
@@ -358,18 +360,18 @@ void vt_process(vt *vt, uint8_t input)
     switch (input) {
         case 0x18: case 0x1A: case 0x80: case 0x81: case 0x82: case 0x83: case 0x84: case 0x85: case 0x86: case 0x87: case 0x88: case 0x89: case 0x8A: case 0x8B: case 0x8C: case 0x8D: case 0x8E: case 0x8F: case 0x9C:
             _vt_action(vt, input == 0x9C ? VT_ACTION_IGNORE : VT_ACTION_EXECUTE, input);
-            _vt_transition(vt, VT_STATE_GROUND);
+            _vt_transition(vt, VT_STATE_GROUND, input);
             return;
 
-        case 0x1B: _vt_transition(vt, VT_STATE_ESCAPE); return;
-        case 0x90: _vt_transition(vt, VT_STATE_DCS_ENTRY); return;
+        case 0x1B: _vt_transition(vt, VT_STATE_ESCAPE, input); return;
+        case 0x90: _vt_transition(vt, VT_STATE_DCS_ENTRY, input); return;
 
         case 0x98: case 0x9E: case 0x9F:
-            _vt_transition(vt, VT_STATE_SOS_PM_APC_STRING);
+            _vt_transition(vt, VT_STATE_SOS_PM_APC_STRING, input);
             return;
 
-        case 0x9B: _vt_transition(vt, VT_STATE_CSI_ENTRY); return;
-        case 0x9D: _vt_transition(vt, VT_STATE_OSC_STRING); return;
+        case 0x9B: _vt_transition(vt, VT_STATE_CSI_ENTRY, input); return;
+        case 0x9D: _vt_transition(vt, VT_STATE_OSC_STRING, input); return;
     }
 
 #define NUM_00_0F N(0x00) N(0x01) N(0x02) N(0x03) N(0x04) N(0x05) N(0x06) N(0x07) N(0x08) N(0x09) N(0x0A) N(0x0B) N(0x0C) N(0x0D) N(0x0e) N(0x0F)
@@ -415,21 +417,21 @@ void vt_process(vt *vt, uint8_t input)
 
                 NUM_20_2F
                     _vt_action(vt, VT_ACTION_COLLECT, input);
-                    _vt_transition(vt, VT_STATE_ESCAPE_INTERMEDIATE);
+                    _vt_transition(vt, VT_STATE_ESCAPE_INTERMEDIATE, input);
                     break;
 
                 NUM_30_3F NUM_40_4F
                 case 0x51: case 0x52: case 0x53: case 0x54: case 0x55: case 0x56: case 0x57: case 0x59: case 0x5A:
                     _vt_action(vt, VT_ACTION_ESC_DISPATCH, input);
-                    _vt_transition(vt, VT_STATE_GROUND);
+                    _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
 
-                case 0x50: _vt_transition(vt, VT_STATE_DCS_ENTRY); break;
-                case 0x5D: _vt_transition(vt, VT_STATE_OSC_STRING); break;
-                case 0x5B: _vt_transition(vt, VT_STATE_CSI_ENTRY); break;
+                case 0x50: _vt_transition(vt, VT_STATE_DCS_ENTRY, input); break;
+                case 0x5D: _vt_transition(vt, VT_STATE_OSC_STRING, input); break;
+                case 0x5B: _vt_transition(vt, VT_STATE_CSI_ENTRY, input); break;
 
                 case 0x58: case 0x5E: case 0x5F:
-                    _vt_transition(vt, VT_STATE_SOS_PM_APC_STRING);
+                    _vt_transition(vt, VT_STATE_SOS_PM_APC_STRING, input);
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
@@ -450,7 +452,7 @@ void vt_process(vt *vt, uint8_t input)
                 NUM_30_3F NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_action(vt, VT_ACTION_ESC_DISPATCH, input);
-                    _vt_transition(vt, VT_STATE_GROUND);
+                    _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
@@ -468,7 +470,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_action(vt, VT_ACTION_OSC_PUT, input);
                     break;
 
-                case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
+                case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
             }
             return;
 
@@ -481,25 +483,25 @@ void vt_process(vt *vt, uint8_t input)
 
                 NUM_20_2F
                     _vt_action(vt, VT_ACTION_COLLECT, input);
-                    _vt_transition(vt, VT_STATE_CSI_INTERMEDIATE);
+                    _vt_transition(vt, VT_STATE_CSI_INTERMEDIATE, input);
                     break;
 
                 case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37: case 0x38: case 0x39: case 0x3B:
                     _vt_action(vt, VT_ACTION_PARAM, input);
-                    _vt_transition(vt, VT_STATE_CSI_PARAM);
+                    _vt_transition(vt, VT_STATE_CSI_PARAM, input);
                     break;
 
-                case 0x3A: _vt_transition(vt, VT_STATE_CSI_IGNORE); break;
+                case 0x3A: _vt_transition(vt, VT_STATE_CSI_IGNORE, input); break;
 
                 case 0x3C: case 0x3D: case 0x3E: case 0x3F:
                     _vt_action(vt, VT_ACTION_COLLECT, input);
-                    _vt_transition(vt, VT_STATE_CSI_PARAM);
+                    _vt_transition(vt, VT_STATE_CSI_PARAM, input);
                     break;
 
                 NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_action(vt, VT_ACTION_CSI_DISPATCH, input);
-                    _vt_transition(vt, VT_STATE_GROUND);
+                    _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
@@ -515,7 +517,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 NUM_20_2F
                     _vt_action(vt, VT_ACTION_COLLECT, input);
-                    _vt_transition(vt, VT_STATE_CSI_INTERMEDIATE);
+                    _vt_transition(vt, VT_STATE_CSI_INTERMEDIATE, input);
                     break;
 
                 case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37: case 0x38: case 0x39: case 0x3B:
@@ -523,13 +525,13 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x3A: case 0x3C: case 0x3D: case 0x3E: case 0x3F:
-                    _vt_transition(vt, VT_STATE_CSI_IGNORE);
+                    _vt_transition(vt, VT_STATE_CSI_IGNORE, input);
                     break;
 
                 NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_action(vt, VT_ACTION_CSI_DISPATCH, input);
-                    _vt_transition(vt, VT_STATE_GROUND);
+                    _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
@@ -550,7 +552,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
-                    _vt_transition(vt, VT_STATE_GROUND);
+                    _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
             }
             return;
@@ -567,13 +569,13 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 NUM_30_3F
-                    _vt_transition(vt, VT_STATE_CSI_IGNORE);
+                    _vt_transition(vt, VT_STATE_CSI_IGNORE, input);
                     break;
 
                 NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_action(vt, VT_ACTION_CSI_DISPATCH, input);
-                    _vt_transition(vt, VT_STATE_GROUND);
+                    _vt_transition(vt, VT_STATE_GROUND, input);
                     break;
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
@@ -587,7 +589,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_action(vt, VT_ACTION_IGNORE, input);
                     break;
 
-                case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
+                case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
             }
             return;
 
@@ -601,24 +603,24 @@ void vt_process(vt *vt, uint8_t input)
 
                 NUM_20_2F
                     _vt_action(vt, VT_ACTION_COLLECT, input);
-                    _vt_transition(vt, VT_STATE_DCS_INTERMEDIATE);
+                    _vt_transition(vt, VT_STATE_DCS_INTERMEDIATE, input);
                     break;
 
                 case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37: case 0x38: case 0x39: case 0x3B:
                     _vt_action(vt, VT_ACTION_PARAM, input);
-                    _vt_transition(vt, VT_STATE_DCS_PARAM);
+                    _vt_transition(vt, VT_STATE_DCS_PARAM, input);
                     break;
 
-                case 0x3A: _vt_transition(vt, VT_STATE_DCS_IGNORE); break;
+                case 0x3A: _vt_transition(vt, VT_STATE_DCS_IGNORE, input); break;
 
                 case 0x3C: case 0x3D: case 0x3E: case 0x3F:
                     _vt_action(vt, VT_ACTION_COLLECT, input);
-                    _vt_transition(vt, VT_STATE_DCS_PARAM);
+                    _vt_transition(vt, VT_STATE_DCS_PARAM, input);
                     break;
 
                 NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
-                    _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
+                    _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH, input);
                     break;
             }
             return;
@@ -630,7 +632,7 @@ void vt_process(vt *vt, uint8_t input)
                     _vt_action(vt, VT_ACTION_IGNORE, input);
                     break;
 
-                case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
+                case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
             }
             return;
 
@@ -644,7 +646,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 NUM_20_2F
                     _vt_action(vt, VT_ACTION_COLLECT, input);
-                    _vt_transition(vt, VT_STATE_DCS_INTERMEDIATE);
+                    _vt_transition(vt, VT_STATE_DCS_INTERMEDIATE, input);
                     break;
 
                 case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37: case 0x38: case 0x39: case 0x3B:
@@ -652,13 +654,13 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 case 0x3A: case 0x3C: case 0x3D: case 0x3E: case 0x3F:
-                    _vt_transition(vt, VT_STATE_DCS_IGNORE);
+                    _vt_transition(vt, VT_STATE_DCS_IGNORE, input);
                     break;
 
                 NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
 
-                    _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
+                    _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH, input);
                     break;
             }
             return;
@@ -676,13 +678,13 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 NUM_30_3F
-                    _vt_transition(vt, VT_STATE_DCS_IGNORE);
+                    _vt_transition(vt, VT_STATE_DCS_IGNORE, input);
                     break;
 
                 NUM_40_4F NUM_50_5F NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
 
-                    _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH);
+                    _vt_transition(vt, VT_STATE_DCS_PASSTHROUGH, input);
                     break;
             }
             return;
@@ -697,7 +699,7 @@ void vt_process(vt *vt, uint8_t input)
 
                 case 0x7F: _vt_action(vt, VT_ACTION_IGNORE, input); break;
 
-                case 0x9C: _vt_transition(vt, VT_STATE_GROUND); break;
+                case 0x9C: _vt_transition(vt, VT_STATE_GROUND, input); break;
             }
             return;
 
