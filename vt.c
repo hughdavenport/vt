@@ -811,8 +811,6 @@ void _vt_move_cursor_offset(vt *vt, int off_x, int off_y)
       }
       buffer->dirty = true;
    }
-
-   buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
 }
 
 void _vt_move_cursor(vt *vt, uint16_t x, uint16_t y)
@@ -827,7 +825,6 @@ void _vt_move_cursor(vt *vt, uint16_t x, uint16_t y)
 
    buffer->cursor.x = x ? (x <= buffer->width ? x : buffer->width) : 1;
    buffer->cursor.y = y ? (y <= buffer->height ? y : buffer->height) : 1;
-   buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
    buffer->dirty = true;
 }
 
@@ -1451,6 +1448,7 @@ void vt_process(vt *vt, uint8_t input)
                 case 0x5B: _vt_transition(vt, VT_STATE_CSI_ENTRY, input); break;
 
                 case 0x58: case 0x5E: case 0x5F:
+                    _vt_action(vt, VT_ACTION_COLLECT, input); // Not in original diagram, used to determine last char in Alt+char sequence for these three
                     _vt_transition(vt, VT_STATE_SOS_PM_APC_STRING, input);
                     break;
 
@@ -2066,25 +2064,38 @@ int vt_main_loop(vt *vt)
                     }
 
                     if (vt->emitted_key.key == VT_KEY_REQUEST) {
-                       bool match = true;
                        switch (vt->state) {
                           case VT_STATE_ESCAPE:
                              vt->emitted_key = (vt_key_modifier){.key = VT_KEY_ESCAPE};
                              break;
 
+                          case VT_STATE_DCS_ENTRY:
+                             vt->emitted_key = (vt_key_modifier){.key = VT_KEY_RAW, .raw = 'P', .modifier = VT_MODIFIER_ALT};
+                             break;
+
                           case VT_STATE_CSI_ENTRY:
                              vt->emitted_key = (vt_key_modifier){.key = VT_KEY_RAW, .raw = '[', .modifier = VT_MODIFIER_ALT};
                              break;
-                          default: match = false;
+
+                          case VT_STATE_OSC_STRING:
+                             vt->emitted_key = (vt_key_modifier){.key = VT_KEY_RAW, .raw = ']', .modifier = VT_MODIFIER_ALT};
+                             break;
+
+                          case VT_STATE_ESCAPE_INTERMEDIATE:
+                          case VT_STATE_SOS_PM_APC_STRING:
+                             if (!vt->sequence_state.num_collected) UNREACHABLE("No collected state to determine last character, state %s", VT_STATE_STRING(vt->state));
+                             if (vt->sequence_state.num_collected > 1) UNREACHABLE("Extra collected state gives ambiguity to determine last character, state %s", VT_STATE_STRING(vt->state));
+                             vt->emitted_key = (vt_key_modifier){.key = VT_KEY_RAW, .raw = *vt->sequence_state.collected, .modifier = VT_MODIFIER_ALT};
+                             break;
+
+                          default: UNREACHABLE("Unexpected read packet that didn't parse a key, state %s", VT_STATE_STRING(vt->state));
                        }
-                       if (match) {
-                          fprintf(stderr, "emitted key ");
-                          vt_fprint_key_modifier(stderr, vt->emitted_key);
-                          fprintf(stderr, "\n");
-                          memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
-                          vt->emitted_key.key = VT_KEY_REQUEST;
-                          _vt_transition(vt, VT_STATE_GROUND, '\0');
-                       }
+                       fprintf(stderr, "emitted key ");
+                       vt_fprint_key_modifier(stderr, vt->emitted_key);
+                       fprintf(stderr, "\n");
+                       memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+                       vt->emitted_key.key = VT_KEY_REQUEST;
+                       _vt_transition(vt, VT_STATE_GROUND, '\0');
                     } else {
                        _vt_transition(vt, VT_STATE_GROUND, '\0');
                        vt->emitted_key.key = VT_KEY_NONE;
