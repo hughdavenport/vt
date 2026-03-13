@@ -178,6 +178,14 @@ static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
 
 typedef enum
 {
+   VT_SCROLL_UP,
+   VT_SCROLL_DOWN,
+   VT_SCROLL_LEFT,
+   VT_SCROLL_RIGHT,
+} vt_scroll;
+
+typedef enum
+{
     VT_ATTRIBUTE_NONE
 } vt_attribute;
 
@@ -240,6 +248,561 @@ typedef struct
 
 void vt_process(vt *vt, uint8_t input);
 
+void vt_free(vt *vt)
+{
+    if (vt->primary_buffer.cells) {
+        free(vt->primary_buffer.cells);
+        vt->primary_buffer.cells = NULL;
+        vt->primary_buffer.width = 0;
+        vt->primary_buffer.height = 0;
+    }
+    if (vt->primary_buffer.saved_cursor) {
+       free(vt->primary_buffer.saved_cursor);
+       vt->primary_buffer.saved_cursor = NULL;
+    }
+    if (vt->alternate_buffer) {
+       if (vt->alternate_buffer->cells) {
+          free(vt->alternate_buffer->cells);
+          vt->alternate_buffer->cells = NULL;
+          vt->alternate_buffer->width = 0;
+          vt->alternate_buffer->height = 0;
+       }
+       if (vt->alternate_buffer->saved_cursor) {
+          free(vt->alternate_buffer->saved_cursor);
+          vt->alternate_buffer->saved_cursor = NULL;
+       }
+       free(vt->alternate_buffer);
+       vt->alternate_buffer = NULL;
+    }
+    vt->primary_buffer.cursor.x = 1;
+    vt->primary_buffer.cursor.y = 1;
+}
+
+void _vt_scroll(vt *vt, vt_scroll scroll)
+{
+    if (!vt) return;
+    if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
+
+    switch (scroll) {
+        case VT_SCROLL_UP:
+            if (buffer->cursor.y <= 1) return;
+            for (size_t row = 1; row < buffer->height; row ++) {
+                memcpy(buffer->cells + (row - 1) * buffer->width, buffer->cells + row * buffer->width, buffer->width * sizeof(*buffer->cells));
+            }
+            memset(buffer->cells + (buffer->height - 1) * buffer->width, '\0', buffer->width * sizeof(*buffer->cells));
+            buffer->cursor.y --;
+            break;
+
+        case VT_SCROLL_DOWN:
+            if (buffer->cursor.y >= buffer->height) return;
+
+            for (size_t row = buffer->height - 2; row >= 1; row --) {
+                memcpy(buffer->cells + (row + 1) * buffer->width, buffer->cells + row * buffer->width, buffer->width);
+            }
+            memset(buffer->cells, '\0', buffer->width);
+            buffer->cursor.y ++;
+            break;
+
+        case VT_SCROLL_LEFT:
+            if (buffer->cursor.x <= 1) return;
+            UNIMPL("this will need something diff than memcpy");
+            break;
+
+        case VT_SCROLL_RIGHT:
+            if (buffer->cursor.x >= buffer->width) return;
+            UNIMPL("this will need something diff than memcpy");
+            break;
+
+        default: UNREACHABLE("Unexpected scroll value %d", scroll);
+    }
+}
+
+#define GUTTER_LEFT 3
+#define GUTTER_TOP 3
+
+void vt_draw_window(vt *vt)
+{
+#define CLEAR_SCREEN do { if (fprintf(vt->tty, VT_ED, 2) < 4) { perror("fprintf(CLEAR_SCREEN)"); fprintf(stderr, "Could not write CLEAR_SCREEN fully\n"); } } while (false)
+#define GOTO(x, y) do { if (fprintf(vt->tty, VT_CUP, (int)(y), (int)(x)) < 6) { perror("fprintf(GOTO)"); fprintf(stderr, "Could not write GOTO fully\n"); } } while (false)
+
+    if (!vt) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
+
+    if (!buffer->dirty) return;
+    /* fprintf(stderr, "redraw\n"); */
+
+    CLEAR_SCREEN;
+    for (size_t x = 10; x <= buffer->width; x += 10) {
+        GOTO(GUTTER_LEFT + x, 1);
+        if (fputc("0123456789"[(x / 10) % 10], vt->tty) == EOF) {
+            perror("fputc()");
+            fprintf(stderr, "Couldn't write char for top gutter row 1\n");
+        }
+        /* fprintf(vt->tty, "%d", (x / 10) % 10); */
+    }
+    GOTO(GUTTER_LEFT + 1, GUTTER_TOP - 1);
+    for (size_t y = 1; y <= buffer->width; y ++) {
+        if (fputc("0123456789"[y % 10], vt->tty) == EOF) {
+            perror("fputc()");
+            fprintf(stderr, "Couldn't write char for top gutter row 2\n");
+        }
+        /* fprintf(vt->tty, "%d", y % 10); */
+    }
+    GOTO(GUTTER_LEFT, GUTTER_TOP);
+    if (fputc('+', vt->tty) == EOF) {
+        perror("fputc()");
+        fprintf(stderr, "Couldn't write char for gutter corner\n");
+    }
+    /* fprintf(vt->tty, "+"); */
+    for (size_t x = 1; x <= buffer->width; x ++) {
+        if (fputc('-', vt->tty) == EOF) {
+            perror("fputc()");
+            fprintf(stderr, "Couldn't write char for top gutter border\n");
+        }
+        /* fprintf(vt->tty, "-"); */
+    }
+    for (size_t y = 1; y <= buffer->height; y ++) {
+        GOTO(1, GUTTER_TOP + y);
+        int mod = y % 10;
+        if (mod) {
+            int writ = fprintf(vt->tty, " %d|", mod);
+            if (writ != 3) {
+                perror("fprintf()");
+                fprintf(stderr, "Could not write single digit left gutter\n");
+            }
+        } else {
+            int writ = fprintf(vt->tty, "%02ld|", y % 100);
+            if (writ != 3) {
+                perror("fprintf()");
+                fprintf(stderr, "Could not write double digit left gutter\n");
+            }
+        }
+    }
+
+    vt_attribute last_attribute = VT_ATTRIBUTE_NONE;
+
+    for (size_t y = 1; y <= buffer->height; y ++) {
+        for (size_t x = 1; x <= buffer->width; x ++) {
+            vt_cell *cell = &buffer->cells[(y - 1) * buffer->width + x - 1];
+            if (cell->used) {
+                if (cell->attribute != last_attribute) {
+                    UNIMPL("set attribute");
+                }
+                if (x == 1 || !buffer->cells[(y - 1) * buffer->width + x - 2].used) {
+                    GOTO(x + GUTTER_LEFT, y + GUTTER_TOP);
+                    /* fprintf(stderr, "cell '%c'\n", cell->c); */
+                }
+                if (fputc(cell->c, vt->tty) == EOF) {
+                    perror("fputc()");
+                    fprintf(stderr, "Could not write char in grid\n");
+                }
+                /* fprintf(vt->tty, "%c", cell->c); */
+            }
+        }
+    }
+
+    GOTO(buffer->cursor.x + GUTTER_LEFT, buffer->cursor.y + GUTTER_TOP);
+
+    while (true) {
+       int flush = fflush(vt->tty);
+       if (flush == EOF) {
+          int e = errno;
+           perror("fflush(tty)");
+           if (e == EAGAIN) continue;
+       }
+       break;
+    }
+    buffer->dirty = false;
+#undef GOTO
+}
+
+int vt_fprintc(FILE *stream, char input)
+{
+    int first = fprintf(stream, "%02X", input);
+    if (first == -1) return -1;
+    int second = 0;
+    switch (input) {
+       case '"': second = fprintf(stream, " '\\\"'"); break;
+       case '\\': second = fprintf(stream, " '\\\\"); break;
+       case '\a': second = fprintf(stream, " '\\a"); break;
+       case '\033': second = fprintf(stream, " '\\e'"); break;
+       case '\b': second = fprintf(stream, " '\\b"); break;
+       case '\f': second = fprintf(stream, " '\\f"); break;
+       case '\n': second = fprintf(stream, " '\\n'"); break;
+       case '\r': second = fprintf(stream, " '\\r'"); break;
+       case '\t': second = fprintf(stream, " '\\t'"); break;
+       case '\v': second = fprintf(stream, " '\\v'"); break;
+       default: if (isprint(input)) second = fprintf(stream, " '%c'", input);
+    }
+    return second == -1 ? -1 : first + second;
+}
+
+void vt_resize_window(vt *vt)
+{
+   /* FIXME resize so that the _bottom_ of the buffer is shown */
+   /* FIXME could detect if text (every row with data has it from start of row contiguously, end can be blank) */
+   // on text do one thing, on "data" try and keep the same coords
+   // perhaps try to replay semantics by reusing _vt_print _vt_execute etc
+    if (!vt) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    fprintf(stderr, "outer window size was %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
+
+    vt_cell *original = buffer->cells;
+    fprintf(stderr, "outer window size was %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
+    fprintf(stderr, "inner window size was %lux%lu\r\n", buffer->width, buffer->height);
+    struct winsize original_size = {.ws_col = buffer->width, .ws_row = buffer->height};
+    size_t orig_size = buffer->width * buffer->height;
+
+    vt->outer_window = (struct winsize){0};
+    int fds[] = { STDOUT_FILENO, STDERR_FILENO, STDIN_FILENO };
+    for (size_t i = 0; i < C_ARRAY_LEN(fds); i++) {
+        if (ioctl(fds[i], TIOCGWINSZ, &vt->outer_window) == 0 && vt->outer_window.ws_col && vt->outer_window.ws_row)
+            break;
+        vt->outer_window = (struct winsize){0};
+    }
+
+    fprintf(stderr, "outer window size %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
+
+    if (vt->outer_window.ws_col > GUTTER_LEFT && vt->outer_window.ws_row > GUTTER_TOP) {
+        buffer->width = vt->outer_window.ws_col - GUTTER_LEFT;
+        buffer->height = vt->outer_window.ws_row - GUTTER_TOP;
+    } else {
+        buffer->width = 80;
+        buffer->height = 24;
+    }
+
+    fprintf(stderr, "inner window size %lux%lu\r\n", buffer->width, buffer->height);
+
+    size_t new_size = buffer->width * buffer->height;
+    if (new_size == orig_size) return;
+
+    buffer->cells = calloc(buffer->width * buffer->height, sizeof(*buffer->cells));
+    if (!buffer->cells) {
+        if (original) free(original);
+        return;
+    }
+
+    if (original) {
+       /* FIXME store and retrieve points where a \r\n was done, then replay that */
+       size_t dst_row = 0;
+       size_t dst_col = 0;
+       vt_cell *src_cursor = &original[(buffer->cursor.y - 1) * original_size.ws_col + buffer->cursor.x - 1];
+       vt_cell *dst_cursor = NULL;
+       for (size_t src_row = 0; src_row < original_size.ws_row; src_row ++) {
+          for (size_t src_col = 0; src_col < original_size.ws_col; src_col ++) {
+             if (dst_col == buffer->width) {
+                /* fprintf(stderr, "line wrap\n"); */
+                dst_col = 0;
+                dst_row ++;
+             }
+             if (dst_row == buffer->height) {
+                /* fprintf(stderr, "screen wrap, data lost\n"); */
+                vt_cell *src_cell = &original[src_row * original_size.ws_col + src_col];
+                vt_cell *dst_cell = &buffer->cells[dst_row * buffer->width + dst_col];
+
+                if (src_cell == src_cursor) dst_cursor = dst_cell;
+
+                bool used = false;
+                for (vt_cell *cell = &original[src_row * original_size.ws_col + src_col];
+                      cell < original + orig_size; cell ++) {
+                   if (cell->used) {
+                      used = true;
+                      break;
+                   }
+                }
+
+                if (used) {
+                   buffer->dirty = true;
+                   vt_draw_window(vt);
+                   _vt_scroll(vt, VT_SCROLL_UP);
+                   buffer->dirty = true;
+                   vt_draw_window(vt);
+                   dst_row --;
+                } else continue;
+
+             }
+
+             vt_cell *src_cell = &original[src_row * original_size.ws_col + src_col];
+             vt_cell *dst_cell = &buffer->cells[dst_row * buffer->width + dst_col];
+
+             if (src_cell == src_cursor) dst_cursor = dst_cell;
+
+             if (src_cell->used) {
+                /* fprintf(stderr, "copying from %ldx%ld to %ldx%ld: ", src_col + 1, src_row + 1, dst_col + 1, dst_row + 1); */
+                /* vt_fprintc(stderr, src_cell->c); */
+                /* fprintf(stderr, "\n"); */
+                memcpy(dst_cell, src_cell, sizeof(*dst_cell));
+
+                if (src_cell->cr) {
+                   fprintf(stderr, "CR\n");
+                   dst_col = 0;
+                } else if (src_cell->lf) {
+                   for (size_t off = 1; src_col + off < original_size.ws_col; off ++) {
+                      if (src_cell + off == src_cursor) dst_cursor = dst_cell + off;
+                      if ((src_cell + off)->used) {
+                         fprintf(stderr, "copying stuff after \\n from %ldx%ld to %ldx%ld: ",
+                               src_col + off + 1, src_row + 1,
+                               (dst_col + off) % buffer->width + 1,
+                               (dst_col + off) / buffer->width + dst_row + 1);
+                         vt_fprintc(stderr, (src_cell + off)->c);
+                         fprintf(stderr, "\n");
+                         memcpy(dst_cell + off, src_cell + off, sizeof(*dst_cell));
+                      }
+                   }
+                   fprintf(stderr, "LF\n");
+                   dst_row ++;
+                   if (true /* FIXME add option for \n -> \r\n semantics */) {
+                      dst_col = 0;
+                   }
+                   break; // Go to next line
+                } else {
+                   dst_col ++;
+                }
+             } else {
+                dst_col ++;
+             }
+          }
+       }
+        /* size_t min_size = orig_size > new_size ? new_size : orig_size; */
+        /* memcpy(vt->cells, original, min_size * sizeof(*vt->cells)); */
+        free(original);
+
+        /* size_t cursor = (vt->cursor.y - 1) * original_size.ws_col + vt->cursor.x - 1; */
+        size_t cursor = dst_cursor ? dst_cursor - buffer->cells : 0;
+        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n", 
+              buffer->cursor.x, buffer->cursor.y,
+              cursor % buffer->width + 1, cursor / buffer->width + 1);
+        if (cursor >= new_size) cursor = new_size - 1;
+
+        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n", 
+              buffer->cursor.x, buffer->cursor.y,
+              cursor % buffer->width + 1, cursor / buffer->width + 1);
+        buffer->cursor.x = cursor % buffer->width + 1;
+        buffer->cursor.y = cursor / buffer->width + 1;
+
+        if (buffer->cursor.wrap_pending) {
+            if (buffer->cursor.x != buffer->width) {
+                buffer->cursor.x ++;
+              fprintf(stderr, "moving cursor to %ldx%ld as was marked as wrap pending\n", buffer->cursor.x, buffer->cursor.y);
+            }
+        }
+        buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
+        if (buffer->cursor.wrap_pending) fprintf(stderr, "wrap pending\n");
+    }
+
+    if (!(buffer->cursor.x && buffer->cursor.y)) {
+        buffer->cursor.x = 1;
+        buffer->cursor.y = 1;
+    }
+
+    buffer->dirty = true;
+    vt_draw_window(vt);
+
+    /* FIXME resize the primary buffer if on alternate buffer */
+    // a way to do this could be to do the resize when turning off alt buffer, but need a way to know the size of the buffer...
+    // also whether primary buffer has scrollback to care about?
+}
+
+void _vt_bell(vt *vt)
+{
+   if (!vt) return;
+
+   // Send to controlling tty (may beep, may flash)
+   fputc('\a', vt->tty);
+
+   /* FIXME flash our virtual terminal */
+   // needs extra param to draw_window to invert, which would apply ontop of any SGR mods
+   // then draw inverted, sleep a tiny bit, draw back to normal
+   //vt_draw_window(vt);
+}
+
+void _vt_backspace(vt *vt)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (buffer->cursor.x > 1) {
+      buffer->cursor.x --;
+      buffer->dirty = true;
+   }
+}
+
+void _vt_line_feed(vt *vt)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   if (buffer->cursor.x > 1 || buffer->cursor.y > 1) buffer->cells[(buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1 - (buffer->cursor.wrap_pending ? 0 : 1)].lf = true;
+   if (buffer->cursor.y == buffer->height) _vt_scroll(vt, VT_SCROLL_UP);
+   buffer->cursor.y ++;
+   if (true /* FIXME add option for \n -> \r\n semantics */) buffer->cursor.x = 1;
+   buffer->dirty = true;
+}
+
+void _vt_carriage_return(vt *vt)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   if (buffer->cursor.x > 1 || buffer->cursor.y > 1) buffer->cells[(buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1 - (buffer->cursor.wrap_pending ? 0 : 1)].cr = true;
+   buffer->cursor.x = 1;
+   buffer->dirty = true;
+}
+
+void _vt_save_cursor(vt *vt)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   if (!buffer->saved_cursor) {
+      buffer->saved_cursor = calloc(1, sizeof(*buffer->saved_cursor));
+      if (!buffer->saved_cursor) return;
+   }
+   *buffer->saved_cursor = buffer->cursor;
+}
+
+void _vt_move_cursor_offset(vt *vt, int off_x, int off_y)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   if (off_y) {
+      if (off_y < 0 && (unsigned)-off_y >= buffer->cursor.y) {
+         buffer->cursor.y = 1;
+      } else if (off_y > 0 && buffer->cursor.y + off_y > buffer->height) {
+         buffer->cursor.y = buffer->height;
+      } else {
+         buffer->cursor.y = buffer->cursor.y + off_y;
+      }
+      buffer->dirty = true;
+   }
+   if (off_x) {
+      if (off_x < 0 && (unsigned)-off_x >= buffer->cursor.x) {
+         buffer->cursor.x = 1;
+      } else if (off_x > 0 && buffer->cursor.x + off_x > buffer->width) {
+         buffer->cursor.x = buffer->width;
+      } else {
+         buffer->cursor.x = buffer->cursor.x + off_x;
+      }
+      buffer->dirty = true;
+   }
+
+   buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
+}
+
+void _vt_move_cursor(vt *vt, uint16_t x, uint16_t y)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   if (!x) x = 1;
+   if (!y) y = 1;
+
+   buffer->cursor.x = x ? (x <= buffer->width ? x : buffer->width) : 1;
+   buffer->cursor.y = y ? (y <= buffer->height ? y : buffer->height) : 1;
+   buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
+   buffer->dirty = true;
+}
+
+void _vt_alternate_buffer(vt *vt, uint8_t input)
+{
+   /* UNIMPL("sizeof(vt_buffer) = %zu", sizeof(vt_buffer)); */
+   static_assert(sizeof(vt_buffer) == 64, "State added, may need freeing");
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+
+   switch (input) {
+      case 'h':
+         if (vt->alternate_buffer) return;
+         vt->alternate_buffer = calloc(1, sizeof(*vt->alternate_buffer));
+         if (!vt->alternate_buffer) return;
+         memcpy(vt->alternate_buffer, &vt->primary_buffer, sizeof(*vt->alternate_buffer));
+         vt->alternate_buffer->cells = calloc(vt->alternate_buffer->width * vt->alternate_buffer->height, sizeof(*vt->alternate_buffer->cells));
+         if (!vt->alternate_buffer->cells) {
+            free(vt->alternate_buffer);
+            vt->alternate_buffer = NULL;
+            return;
+         }
+
+         vt->alternate_buffer->saved_cursor = NULL;
+         vt->alternate_buffer->dirty = true;
+         break;
+
+      case 'l':
+         if (!vt->alternate_buffer) return;
+         if (vt->alternate_buffer->cells) {
+            free(vt->alternate_buffer->cells);
+            vt->alternate_buffer->cells = NULL;
+         }
+         if (vt->alternate_buffer->saved_cursor) {
+            free(vt->alternate_buffer->saved_cursor);
+            vt->alternate_buffer->saved_cursor = NULL;
+         }
+         free(vt->alternate_buffer);
+         vt->alternate_buffer = NULL;
+         vt->primary_buffer.dirty = true;
+         break;
+
+      default: UNREACHABLE("Unexpected CSI terminator for alternative buffer");
+   }
+}
+
+void _vt_erase_in_line(vt *vt, uint16_t param)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   switch (param) {
+      case 0:
+              memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1, '\0', sizeof(*buffer->cells) * (buffer->width - buffer->cursor.x + 1));
+                 break;
+      case 1:
+              memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width, '\0', sizeof(*buffer->cells) * (buffer->cursor.x));
+                 break;
+      case 2:
+              memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width, '\0', sizeof(*buffer->cells) * buffer->width);
+                 break;
+      default: UNREACHABLE("Unexpected param to ED: %d", param);
+   }
+   buffer->dirty = true;
+}
+
+void _vt_erase_in_page(vt *vt, uint16_t param)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   switch (param) {
+      case 0:
+              memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1, '\0', sizeof(*buffer->cells) * ((buffer->width * buffer->height) - ((buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1)));
+                 break;
+      case 1:
+              memset(buffer->cells, '\0', sizeof(*buffer->cells) * (((buffer->cursor.y - 1) * buffer->width + buffer->cursor.x)));
+                 break;
+      case 2:
+              memset(buffer->cells, '\0', sizeof(*buffer->cells) * (buffer->width * buffer->height));
+                 break;
+      default: UNREACHABLE("Unexpected param to ED: %d", param);
+   }
+   buffer->dirty = true;
+}
 
 void _vt_print(vt *vt, char input)
 {
@@ -1002,126 +1565,12 @@ void vt_restore_io(vt *vt)
             }
         }
     }
-}
 
-void vt_draw_window(vt *vt)
-{
-#define VT_ED "\033[%dJ"
-#define VT_CUP "\033[%d;%dH"
-
-#define CLEAR_SCREEN fprintf(vt->tty, VT_ED, 2)
-#define GOTO(x, y) fprintf(vt->tty, VT_CUP, (int)(y), (int)(x))
-
-    if (!vt) return;
-
-    if (!vt->dirty) return;
-
-    CLEAR_SCREEN;
-    for (int y = 10; y <= vt->window.ws_col; y += 10) {
-        GOTO(3 + y, 1);
-        fprintf(vt->tty, "%d", (y / 10) % 10);
-    }
-    GOTO(4, 2);
-    for (int y = 1; y <= vt->window.ws_col; y ++) {
-        fprintf(vt->tty, "%d", y % 10);
-    }
-    GOTO(3, 3);
-    fprintf(vt->tty, "+");
-    for (int y = 1; y <= vt->window.ws_col; y ++) {
-        fprintf(vt->tty, "-");
-    }
-    for (int x = 1; x <= vt->window.ws_row; x ++) {
-        GOTO(1, 3 + x);
-        int mod = x % 10;
-        if (mod) {
-            fprintf(vt->tty, " %d|", mod);
-        } else {
-            fprintf(vt->tty, "%02d|", x % 100);
-        }
-    }
-
-    vt_attribute last_attribute = VT_ATTRIBUTE_NONE;
-
-    for (int y = 1; y <= vt->window.ws_row; y ++) {
-        for (int x = 1; x <= vt->window.ws_col; x ++) {
-            vt_cell *cell = &vt->cells[(y - 1) * vt->window.ws_col + x - 1];
-            if (cell->used) {
-                if (cell->attribute != last_attribute) {
-                    UNIMPL("set attribute");
-                }
-                if (x == 1 || !vt->cells[(y - 1) * vt->window.ws_col + x - 2].used) {
-                    GOTO(x + 3, y + 3);
-                }
-                fprintf(vt->tty, "%c", cell->c);
-            }
-        }
-    }
-
-    GOTO(vt->cursor.x + 3, vt->cursor.y + 3);
-
-    fflush(vt->tty);
-    vt->dirty = false;
-}
-
-void vt_resize_window(vt *vt)
-{
-    vt_cell *original = vt->cells;
-    struct winsize original_size = vt->window;
-    size_t orig_size = original_size.ws_col * original_size.ws_row;
-
-    struct winsize w = {0};
-    int fds[] = { STDOUT_FILENO, STDERR_FILENO, STDIN_FILENO };
-    for (size_t i = 0; i < C_ARRAY_LEN(fds); i++) {
-        if (ioctl(fds[i], TIOCGWINSZ, &w) == 0 && w.ws_col && w.ws_row)
-            break;
-        w = (struct winsize){0};
-    }
-
-    fprintf(stderr, "outer window size %ux%u\r\n", w.ws_col, w.ws_row);
-
-    if (w.ws_col > 3 && w.ws_row > 3) {
-        vt->window.ws_col = w.ws_col - 3;
-        vt->window.ws_row = w.ws_row - 3;
-    } else {
-        vt->window = (struct winsize){.ws_col = 80, .ws_row = 24};
-    }
-
-    fprintf(stderr, "inner window size %ux%u\r\n", vt->window.ws_col, vt->window.ws_row);
-
-    size_t new_size = vt->window.ws_col * vt->window.ws_row;
-    if (new_size == orig_size) return;
-
-    vt->cells = calloc(vt->window.ws_col * vt->window.ws_row, sizeof(*vt->cells));
-    if (!vt->cells) {
-        if (original) free(original);
-        return;
-    }
-
-    if (original) {
-        size_t min_size = orig_size > new_size ? new_size : orig_size;
-        memcpy(vt->cells, original, min_size * sizeof(*vt->cells));
-        free(original);
-
-        size_t cursor = (vt->cursor.y - 1) * original_size.ws_col + vt->cursor.x - 1;
-
-        vt->cursor.x = cursor % vt->window.ws_col + 1;
-        vt->cursor.y = cursor / vt->window.ws_col + 1;
-
-        if (vt->cursor.wrap_pending) {
-            if (vt->cursor.x != vt->window.ws_col) {
-                vt->cursor.x ++;
-            }
-        }
-        vt->cursor.wrap_pending = vt->cursor.x == vt->window.ws_col;
-    }
-
-    if (!(vt->cursor.x && vt->cursor.y)) {
-        vt->cursor.x = 1;
-        vt->cursor.y = 1;
-    }
-
-    vt->dirty = true;
-    vt_draw_window(vt);
+#define GOTO(x, y) fprintf(stdout, VT_CUP, (int)(y), (int)(x))
+    GOTO(vt->outer_window.ws_col, vt->outer_window.ws_row);
+    printf("\n");
+    fflush(stdout);
+#undef GOTO
 }
 
 #define _signalfd(...) __signalfd(-1, ##__VA_ARGS__, NULL)
