@@ -42,7 +42,7 @@
 #define VT_ACTIONS_LIST \
     X(VT_ACTION_IGNORE)       S((void)NULL) \
     X(VT_ACTION_PRINT)        S(_vt_print(vt, input)) \
-    X(VT_ACTION_EXECUTE)      S(_vt_execute(vt, _vt_control_function(input))) \
+    X(VT_ACTION_EXECUTE)      S(_vt_execute(vt, input)) \
     X(VT_ACTION_CLEAR)        S(_vt_clear(vt)) \
     X(VT_ACTION_COLLECT)      S(UNIMPL("VT_ACTION_COLLECT")) \
     X(VT_ACTION_PARAM)        S(_vt_param(vt, input)) \
@@ -56,37 +56,39 @@
     X(VT_ACTION_OSC_END)      S(UNIMPL("VT_ACTION_OSC_END"))
 
 #define VT_CONTROL_FUNCTIONS_LIST \
-   C(0x00) X(VT_CONTROL_NULL)  S(UNIMPL("VT_CONTROL_NULL")) \
-   C(0x05) X(VT_CONTROL_ENQ)   S(UNIMPL("VT_CONTROL_ENQ")) \
-   C(0x07) X(VT_CONTROL_BEL)   S(UNIMPL("VT_CONTROL_BEL")) \
-   C(0x08) X(VT_CONTROL_BS)    S(UNIMPL("VT_CONTROL_BS")) \
-   C(0x09) X(VT_CONTROL_HT)    S(UNIMPL("VT_CONTROL_HT")) \
-   C(0x0A) X(VT_CONTROL_LF)    S(UNIMPL("VT_CONTROL_LF")) \
-   C(0x0B) X(VT_CONTROL_VT)    S(UNIMPL("VT_CONTROL_VT")) \
-   C(0x0C) X(VT_CONTROL_FF)    S(UNIMPL("VT_CONTROL_FF")) \
-   C(0x0D) X(VT_CONTROL_CR)    S(UNIMPL("VT_CONTROL_CR")) \
-   C(0x0E) X(VT_CONTROL_SO)    S(UNIMPL("VT_CONTROL_SO")) \
-   C(0x0F) X(VT_CONTROL_SI)    S(UNIMPL("VT_CONTROL_SI")) \
-   C(0x11) X(VT_CONTROL_DC1)   S(UNIMPL("VT_CONTROL_DC1")) \
-   C(0x13) X(VT_CONTROL_DC3)   S(UNIMPL("VT_CONTROL_DC3")) \
-   C(0x18) X(VT_CONTROL_CAN)   S(UNIMPL("VT_CONTROL_CAN")) \
-   C(0x1A) X(VT_CONTROL_SUB)   S(UNIMPL("VT_CONTROL_SUB")) \
-   C(0x1B) X(VT_CONTROL_ESC)   S(UNIMPL("VT_CONTROL_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x7F) X(VT_CONTROL_DEL)   S(UNIMPL("VT_CONTROL_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
-   C(0x84) X(VT_CONTROL_IND)   S(UNIMPL("VT_CONTROL_IND")) \
-   C(0x85) X(VT_CONTROL_NEL)   S(UNIMPL("VT_CONTROL_NEL")) \
-   C(0x88) X(VT_CONTROL_HTS)   S(UNIMPL("VT_CONTROL_HTS")) \
-   C(0x8D) X(VT_CONTROL_RI)    S(UNIMPL("VT_CONTROL_RI")) \
-   C(0x8E) X(VT_CONTROL_SS2)   S(UNIMPL("VT_CONTROL_SS2")) \
-   C(0x8F) X(VT_CONTROL_SS3)   S(UNIMPL("VT_CONTROL_SS3")) \
-   C(0x90) X(VT_CONTROL_DCS)   S(UNIMPL("VT_CONTROL_DCS")) \
-   C(0x98) X(VT_CONTROL_SOS)   S(UNIMPL("VT_CONTROL_SOS")) \
-   C(0x9A) X(VT_CONTROL_DECID) S(UNIMPL("VT_CONTROL_DECID")) \
-   C(0x9B) X(VT_CONTROL_CSI)   S(UNIMPL("VT_CONTROL_CSI")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x9C) X(VT_CONTROL_ST)    S(UNIMPL("VT_CONTROL_ST")) \
-   C(0x9D) X(VT_CONTROL_OSC)   S(UNIMPL("VT_CONTROL_OSC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x9E) X(VT_CONTROL_PM)    S(UNIMPL("VT_CONTROL_PM")) \
-   C(0x9F) X(VT_CONTROL_APC)   S(UNIMPL("VT_CONTROL_APC"))
+   C(0x00) X(VT_CONTROL_NULL)  L("Null") S(UNIMPL("VT_CONTROL_NULL")) \
+   C(0x03) X(VT_CONTROL_ETX)   L("End of Text") S(kill(getpid(), SIGINT)) \
+   C(0x05) X(VT_CONTROL_ENQ)   L("Enquire") S(UNIMPL("VT_CONTROL_ENQ")) \
+   C(0x07) X(VT_CONTROL_BEL)   L("Bell") S(_vt_bell(vt)) \
+   C(0x08) X(VT_CONTROL_BS)    L("Backspace") S(_vt_backspace(vt)) \
+   C(0x09) X(VT_CONTROL_HT)    L("Horizontal Tab") S(UNIMPL("VT_CONTROL_HT")) \
+   C(0x0A) X(VT_CONTROL_LF)    L("Line Feed") S(_vt_line_feed(vt)) \
+   C(0x0B) X(VT_CONTROL_VT)    L("Vertical Tab") S(UNIMPL("VT_CONTROL_VT")) \
+   C(0x0C) X(VT_CONTROL_FF)    L("Form Feed") S(UNIMPL("VT_CONTROL_FF")) \
+   C(0x0D) X(VT_CONTROL_CR)    L("Carriage Return") S(_vt_carriage_return(vt)) \
+   C(0x0E) X(VT_CONTROL_SO)    L("Shift Out") S(UNIMPL("VT_CONTROL_SO")) \
+   C(0x0F) X(VT_CONTROL_SI)    L("Shift Out") S(UNIMPL("VT_CONTROL_SI")) \
+   C(0x11) X(VT_CONTROL_DC1)   L("Device Control 1 (XON)") S(UNIMPL("VT_CONTROL_DC1")) \
+   C(0x13) X(VT_CONTROL_DC3)   L("Device Control 3 (XOFF)") S(UNIMPL("VT_CONTROL_DC3")) \
+   C(0x18) X(VT_CONTROL_CAN)   L("Cancel") S(UNIMPL("VT_CONTROL_CAN")) \
+   C(0x1A) X(VT_CONTROL_SUB)   L("Substitute") S(UNIMPL("VT_CONTROL_SUB")) \
+   C(0x1B) X(VT_CONTROL_ESC)   L("Escape") S(UNIMPL("VT_CONTROL_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x1C) X(VT_CONTROL_GS)    L("Group Separator") S(UNIMPL("VT_CONTROL_GS")) \
+   C(0x7F) X(VT_CONTROL_DEL)   L("Delete") S(UNIMPL("VT_CONTROL_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
+   C(0x84) X(VT_CONTROL_IND)   L("Index") S(UNIMPL("VT_CONTROL_IND")) \
+   C(0x85) X(VT_CONTROL_NEL)   L("Next Line") S(UNIMPL("VT_CONTROL_NEL")) \
+   C(0x88) X(VT_CONTROL_HTS)   L("Horizontal Tab Set") S(UNIMPL("VT_CONTROL_HTS")) \
+   C(0x8D) X(VT_CONTROL_RI)    L("Reverse Index") S(UNIMPL("VT_CONTROL_RI")) \
+   C(0x8E) X(VT_CONTROL_SS2)   L("Single shift 2") S(vt->sequence_state.shift = 2; vt->sequence_state.shift_lock = false) \
+   C(0x8F) X(VT_CONTROL_SS3)   L("Single shift 3") S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
+   C(0x90) X(VT_CONTROL_DCS)   L("Device Control String") S(UNIMPL("VT_CONTROL_DCS")) /* UNREACHABLE, mapping in "anywhere" transitions */ \
+   C(0x98) X(VT_CONTROL_SOS)   L("Start Of String") S(UNIMPL("VT_CONTROL_SOS")) \
+   C(0x9A) X(VT_CONTROL_DECID) L("DEC Private Identification") S(UNIMPL("VT_CONTROL_DECID")) \
+   C(0x9B) X(VT_CONTROL_CSI)   L("Control Sequence Introducer") S(UNIMPL("VT_CONTROL_CSI")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x9C) X(VT_CONTROL_ST)    L("String Terminator") S(UNIMPL("VT_CONTROL_ST")) \
+   C(0x9D) X(VT_CONTROL_OSC)   L("Operating System Command") S(UNIMPL("VT_CONTROL_OSC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x9E) X(VT_CONTROL_PM)    L("Privacy Message") S(UNIMPL("VT_CONTROL_PM")) \
+   C(0x9F) X(VT_CONTROL_APC)   L("Application Program Command") S(UNIMPL("VT_CONTROL_APC"))
 
 #define VT_PARAM(vt, idx, def) ((idx) < (vt)->num_params && (vt)->params[(idx)].non_default ? (vt)->params[(idx)].value : (def))
 
@@ -122,17 +124,21 @@ static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 
 #define C(code) case code:
 #define X(name) return name;
-static vt_control_function _vt_control_function(uint8_t input)
-{
-    switch (input) { VT_CONTROL_FUNCTIONS_LIST }
-    UNREACHABLE("Unexpected control function input 0x%02X", input);
-}
 
 static vt_csi_function _vt_csi_function(uint8_t input)
 {
     switch (input) { VT_CSI_FUNCTIONS_LIST }
     UNREACHABLE("Unexpected csi function input 0x%02X", input);
 }
+#undef X
+#undef C
+#define X(code)
+#undef L
+#define L(name) name, 
+static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
+
+#define VT_CONTROL_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings_long[(func)] : "(control_function out of bounds)")
+#undef L
 #undef X
 #undef C
 
@@ -261,12 +267,26 @@ void _vt_param(vt *vt, uint8_t input)
 
 #define X(name) case name:
 #define S(code) code; return;
-void _vt_execute(vt *vt, vt_control_function func)
+void _vt_execute(vt *vt, uint8_t input)
 {
     if (!vt) return;
 
-    fprintf(stderr, "state %s, execute %s\n", VT_STATE_STRING(vt->state), VT_CONTROL_FUNCTION_STRING(func));
+#define S(code)
+#define C(code) case code:
 
+#define X(name) func = name; break;
+    vt_control_function func = -1;
+    switch (input) { VT_CONTROL_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown control function input 0x%02X '%c'", input, input);
+#undef S
+#undef C
+#undef X
+
+    fprintf(stderr, "state %s, execute %s (%s)\n", VT_STATE_STRING(vt->state), VT_CONTROL_FUNCTION_STRING(func), VT_CONTROL_FUNCTION_STRING_LONG(func));
+
+#define C(code)
+#define X(name) case name:
+#define S(code) code; return;
     /* all cases must return */
     static_assert(VT_NUM_CONTROL_FUNCTIONS == 31, "Not all functions handled");
     switch (func) {
@@ -274,6 +294,9 @@ void _vt_execute(vt *vt, vt_control_function func)
         case VT_NUM_CONTROL_FUNCTIONS: break;
     }
     UNREACHABLE("Unexpected func %d", func);
+#undef X
+#undef S
+#undef C
 }
 
 void _vt_csi_dispatch(vt *vt, vt_csi_function func)
