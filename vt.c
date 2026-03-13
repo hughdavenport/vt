@@ -19,8 +19,8 @@
 #include <termios.h>
 #include <unistd.h>
 
-#define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
-#define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
+#define UNIMPL(fmt, ...) do { fprintf(stdout, "\n%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (true) exit(1); else return; } while (false)
+#define UNREACHABLE(fmt, ...) do { fprintf(stdout, "\n%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); exit(1); } while (false)
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
 
