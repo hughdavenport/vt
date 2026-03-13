@@ -46,7 +46,7 @@
     X(VT_ACTION_CLEAR)        S(_vt_clear(vt)) \
     X(VT_ACTION_COLLECT)      S(_vt_collect(vt, input)) \
     X(VT_ACTION_PARAM)        S(_vt_param(vt, input)) \
-    X(VT_ACTION_ESC_DISPATCH) S(UNIMPL("VT_ACTION_ESC_DISPATCH")) \
+    X(VT_ACTION_ESC_DISPATCH) S(_vt_escape_dispatch(vt, input)) \
     X(VT_ACTION_CSI_DISPATCH) S(_vt_csi_dispatch(vt, input)) \
     X(VT_ACTION_HOOK)         S(UNIMPL("VT_ACTION_HOOK")) \
     X(VT_ACTION_PUT)          S(UNIMPL("VT_ACTION_PUT")) \
@@ -54,6 +54,12 @@
     X(VT_ACTION_OSC_START)    S(UNIMPL("VT_ACTION_OSC_START")) \
     X(VT_ACTION_OSC_PUT)      S(UNIMPL("VT_ACTION_OSC_PUT")) \
     X(VT_ACTION_OSC_END)      S(UNIMPL("VT_ACTION_OSC_END"))
+
+#define VT_ESCAPE_FUNCTIONS_LIST \
+   C(0x00)         X(VT_ESCAPE_NONE)  L("NONE")                   S(UNREACHABLE("Unexpected Escape function")) \
+   C(0x37 /* 7 */) X(VT_ESCAPE_DECSC) L("Save Cursor")            S(_vt_save_cursor(vt)) \
+   C(0x4F /* O */) X(VT_ESCAPE_SS3)   L("Single Shift 3")         S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
+   C(0x63 /* c */) X(VT_ESCAPE_RIS)   L("Reset to Initial State") S(vt_free(vt); vt_resize_window(vt))
 
 #define VT_CONTROL_FUNCTIONS_LIST \
    C(0x00) X(VT_CONTROL_NULL)  L("Null") S(UNIMPL("VT_CONTROL_NULL")) \
@@ -110,6 +116,7 @@
 #define X(name) name, 
 typedef enum { VT_STATES_LIST VT_NUM_STATES } vt_state;
 typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
+typedef enum { VT_ESCAPE_FUNCTIONS_LIST VT_NUM_ESCAPE_FUNCTIONS } vt_escape_function;
 typedef enum { VT_CONTROL_FUNCTIONS_LIST VT_NUM_CONTROL_FUNCTIONS } vt_control_function;
 typedef enum { VT_CSI_FUNCTIONS_LIST VT_NUM_CSI_FUNCTIONS } vt_csi_function;
 #undef X
@@ -117,11 +124,13 @@ typedef enum { VT_CSI_FUNCTIONS_LIST VT_NUM_CSI_FUNCTIONS } vt_csi_function;
 #define X(name) [name] = #name, 
 static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
+static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
 static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
+#define VT_ESCAPE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings[(func)] : "(escape_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings[(func)] : "(control_function out of bounds)")
 #define VT_CSI_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings[(func)] : "(csi_function out of bounds)")
 #undef X
@@ -130,10 +139,12 @@ static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 #undef L
 #define L(name) name, 
 static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
+static const char *vt_escape_function_strings_long[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
 
 #define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings_long[(func)] : "(control_function out of bounds)")
+#define VT_ESCAPE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings_long[(func)] : "(escape_function out of bounds)")
 #undef L
 #undef X
 #define L(name)
@@ -302,6 +313,37 @@ void _vt_execute(vt *vt, uint8_t input)
     switch (func) {
         VT_CONTROL_FUNCTIONS_LIST
         case VT_NUM_CONTROL_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected func %d", func);
+#undef X
+#undef S
+#undef C
+}
+
+void _vt_escape_dispatch(vt *vt, uint8_t input)
+{
+    if (!vt) return;
+
+#define S(code)
+#define C(code) case code:
+#define X(name) func = name; break;
+    vt_escape_function func = -1;
+    switch (input) { VT_ESCAPE_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown escape function input 0x%02X '%c'", input, input);
+#undef C
+#undef S
+#undef X
+
+    fprintf(stderr, "state %s, escape function %s (%s)\n", VT_STATE_STRING(vt->state), VT_ESCAPE_FUNCTION_STRING(func), VT_ESCAPE_FUNCTION_STRING_LONG(func));
+
+#define C(name)
+#define X(name) case name:
+#define S(code) code; return;
+    /* all cases must return */
+    static_assert(VT_NUM_ESCAPE_FUNCTIONS == 4, "Not all functions handled");
+    switch (func) {
+        VT_ESCAPE_FUNCTIONS_LIST
+        case VT_NUM_ESCAPE_FUNCTIONS: break;
     }
     UNREACHABLE("Unexpected func %d", func);
 #undef X
