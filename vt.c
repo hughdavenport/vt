@@ -21,6 +21,8 @@
 #define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
 #define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); abort(); } while (false)
 
+#define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
+
 #define VT_STATES_LIST \
     X(VT_STATE_GROUND) \
     X(VT_STATE_ESCAPE) \
@@ -234,7 +236,7 @@ void _vt_param(vt *vt, uint8_t input)
 
    vt_param *param = NULL;
    if (isdigit(input)) {
-      if (vt->num_params != sizeof(vt->params)/sizeof(*vt->params)) {
+      if (vt->num_params != C_ARRAY_LEN(vt->params)) {
           if (vt->num_params) {
              param = &vt->params[vt->num_params - 1];
              param->value *= 10;
@@ -245,7 +247,7 @@ void _vt_param(vt *vt, uint8_t input)
           }
       }
       if (param) param->non_default = true;
-   } else if (vt->num_params != sizeof(vt->params)/sizeof(*vt->params)) {
+   } else if (vt->num_params != C_ARRAY_LEN(vt->params)) {
       param = &vt->params[vt->num_params ++];
       param->non_default = false;
    }
@@ -836,7 +838,7 @@ void vt_resize_window(vt *vt)
 
     struct winsize w = {0};
     int fds[] = { STDOUT_FILENO, STDERR_FILENO, STDIN_FILENO };
-    for (size_t i = 0; i < sizeof(fds)/sizeof(*fds); i++) {
+    for (size_t i = 0; i < C_ARRAY_LEN(fds); i++) {
         if (ioctl(fds[i], TIOCGWINSZ, &w) == 0 && w.ws_col && w.ws_row)
             break;
         w = (struct winsize){0};
