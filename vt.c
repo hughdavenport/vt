@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <pty.h>
 #include <signal.h>
 #include <stdarg.h>
 #include <stdbool.h>
@@ -223,6 +224,7 @@ typedef struct
 {
     vt_state state;
     struct termios original_ios;
+    struct termios child_ios;
     bool raw;
     bool nonblocking;
     FILE *tty;
@@ -231,8 +233,9 @@ typedef struct
     vt_buffer *alternate_buffer;
     vt_sequence_state sequence_state;
     pid_t child_pid;
-    int stdin[2];
     int stdout[2];
+    int stderr[2];
+    int child_tty;
 } vt;
 
 void vt_process(vt *vt, uint8_t input);
@@ -1182,116 +1185,212 @@ int handle_signal(vt *vt, int signo)
     switch (signo) {
         case SIGWINCH:
             vt_resize_window(vt);
+            if (vt->child_tty) {
+               struct winsize window = {
+                  .ws_col = vt->alternate_buffer ? vt->alternate_buffer->width : vt->primary_buffer.width,
+                  .ws_row = vt->alternate_buffer ? vt->alternate_buffer->height : vt->primary_buffer.height,
+               };
+               if (ioctl(vt->child_tty, TIOCSWINSZ, &window) != 0) {
+                  perror("ioctl(child_tty, TIOCSWINSZ, &window)");
+                  return 1;
+               }
+               if (kill(vt->child_pid, signo) == -1) {
+                  perror("kill(SIGWINCH, child)");
+                  return 1;
+               }
+            }
             return -1;
 
-        case SIGINT:
+         case SIGINT:
             fprintf(vt->tty, "^C");
-            fflush(vt->tty);
-            vt_resize_window(vt);
+            if (vt->child_tty) {
+               if (kill(vt->child_pid, signo) == -1) {
+                  perror("kill(SIGINT, child)");
+               }
+            }
             return 130;
+
+         case SIGCHLD:
+         {
+            int wstatus;
+            pid_t waited = waitpid(vt->child_pid, &wstatus, WNOHANG);
+            if (waited == -1) {
+               if (errno == ECHILD) {
+                  vt->child_pid = 0;
+                  break;
+               }
+               perror("waitpid(child, NOHANG)");
+               return 1;
+            } else if (waited) {
+               int ret;
+               if (WIFEXITED(wstatus)) {
+                  ret = WEXITSTATUS(wstatus);
+                  fprintf(stderr, "child exited with code %d\n", ret);
+               } else if (WIFSIGNALED(wstatus)) {
+                  int sig = WTERMSIG(wstatus);
+                  fprintf(stderr, "child was terminated by signal %d (%s)\n", sig, strsignal(sig));
+                  ret = 128 + sig;
+               }
+               vt->child_pid = 0;
+               return ret;
+            }
+         }; return 0;
     }
-    UNREACHABLE("Unhandled signal %d", signo);
+    UNREACHABLE("Unhandled signal %d %s", signo, strsignal(signo));
+    return 1;
 }
 
 int vt_main_loop(vt *vt)
 {
     if (!vt) return 1;
 
-    int sigfd = _signalfd(SIGWINCH, SIGINT);
+    int sigfd = _signalfd(SIGWINCH, SIGINT, vt->child_pid ? SIGCHLD : SIGKILL);
     bool stdin_eof = false;
     bool stdout_eof = false;
+    bool stderr_eof = false;
+    bool tty_eof = false;
+
     while (true) {
        int fd;
        if (vt->child_pid) {
-          if (stdin_eof && stdout_eof) break;
+          if (stdin_eof && stdout_eof && stderr_eof && tty_eof) break;
 
-          int wstatus;
-          pid_t waited = waitpid(vt->child_pid, &wstatus, WNOHANG);
-          if (waited == -1) {
-             perror("waitpid(child, NOHANG)");
-             return 1;
-          } else if (waited) {
-             if (WIFEXITED(wstatus)) {
-                int ret = WEXITSTATUS(wstatus);
-                fprintf(stderr, "child exited with code %d\n", ret);
-             } else if (WIFSIGNALED(wstatus)) {
-                int sig = WTERMSIG(wstatus);
-                fprintf(stderr, "child was terminated by signal %d (%s)\n", sig, strsignal(sig));
-             }
-             stdin_eof = true;
-             vt->child_pid = 0;
-          }
+          if (stdin_eof && stdout_eof && stderr_eof && tty_eof) break;
 
-          if (stdin_eof && stdout_eof) break;
-
-          if (stdin_eof) {
-             fd = _select(sigfd, vt->stdout[0]);
-          } else if (stdout_eof) {
-             fd = _select(sigfd, STDIN_FILENO);
-          } else {
-             fd = _select(sigfd, STDIN_FILENO, vt->stdout[0]);
-          }
-          fprintf(stderr, "fd = %d\n", fd);
+          fprintf(stderr, "select(sigfd, stdin, stdout, stderr, tty)\n");
+          fd = _select(sigfd, STDIN_FILENO, vt->stdout[0], vt->stderr[0], vt->child_tty);
        } else {
           if (stdin_eof) break;
 
+          fprintf(stderr, "select(sigfd, stdin)\n");
           fd = _select(sigfd, STDIN_FILENO);
        }
+       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty ? "child tty" : "unknown"))))));
        if (fd == sigfd) {
           struct signalfd_siginfo siginfo;
           ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
+          if (red == -1 && errno == EAGAIN) continue;
           if (red != sizeof(siginfo)) {
-             perror("read(sigfd)");
+             if (red == -1) fprintf(stderr, "read(sigfd) = %ld\n", red);
+             else perror("read(sigfd)");
              return 1;
+          }
+
+          if (siginfo.ssi_signo == SIGCHLD) {
+             stdin_eof = true;
+             stdout_eof = true;
+             stderr_eof = true;
+             tty_eof = true;
+             close(vt->stdout[0]);
+             close(vt->stderr[0]);
+             close(vt->child_tty);
           }
 
           int ret = handle_signal(vt, siginfo.ssi_signo);
           if (ret != -1) return ret;
        } else {
-          uint8_t buf[512];
-          ssize_t red = read(fd, buf, sizeof(buf));
-          fprintf(stderr, "red from fd %d = %ld, |%.*s| (%02x)\n", fd, red, (int)red, buf, *buf);
-          if (red == -1) {
-             perror("read()");
-             return 1;
-          } else if (red == 0) {
-             fprintf(stderr, "got eof on fd %d\n", fd);
-             if (fd == STDIN_FILENO) {
-                stdin_eof = true;
-             } else if (fd == vt->stdout[0]) {
-                stdout_eof = true;
-             } else break;
-          }
-          if (vt->child_pid) {
-             if (fd == STDIN_FILENO) {
-                size_t written = 0;
-                while (written != (unsigned)red) {
-                   ssize_t writ = write(vt->stdin[1], buf + written, red - written);
-                   if (writ == -1) {
-                      perror("write(child stdin)");
-                      return 1;
-                   }
-                   written += writ;
-                   if (written > (unsigned)red) UNREACHABLE("kernel wrote too much");
-                }
+           while (true) {
+              uint8_t buf[512] = {0};
+              ssize_t red = read(fd, buf, sizeof(buf));
 
-                /* FIXME have another vt model which can be used to determine pressed keys */
-             } else {
-                for (size_t i = 0; i < (unsigned)red; i ++) {
-                   fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
-                   vt_process(vt, buf[i]);
-                   if (vt->dirty) vt_draw_window(vt);
-                   fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state));
-                }
-             }
-          } else {
-             for (size_t i = 0; i < (unsigned)red; i ++) {
-                fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
-                vt_process(vt, buf[i]);
-                if (vt->dirty) vt_draw_window(vt);
-                fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state));
-             }
-          }
+              if (red == -1) {
+                  if (errno == EAGAIN) break;
+                 perror("read()");
+                 return 1;
+
+              } else if (red == 0) {
+                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty ? "child tty" : "unknown")))));
+                 close(fd);
+                 if (fd == STDIN_FILENO) {
+                    stdin_eof = true;
+                 } else if (fd == vt->stdout[0]) {
+                    stdout_eof = true;
+                 } else if (fd == vt->stderr[0]) {
+                    stderr_eof = true;
+                 } else if (fd == vt->child_tty) {
+                    tty_eof = true;
+                 } else {
+                    fprintf(stderr, "Unexpected fd\n");
+                 }
+                 break;
+              }
+
+              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty ? "child tty" : "unknown")))));
+              bool allgraph = true;
+              for (ssize_t i = 0; i < red; i ++) {
+                  if (!isgraph(buf[i])) {
+                      allgraph = false;
+                      break;
+                  }
+              }
+              if (allgraph) {
+                 fprintf(stderr, " |%.*s|\n", (int)red, buf);
+              } else {
+                 fprintf(stderr, " (");
+                 for (ssize_t i = 0; i < red; i ++) {
+                    if (i) fprintf(stderr, ", ");
+                    vt_fprintc(stderr, buf[i]);
+                 }
+                 fprintf(stderr, ")\n");
+              }
+
+              if (vt->child_tty > 0) {
+                 if (fd == STDIN_FILENO) {
+                    size_t written = 0;
+                    while (written != (unsigned)red) {
+                       ssize_t writ = write(vt->child_tty, buf + written, red - written);
+                       if (writ == -1) {
+                          perror("write(child stdin)");
+                          return 1;
+                       }
+                       written += writ;
+                       if (written > (unsigned)red) UNREACHABLE("kernel wrote too much");
+                    }
+
+                    for (size_t i = 0; i < (unsigned)red; i ++) {
+                       /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
+                       vt_process(vt, buf[i]);
+                       /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                       /* fprintf(stderr, "cell now %ldx%ld\n", vt->cursor.x, vt->cursor.y); */
+                       /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
+                    }
+
+                    vt_draw_window(vt);
+                 } else if (fd == vt->stderr[0] && false /* FIXME add option to send stderr to vt */) {
+                    size_t written = 0;
+                    while (written != (unsigned)red) {
+                       ssize_t writ = write(STDERR_FILENO, buf + written, red - written);
+                       if (writ == -1) {
+                          perror("write(stderr)");
+                          return 1;
+                       }
+                       written += writ;
+                       if (written > (unsigned)red) UNREACHABLE("kernel wrote too much");
+                    }
+
+                 } else {
+                    for (size_t i = 0; i < (unsigned)red; i ++) {
+                       /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
+                       vt_process(vt, buf[i]);
+                       /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                       /* fprintf(stderr, "cell now %ldx%ld\n", vt->cursor.x, vt->cursor.y); */
+                       /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
+                    }
+                    vt_draw_window(vt);
+                 }
+              } else {
+                 for (size_t i = 0; i < (unsigned)red; i ++) {
+                    /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
+                    vt_process(vt, buf[i]);
+                    /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                    /* vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer; */
+                    /* fprintf(stderr, "cell now %ldx%ld\n", buffer->cursor.x, buffer->cursor.y); */
+                    /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
+                 }
+                 vt_draw_window(vt);
+              }
+              break;
+           }
        }
     }
 
@@ -1326,78 +1425,89 @@ void vt_rebuild_if_source_newer(const char *program, char * const *argv)
     }
 }
 
+int vt_setup_child(vt *vt, char * const *argv)
+{
+   if (pipe2(vt->stdout, O_NONBLOCK) != 0) {
+      perror("pipe2(stdout)");
+      return 1;
+   }
+
+   if (pipe2(vt->stderr, O_NONBLOCK) != 0) {
+      perror("pipe2(stderr)");
+      return 1;
+   }
+
+   vt->child_ios = vt->original_ios;
+   struct winsize window = {.ws_col = vt->primary_buffer.width, .ws_row = vt->primary_buffer.height};
+   vt->child_pid = forkpty(&vt->child_tty, NULL, &vt->child_ios, &window);
+
+   if (vt->child_pid == -1) {
+      perror("fork()");
+      return 1;
+   }
+
+   if (!vt->child_pid) {
+      if (dup2(vt->stdout[1], STDOUT_FILENO) == -1) {
+         perror("dup2(stdout)");
+         _exit(1);
+      }
+
+      if (dup2(vt->stderr[1], STDERR_FILENO) == -1) {
+         perror("dup2(stderr)");
+         _exit(1);
+      }
+
+      close(vt->stderr[0]);
+      close(vt->stdout[0]);
+
+      int ret = execvp(*argv, argv);
+      if (ret == -1) {
+         perror("execvp");
+      }
+      _exit(1);
+   }
+
+   fprintf(stderr, "Parent %d\n", getpid());
+   fprintf(stderr, "Started child %d\n", vt->child_pid);
+
+   close(vt->stdout[1]);
+   close(vt->stderr[1]);
+
+   return 0;
+}
+
 int main(int argc, char * const *argv)
 {
     vt_rebuild_if_source_newer(*argv, argv);
 
-    printf("argc = %d\n", argc);
 #define NEXT_ARG (*(argv++)) + 0 * (argc--)
     __attribute__((unused)) const char *program = NEXT_ARG;
     vt vt = {0};
 
     /* FIXME process args */
 
-    if (argc) {
-       if (pipe2(vt.stdin, O_NONBLOCK) != 0) {
-          perror("pipe2(stdin)");
-          return 1;
-       }
-
-       if (pipe2(vt.stdout, O_NONBLOCK) != 0) {
-          perror("pipe2(stdout)");
-          return 1;
-       }
-
-       vt.child_pid = fork();
-
-       if (vt.child_pid == -1) {
-          perror("fork()");
-          return 1;
-       }
-
-       if (!vt.child_pid) {
-          if (dup2(vt.stdin[0], STDIN_FILENO) == -1) {
-             perror("dup2(stdin)");
-             exit(1);
-          }
-
-          if (dup2(vt.stdout[1], STDOUT_FILENO) == -1) {
-             perror("dup2(stdout)");
-             exit(1);
-          }
-
-          close(vt.stdout[0]);
-          close(vt.stdin[1]);
-
-          int ret = execvp(*argv, argv);
-          if (ret == -1) {
-             perror("execvp");
-          }
-          exit(1);
-       }
-
-       close(vt.stdout[1]);
-       close(vt.stdin[0]);
-    }
-
     vt_setup_io(&vt);
     vt_resize_window(&vt);
-    int ret = vt_main_loop(&vt);
+
+    int ret = 0;
+    if (argc) {
+       ret = vt_setup_child(&vt, argv);
+       if (ret) return ret;
+    }
+
+    ret = vt_main_loop(&vt);
+    fprintf(stderr, "ret = %d\n", ret);
     if (vt.child_pid) {
-       close(vt.stdin[1]);
-       close(vt.stdout[0]);
+       if (vt.stdout[1] > 0) close(vt.stdout[0]);
+       if (vt.stderr[1] > 0) close(vt.stderr[0]);
        int wstatus;
        if (waitpid(vt.child_pid, &wstatus, 0) != vt.child_pid) {
           perror("waitpid(child)");
-          return 1;
        }
        vt.child_pid = 0;
     }
     vt_restore_io(&vt);
-    if (vt.cells) {
-        free(vt.cells);
-        vt.cells = NULL;
-    }
+    vt_free(&vt);
     return ret;
 #undef NEXT_ARG
 }
