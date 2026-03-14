@@ -19,7 +19,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-#define UNIMPL(fmt, ...) do { fprintf(stdout, "\n%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (true) exit(1); else return; } while (false)
+#define UNIMPL(fmt, ...) do { fprintf(stdout, "\n%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (false) exit(1); else return; } while (false)
 #define UNREACHABLE(fmt, ...) do { fprintf(stdout, "\n%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); exit(1); } while (false)
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
@@ -62,6 +62,18 @@
    X(VT_MODIFIER_SHIFT)   E(1 << 2) /* Only used for certain special chars, not used for uppercase */ \
    X(VT_MODIFIER_SUPER)   E(1 << 3) /* Only used for certain special chars */
 
+#define VT_ATTRIBUTES_LIST \
+   C(0)  X(VT_ATTRIBUTE_NONE) L("Reset") \
+   C(1)  X(VT_ATTRIBUTE_BOLD) L("Bold") \
+   C(30) X(VT_ATTRIBUTE_FG_0) L("Foreground Black") \
+   C(31) X(VT_ATTRIBUTE_FG_1) L("Foreground Red") \
+   C(32) X(VT_ATTRIBUTE_FG_2) L("Foreground Green") \
+   C(33) X(VT_ATTRIBUTE_FG_3) L("Foreground Yellow") \
+   C(34) X(VT_ATTRIBUTE_FG_4) L("Foreground Blue") \
+   C(35) X(VT_ATTRIBUTE_FG_5) L("Foreground Magenta") \
+   C(36) X(VT_ATTRIBUTE_FG_6) L("Foreground Cyan") \
+   C(37) X(VT_ATTRIBUTE_FG_7) L("Foreground White")
+
 #define VT_STATES_LIST \
     X(VT_STATE_GROUND) \
     X(VT_STATE_ESCAPE) \
@@ -101,38 +113,38 @@
    C(0x63 /* c */) X(VT_ESCAPE_RIS)   L("Reset to Initial State") S(vt_free(vt); vt_resize_window(vt))
 
 #define VT_CONTROL_FUNCTIONS_LIST \
-   C(0x00) X(VT_CONTROL_NULL)  K(VT_KEY_NONE)      L("Null") S(UNIMPL("VT_CONTROL_NULL")) \
-   C(0x03) X(VT_CONTROL_ETX)   K(VT_KEY_NONE)      L("End of Text") S(kill(getpid(), SIGINT)) \
-   C(0x05) X(VT_CONTROL_ENQ)   K(VT_KEY_NONE)      L("Enquire") S(UNIMPL("VT_CONTROL_ENQ")) \
-   C(0x07) X(VT_CONTROL_BEL)   K(VT_KEY_NONE)      L("Bell") S(_vt_bell(vt)) \
-   C(0x08) X(VT_CONTROL_BS)    K(VT_KEY_NONE)      L("Backspace") S(_vt_backspace(vt)) \
-   C(0x09) X(VT_CONTROL_HT)    K(VT_KEY_TAB)       L("Horizontal Tab") S(UNIMPL("VT_CONTROL_HT")) \
-   C(0x0A) X(VT_CONTROL_LF)    K(VT_KEY_NONE)      L("Line Feed") S(_vt_line_feed(vt)) \
-   C(0x0B) X(VT_CONTROL_VT)    K(VT_KEY_NONE)      L("Vertical Tab") S(UNIMPL("VT_CONTROL_VT")) \
-   C(0x0C) X(VT_CONTROL_FF)    K(VT_KEY_NONE)      L("Form Feed") S(UNIMPL("VT_CONTROL_FF")) \
-   C(0x0D) X(VT_CONTROL_CR)    K(VT_KEY_ENTER)     L("Carriage Return") S(_vt_carriage_return(vt)) \
-   C(0x0E) X(VT_CONTROL_SO)    K(VT_KEY_NONE)      L("Shift Out") S(UNIMPL("VT_CONTROL_SO")) \
-   C(0x0F) X(VT_CONTROL_SI)    K(VT_KEY_NONE)      L("Shift Out") S(UNIMPL("VT_CONTROL_SI")) \
-   C(0x11) X(VT_CONTROL_DC1)   K(VT_KEY_NONE)      L("Device Control 1 (XON)") S(UNIMPL("VT_CONTROL_DC1")) \
-   C(0x13) X(VT_CONTROL_DC3)   K(VT_KEY_NONE)      L("Device Control 3 (XOFF)") S(UNIMPL("VT_CONTROL_DC3")) \
-   C(0x18) X(VT_CONTROL_CAN)   K(VT_KEY_NONE)      L("Cancel") S(UNIMPL("VT_CONTROL_CAN")) \
-   C(0x1A) X(VT_CONTROL_SUB)   K(VT_KEY_NONE)      L("Substitute") S(UNIMPL("VT_CONTROL_SUB")) \
-   C(0x1B) X(VT_CONTROL_ESC)   K(VT_KEY_ESCAPE)    L("Escape") S(UNIMPL("VT_CONTROL_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x1C) X(VT_CONTROL_GS)    K(VT_KEY_NONE)      L("Group Separator") S(UNIMPL("VT_CONTROL_GS")) \
-   C(0x7F) X(VT_CONTROL_DEL)   K(VT_KEY_BACKSPACE) L("Delete") S(UNIMPL("VT_CONTROL_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
-   C(0x84) X(VT_CONTROL_IND)   K(VT_KEY_NONE)      L("Index") S(UNIMPL("VT_CONTROL_IND")) \
-   C(0x85) X(VT_CONTROL_NEL)   K(VT_KEY_NONE)      L("Next Line") S(UNIMPL("VT_CONTROL_NEL")) \
-   C(0x88) X(VT_CONTROL_HTS)   K(VT_KEY_NONE)      L("Horizontal Tab Set") S(UNIMPL("VT_CONTROL_HTS")) \
-   C(0x8D) X(VT_CONTROL_RI)    K(VT_KEY_NONE)      L("Reverse Index") S(UNIMPL("VT_CONTROL_RI")) \
-   C(0x8E) X(VT_CONTROL_SS2)   K(VT_KEY_NONE)      L("Single shift 2") S(vt->sequence_state.shift = 2; vt->sequence_state.shift_lock = false) \
-   C(0x8F) X(VT_CONTROL_SS3)   K(VT_KEY_NONE)      L("Single shift 3") S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
-   C(0x90) X(VT_CONTROL_DCS)   K(VT_KEY_NONE)      L("Device Control String") S(UNIMPL("VT_CONTROL_DCS")) /* UNREACHABLE, mapping in "anywhere" transitions */ \
-   C(0x98) X(VT_CONTROL_SOS)   K(VT_KEY_NONE)      L("Start Of String") S(UNIMPL("VT_CONTROL_SOS")) \
-   C(0x9A) X(VT_CONTROL_DECID) K(VT_KEY_NONE)      L("DEC Private Identification") S(UNIMPL("VT_CONTROL_DECID")) \
+   C(0x00) X(VT_CONTROL_NULL)  K(VT_KEY_NONE)      L("Null")                        S(UNIMPL("VT_CONTROL_NULL")) \
+   C(0x03) X(VT_CONTROL_ETX)   K(VT_KEY_NONE)      L("End of Text")                 S(kill(getpid(), SIGINT)) \
+   C(0x05) X(VT_CONTROL_ENQ)   K(VT_KEY_NONE)      L("Enquire")                     S(UNIMPL("VT_CONTROL_ENQ")) \
+   C(0x07) X(VT_CONTROL_BEL)   K(VT_KEY_NONE)      L("Bell")                        S(_vt_bell(vt)) \
+   C(0x08) X(VT_CONTROL_BS)    K(VT_KEY_NONE)      L("Backspace")                   S(_vt_backspace(vt)) \
+   C(0x09) X(VT_CONTROL_HT)    K(VT_KEY_TAB)       L("Horizontal Tab")              S(UNIMPL("VT_CONTROL_HT")) \
+   C(0x0A) X(VT_CONTROL_LF)    K(VT_KEY_NONE)      L("Line Feed")                   S(_vt_line_feed(vt)) \
+   C(0x0B) X(VT_CONTROL_VT)    K(VT_KEY_NONE)      L("Vertical Tab")                S(UNIMPL("VT_CONTROL_VT")) \
+   C(0x0C) X(VT_CONTROL_FF)    K(VT_KEY_NONE)      L("Form Feed")                   S(UNIMPL("VT_CONTROL_FF")) \
+   C(0x0D) X(VT_CONTROL_CR)    K(VT_KEY_ENTER)     L("Carriage Return")             S(_vt_carriage_return(vt)) \
+   C(0x0E) X(VT_CONTROL_SO)    K(VT_KEY_NONE)      L("Shift Out")                   S(UNIMPL("VT_CONTROL_SO")) \
+   C(0x0F) X(VT_CONTROL_SI)    K(VT_KEY_NONE)      L("Shift Out")                   S(UNIMPL("VT_CONTROL_SI")) \
+   C(0x11) X(VT_CONTROL_DC1)   K(VT_KEY_NONE)      L("Device Control 1 (XON)")      S(UNIMPL("VT_CONTROL_DC1")) \
+   C(0x13) X(VT_CONTROL_DC3)   K(VT_KEY_NONE)      L("Device Control 3 (XOFF)")     S(UNIMPL("VT_CONTROL_DC3")) \
+   C(0x18) X(VT_CONTROL_CAN)   K(VT_KEY_NONE)      L("Cancel")                      S(UNIMPL("VT_CONTROL_CAN")) \
+   C(0x1A) X(VT_CONTROL_SUB)   K(VT_KEY_NONE)      L("Substitute")                  S(UNIMPL("VT_CONTROL_SUB")) \
+   C(0x1B) X(VT_CONTROL_ESC)   K(VT_KEY_ESCAPE)    L("Escape")                      S(UNIMPL("VT_CONTROL_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x1C) X(VT_CONTROL_GS)    K(VT_KEY_NONE)      L("Group Separator")             S(UNIMPL("VT_CONTROL_GS")) \
+   C(0x7F) X(VT_CONTROL_DEL)   K(VT_KEY_BACKSPACE) L("Delete")                      S(UNIMPL("VT_CONTROL_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
+   C(0x84) X(VT_CONTROL_IND)   K(VT_KEY_NONE)      L("Index")                       S(UNIMPL("VT_CONTROL_IND")) \
+   C(0x85) X(VT_CONTROL_NEL)   K(VT_KEY_NONE)      L("Next Line")                   S(UNIMPL("VT_CONTROL_NEL")) \
+   C(0x88) X(VT_CONTROL_HTS)   K(VT_KEY_NONE)      L("Horizontal Tab Set")          S(UNIMPL("VT_CONTROL_HTS")) \
+   C(0x8D) X(VT_CONTROL_RI)    K(VT_KEY_NONE)      L("Reverse Index")               S(UNIMPL("VT_CONTROL_RI")) \
+   C(0x8E) X(VT_CONTROL_SS2)   K(VT_KEY_NONE)      L("Single shift 2")              S(vt->sequence_state.shift = 2; vt->sequence_state.shift_lock = false) \
+   C(0x8F) X(VT_CONTROL_SS3)   K(VT_KEY_NONE)      L("Single shift 3")              S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
+   C(0x90) X(VT_CONTROL_DCS)   K(VT_KEY_NONE)      L("Device Control String")       S(UNIMPL("VT_CONTROL_DCS")) /* UNREACHABLE, mapping in "anywhere" transitions */ \
+   C(0x98) X(VT_CONTROL_SOS)   K(VT_KEY_NONE)      L("Start Of String")             S(UNIMPL("VT_CONTROL_SOS")) \
+   C(0x9A) X(VT_CONTROL_DECID) K(VT_KEY_NONE)      L("DEC Private Identification")  S(UNIMPL("VT_CONTROL_DECID")) \
    C(0x9B) X(VT_CONTROL_CSI)   K(VT_KEY_NONE)      L("Control Sequence Introducer") S(UNIMPL("VT_CONTROL_CSI")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x9C) X(VT_CONTROL_ST)    K(VT_KEY_NONE)      L("String Terminator") S(UNIMPL("VT_CONTROL_ST")) \
-   C(0x9D) X(VT_CONTROL_OSC)   K(VT_KEY_NONE)      L("Operating System Command") S(UNIMPL("VT_CONTROL_OSC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
-   C(0x9E) X(VT_CONTROL_PM)    K(VT_KEY_NONE)      L("Privacy Message") S(UNIMPL("VT_CONTROL_PM")) \
+   C(0x9C) X(VT_CONTROL_ST)    K(VT_KEY_NONE)      L("String Terminator")           S(UNIMPL("VT_CONTROL_ST")) \
+   C(0x9D) X(VT_CONTROL_OSC)   K(VT_KEY_NONE)      L("Operating System Command")    S(UNIMPL("VT_CONTROL_OSC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
+   C(0x9E) X(VT_CONTROL_PM)    K(VT_KEY_NONE)      L("Privacy Message")             S(UNIMPL("VT_CONTROL_PM")) \
    C(0x9F) X(VT_CONTROL_APC)   K(VT_KEY_NONE)      L("Application Program Command") S(UNIMPL("VT_CONTROL_APC"))
 
 #define VT_PARAM(vt, idx, def) ((idx) < (vt)->sequence_state.num_params && (vt)->sequence_state.params[(idx)].non_default ? (vt)->sequence_state.params[(idx)].value : (def))
@@ -141,15 +153,16 @@
 #define VT_CUP "\033[%d;%dH"
 
 #define VT_CSI_FUNCTIONS_LIST \
-   C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")              S(UNREACHABLE("Unexpected CSI function")) \
-   C(0x41 /* A */) X(VT_CSI_CUU)           K(VT_KEY_UP)    L("Cursor Up")         S(_vt_move_cursor_offset(vt, 0, -VT_PARAM(vt, 0, 1))) \
-   C(0x42 /* B */) X(VT_CSI_CUD)           K(VT_KEY_DOWN)  L("Cursor Down")       S(_vt_move_cursor_offset(vt, 0, VT_PARAM(vt, 0, 1))) \
-   C(0x43 /* C */) X(VT_CSI_CUF)           K(VT_KEY_RIGHT) L("Cursor Forward")    S(_vt_move_cursor_offset(vt, VT_PARAM(vt, 0, 1), 0)) \
-   C(0x44 /* D */) X(VT_CSI_CUB)           K(VT_KEY_LEFT)  L("Cursor Backward")   S(_vt_move_cursor_offset(vt, -VT_PARAM(vt, 0, 1), 0)) \
-   C(0x48 /* H */) X(VT_CSI_CUP)           K(VT_KEY_NONE)  L("Cursor Position")   S(_vt_move_cursor(vt, VT_PARAM(vt, 1, 1), VT_PARAM(vt, 0, 1))) \
-   C(0x4A /* J */) X(VT_CSI_ED)            K(VT_KEY_NONE)  L("Erase In Page")     S(_vt_erase_in_page(vt, VT_PARAM(vt, 0, 0))) \
-   C(0x4B /* K */) X(VT_CSI_EL)            K(VT_KEY_NONE)  L("Erase In Line")     S(_vt_erase_in_line(vt, VT_PARAM(vt, 0, 0))) \
-   C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde") S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
+   C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                     S(UNREACHABLE("Unexpected CSI function")) \
+   C(0x41 /* A */) X(VT_CSI_CUU)           K(VT_KEY_UP)    L("Cursor Up")                S(_vt_move_cursor_offset(vt, 0, -VT_PARAM(vt, 0, 1))) \
+   C(0x42 /* B */) X(VT_CSI_CUD)           K(VT_KEY_DOWN)  L("Cursor Down")              S(_vt_move_cursor_offset(vt, 0, VT_PARAM(vt, 0, 1))) \
+   C(0x43 /* C */) X(VT_CSI_CUF)           K(VT_KEY_RIGHT) L("Cursor Forward")           S(_vt_move_cursor_offset(vt, VT_PARAM(vt, 0, 1), 0)) \
+   C(0x44 /* D */) X(VT_CSI_CUB)           K(VT_KEY_LEFT)  L("Cursor Backward")          S(_vt_move_cursor_offset(vt, -VT_PARAM(vt, 0, 1), 0)) \
+   C(0x48 /* H */) X(VT_CSI_CUP)           K(VT_KEY_NONE)  L("Cursor Position")          S(_vt_move_cursor(vt, VT_PARAM(vt, 1, 1), VT_PARAM(vt, 0, 1))) \
+   C(0x4A /* J */) X(VT_CSI_ED)            K(VT_KEY_NONE)  L("Erase In Page")            S(_vt_erase_in_page(vt, VT_PARAM(vt, 0, 0))) \
+   C(0x4B /* K */) X(VT_CSI_EL)            K(VT_KEY_NONE)  L("Erase In Line")            S(_vt_erase_in_line(vt, VT_PARAM(vt, 0, 0))) \
+   C(0x6D /* m */) X(VT_CSI_SGR)           K(VT_KEY_NONE)  L("Select Graphic Rendition") S(_vt_select_graphic_rendition(vt)) \
+   C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")        S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
 #define VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST \
    C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   K(VT_KEY_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private tilde function")) \
@@ -171,12 +184,13 @@
 
 #define X(name) name
 #define E(code) = code, 
-typedef enum { VT_MODIFIERS_LIST VT_NUM_MODIFIERS } vt_modifier;
+typedef enum { VT_MODIFIERS_LIST } vt_modifier;
 
 #undef E
 #undef X
 #define E(code)
 #define X(name) name,
+typedef enum { VT_ATTRIBUTES_LIST } vt_attribute;
 typedef enum { VT_KEYS_LIST VT_NUM_KEYS } vt_key;
 typedef enum { VT_STATES_LIST VT_NUM_STATES } vt_state;
 typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
@@ -196,7 +210,6 @@ static const char *vt_csi_private_question_function_strings[] = { VT_CSI_PRIVATE
 static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
-__attribute__((unused)) static const char *vt_modifier_strings[] = { VT_MODIFIERS_LIST };
 
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
@@ -206,7 +219,6 @@ __attribute__((unused)) static const char *vt_modifier_strings[] = { VT_MODIFIER
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings[(func)] : "(csi_private_question_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings[(func)] : "(csi_private_tilde_function out of bounds)")
 #define VT_KEY_STRING(func) (((func) >= 0 && (func) < VT_NUM_KEYS) ? vt_key_strings[(func)] : "(key out of bounds)")
-#define VT_MODIFIER_STRING(func) (((func) >= 0 && (func) < VT_NUM_MODIFIERS) ? vt_modifier_strings[(func)] : "(modifier out of bounds)")
 #undef X
 
 #define X(code)
@@ -227,6 +239,61 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 #undef X
 #define L(name)
 
+#define ARRAY(t) struct { t *data; size_t size; size_t capacity; }
+
+#define ARRAY_ENSURE_CAPACITY(arr, cap) do { \
+   if ((arr).capacity >= cap) break; \
+   (arr).data = realloc((arr).data, cap * sizeof(*(arr).data)); \
+   if (!(arr).data) break; \
+   memset((arr).data + (arr).size, '\0', (cap - (arr).size) * sizeof(*(arr).data)); \
+   (arr).capacity = cap; \
+} while (false)
+
+#define ARRAY_CLEAR(arr) do { (arr).size = 0; } while (false)
+#define ARRAY_CONTAINS(ret, arr, d) do { \
+   (ret) = false; \
+   for (size_t i = 0; i < (arr).size; i ++) { \
+      if ((arr).data[i] == (d)) { \
+         (ret) = true; \
+         break; \
+      } \
+   } \
+} while (false)
+
+#define ARRAY_APPEND(arr, d) do { \
+   ARRAY_ENSURE_CAPACITY(arr, (arr).size + 1); \
+   if (!(arr).data) break; \
+   (arr).data[(arr).size ++] = (d); \
+} while (false)
+
+#define ARRAY_COPY(dst, src) do { \
+   ARRAY_CLEAR(dst); \
+   ARRAY_ENSURE_CAPACITY(dst, (src).size); \
+   for (size_t i = 0; i < (src).size; i ++) { \
+      ARRAY_APPEND(dst, (src).data[i]); \
+   } \
+} while (false)
+
+#define SET(t) ARRAY(t)
+#define SET_CLEAR(s) ARRAY_CLEAR(s)
+#define SET_CONTAINS(ret, s, d) ARRAY_CONTAINS(ret, s, d)
+#define SET_COPY(src, dst) ARRAY_COPY(src, dst)
+#define SET_APPEND(s, d) do { \
+   bool ret; \
+   SET_CONTAINS(ret, s, d); \
+   if (ret) break; \
+   ARRAY_APPEND(s, d); \
+} while (false)
+
+#define SET_EQUALS(ret, s1, s2) do { \
+   (ret) = false; \
+   if ((s1).size != (s2).size) break; \
+   for (size_t i = 0; i < (s1).size; i ++) { \
+      SET_CONTAINS(ret, (s2), (s1).data[i]); \
+      if (!ret) break; \
+   } \
+} while (false)
+
 static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
 static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
 
@@ -238,16 +305,11 @@ typedef enum
    VT_SCROLL_RIGHT,
 } vt_scroll;
 
-typedef enum
-{
-    VT_ATTRIBUTE_NONE
-} vt_attribute;
-
 typedef struct
 {
     bool used;
     char c;
-    vt_attribute attribute;
+    SET(vt_attribute) attributes;
     bool cr;
     bool lf;
 } vt_cell;
@@ -263,7 +325,6 @@ typedef struct
     size_t x;
     size_t y;
     bool wrap_pending;
-    vt_attribute current_attribute;
 } vt_cursor;
 
 typedef struct
@@ -353,6 +414,7 @@ typedef struct
     vt_buffer primary_buffer;
     vt_buffer *alternate_buffer;
     vt_sequence_state sequence_state;
+    SET(vt_attribute) current_attributes;
     pid_t child_pid;
     int stdout[2];
     int stderr[2];
@@ -496,13 +558,15 @@ void vt_draw_window(vt *vt)
         }
     }
 
-    vt_attribute last_attribute = VT_ATTRIBUTE_NONE;
+    SET(vt_attribute) last_attributes = {0};
 
     for (size_t y = 1; y <= buffer->height; y ++) {
         for (size_t x = 1; x <= buffer->width; x ++) {
             vt_cell *cell = &buffer->cells[(y - 1) * buffer->width + x - 1];
             if (cell->used) {
-                if (cell->attribute != last_attribute) {
+               bool eq;
+               SET_EQUALS(eq, last_attributes, cell->attributes);
+               if (!eq) {
                     UNIMPL("set attribute");
                 }
                 if (x == 1 || !buffer->cells[(y - 1) * buffer->width + x - 2].used) {
@@ -949,8 +1013,11 @@ void _vt_print(vt *vt, char input)
        }
        if (vt->emitted_key.key != VT_KEY_REQUEST) return;
     }
+
     vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
     if (!buffer->cells) return;
+
+    if (vt->sequence_state.shift) UNIMPL("Unsure how to deal with printing shifts");
 
     if (!isprint(input)) {
         if (input == 0x7F) {
@@ -975,7 +1042,7 @@ void _vt_print(vt *vt, char input)
     vt_cell *cell = &buffer->cells[(buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1];
     cell->used = true;
     cell->c = input;
-    cell->attribute = buffer->cursor.current_attribute;
+    SET_COPY(cell->attributes, vt->current_attributes);
 
     if (buffer->cursor.x == buffer->width) {
        fprintf(stderr, "line wrap pending\n");
@@ -1037,6 +1104,34 @@ void _vt_param(vt *vt, uint8_t input)
 
 #undef C
 #undef K
+#undef L
+
+void _vt_select_graphic_rendition(vt *vt)
+{
+    if (!vt) return;
+
+    for (size_t p = 0; p < vt->sequence_state.num_params; p ++) {
+       uint16_t param = VT_PARAM(vt, p, 0);
+#define X(code)
+#define C(code) case code: 
+#define L(name) fprintf(stderr, "Got SGR code " name "\n"); break;
+       switch (param) {
+          VT_ATTRIBUTES_LIST
+          default: UNIMPL("Unimplemented param for SGR, param %u", param);
+       }
+#undef L
+#undef X
+
+#define L(typ)
+#define X(typ) if (typ) SET_APPEND(vt->current_attributes, typ); else SET_CLEAR(vt->current_attributes); break;
+       switch (param) {
+          VT_ATTRIBUTES_LIST
+          default: UNIMPL("Unimplemented param for SGR, param %u", param);
+       }
+#undef X
+#undef C
+    }
+}
 
 void _vt_execute(vt *vt, uint8_t input)
 {
@@ -1266,7 +1361,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_FUNCTIONS == 9, "Not all functions handled");
+    static_assert(VT_NUM_CSI_FUNCTIONS == 10, "Not all functions handled");
     switch (func) {
         VT_CSI_FUNCTIONS_LIST
         case VT_NUM_CSI_FUNCTIONS: break;
