@@ -243,9 +243,18 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 
 #define ARRAY_ENSURE_CAPACITY(arr, cap) do { \
    if ((arr).capacity >= cap) break; \
-   (arr).data = realloc((arr).data, cap * sizeof(*(arr).data)); \
-   if (!(arr).data) break; \
-   memset((arr).data + (arr).size, '\0', (cap - (arr).size) * sizeof(*(arr).data)); \
+   size_t _size = sizeof(*(arr).data); \
+   fprintf(stderr, "realloc(%p, %zu (%zu * %zu)) => ", \
+         (void*)(arr).data, cap * _size, cap, _size); \
+   typeof((arr).data) data = realloc((arr).data, cap * _size); \
+   fprintf(stderr, "%p\n", (void*)data); \
+   if (!data) break; \
+   (arr).data = data; \
+   fprintf(stderr, "size = %lu, capacity = %lu, cap = %lu, sizeof(*) = %lu\n", \
+         (arr).size, (arr).capacity, cap, _size); \
+   fprintf(stderr, "memset(%p ((...)%p + %zu), '\\0', %zu ((%zu - %zu) * %zu)\n", \
+         (void*)((arr).data + (arr).size), (void*)arr.data, (arr).size, (cap - (arr).size) * _size, cap, (arr).size, _size); \
+   memset((arr).data + (arr).size, '\0', (cap - (arr).size) * _size); \
    (arr).capacity = cap; \
 } while (false)
 
