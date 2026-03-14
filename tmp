@@ -1,0 +1,126 @@
+Opening /dev/tty
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 159x30
+inner window size 156x27
+Parent 1064609
+Started child 1064610
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 4 (child stdout)
+red 512 from fd 4 (child stdout): (54 'T', 4F 'O', 44 'D', 4F 'O', 3A ':', 0A '\n', 6E 'n', 65 'e', 74 't', 77 'w', 6F 'o', 72 'r', 6B 'k', 69 'i', 6E 'n', 67 'g', 3A ':', 0A '\n', 2D '-', 20 ' ', 70 'p', 69 'i', 68 'h', 6F 'o', 6C 'l', 65 'e', 20 ' ', 6F 'o', 72 'r', 20 ' ', 73 's', 6F 'o', 6D 'm', 65 'e', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 20 ' ', 28 '(', 61 'a', 64 'd', 67 'g', 75 'u', 61 'a', 72 'r', 64 'd', 68 'h', 6F 'o', 6D 'm', 65 'e', 3F '?', 29 ')', 0A '\n', 20 ' ', 2D '-', 20 ' ', 6D 'm', 61 'a', 79 'y', 62 'b', 65 'e', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 75 'u', 6E 'n', 62 'b', 6F 'o', 75 'u', 6E 'n', 64 'd', 2E '.', 20 ' ', 6E 'n', 6F 'o', 20 ' ', 6E 'n', 65 'e', 65 'e', 64 'd', 20 ' ', 66 'f', 6F 'o', 72 'r', 20 ' ', 77 'w', 65 'e', 62 'b', 20 ' ', 69 'i', 6E 'n', 74 't', 65 'e', 72 'r', 66 'f', 61 'a', 63 'c', 65 'e', 2E '.', 2E '.', 2C ',', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 63 'c', 72 'r', 6F 'o', 6E 'n', 6A 'j', 6F 'o', 62 'b', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 73 's', 63 'c', 72 'r', 69 'i', 70 'p', 74 't', 20 ' ', 74 't', 6F 'o', 20 ' ', 70 'p', 61 'a', 72 'r', 73 's', 65 'e', 20 ' ', 62 'b', 6C 'l', 6F 'o', 63 'c', 6B 'k', 6C 'l', 69 'i', 73 's', 74 't', 73 's', 0A '\n', 2D '-', 20 ' ', 6C 'l', 6F 'o', 63 'c', 6B 'k', 20 ' ', 64 'd', 6F 'o', 77 'w', 6E 'n', 20 ' ', 41 'A', 50 'P', 20 ' ', 74 't', 6F 'o', 20 ' ', 73 's', 74 't', 61 'a', 74 't', 69 'i', 63 'c', 20 ' ', 49 'I', 50 'P', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6C 'l', 69 'i', 6D 'm', 69 'i', 74 't', 20 ' ', 70 'p', 6F 'o', 72 'r', 74 't', 73 's', 20 ' ', 74 't', 72 'r', 61 'a', 66 'f', 66 'f', 69 'i', 63 'c', 20 ' ', 74 't', 6F 'o', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 77 'w', 68 'h', 61 'a', 74 't', 20 ' ', 69 'i', 73 's', 20 ' ', 6E 'n', 65 'e', 65 'e', 64 'd', 65 'e', 64 'd', 0A '\n', 20 ' ', 2D '-', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6F 'o', 74 't', 68 'h', 65 'e', 72 'r', 20 ' ', 6D 'm', 67 'g', 6D 'm', 74 't', 20 ' ', 73 's', 74 't', 75 'u', 66 'f', 66 'f', 20 ' ', 63 'c', 6F 'o', 75 'u', 6C 'l', 64 'd', 20 ' ', 68 'h', 61 'a', 76 'v', 65 'e', 20 ' ', 66 'f', 69 'i', 72 'r', 65 'e', 77 'w', 61 'a', 6C 'l', 6C 'l', 65 'e', 64 'd', 20 ' ', 65 'e', 67 'g', 72 'r', 65 'e', 73 's', 73 's', 3F '?', 0A '\n', 2D '-', 20 ' ', 69 'i', 70 'p', 76 'v', 36 '6', 0A '\n', 20 ' ', 2D '-', 20 ' ', 6D 'm', 61 'a', 79 'y', 62 'b', 65 'e', 20 ' ', 74 't', 72 'r', 79 'y', 20 ' ', 62 'b', 72 'r', 6F 'o', 61 'a', 64 'd', 63 'c', 61 'a', 73 's', 74 't', 20 ' ', 74 't', 6F 'o', 20 ' ', 75 'u', 6E 'n', 69 'i', 63 'c', 61 'a', 73 's', 74 't', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 75 'u', 6E 'n', 69 'i', 66 'f', 69 'i', 2C ',', 20 ' ', 73 's', 65 'e', 65 'e', 20 ' ', 69 'i', 66 'f', 20 ' ', 74 't', 68 'h', 61 'a', 74 't', 20 ' ', 68 'h', 65 'e', 6C 'l', 70 'p', 73 's', 0A '\n', 20 ' ', 2D '-', 20 ' ', 73 's', 65 'e', 65 'e', 20 ' ', 69 'i', 66 'f', 20 ' ', 63 'c', 61 'a', 62 'b', 6C 'l', 65 'e', 20 ' ', 66 'f', 69 'i', 78 'x', 65 'e', 73 's', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 69 'i', 73 's', 73 's', 75 'u', 65 'e', 20 ' ', 28 '(', 69 'i', 65 'e', 20 ' ', 69 'i', 74 't', 20 ' ', 69 'i', 73 's', 20 ' ', 77 'w', 69 'i', 66 'f', 69 'i', 29 ')', 0A '\n', 20 ' ', 2D '-', 20 ' ', 74 't', 75 'u', 72 'r', 6E 'n', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 73 's', 6E 'n', 6F 'o', 6F 'o', 70 'p', 69 'i', 6E 'n', 67 'g', 20 ' ', 65 'e', 76 'v', 65 'e', 72 'r', 79 'y', 77 'w', 68 'h', 65 'e', 72 'r', 65 'e', 2C ',', 20 ' ', 74 't', 72 'r', 79 'y', 20 ' ', 64 'd', 69 'i', 66 'f', 66 'f', 20 ' ', 72 'r', 6F 'o', 75 'u', 74 't', 65 'e', 72 'r', 20 ' ', 62 'b', 65 'e', 69 'i', 6E 'n', 67 'g', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 71 'q', 75 'u', 65 'e', 72 'r', 69 'i', 65 'e', 72 'r', 20 ' ', 6F 'o', 6E 'n', 2C ',', 20 ' ', 73 's', 65 'e', 65 'e', 20 ' ', 77 'w', 68 'h', 61 'a', 74 't', 20 ' ', 77 'w', 6F 'o', 72 'r', 6B 'k', 73 's', 3F '?', 20 ' ', 69 'i', 66 'f', 20 ' ', 61 'a', 6E 'n', 79 'y', 0A '\n', 2D '-', 20 ' ', 6D 'm', 6F 'o', 76 'v', 65 'e', 20 ' ', 6E 'n', 65 'e', 77 'w', 20 ' ', 63 'c', 68 'h', 72 'r', 6F 'o', 6D 'm', 65 'e', 63 'c', 61 'a', 73 's', 74 't', 20 ' ')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+vt.c:579: [31mUNIMPLEMENTED[m: set attribute
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 4 (child stdout)
+red 512 from fd 4 (child stdout): (74 't', 76 'v', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 20 ' ', 74 't', 6F 'o', 20 ' ', 75 'u', 6E 'n', 74 't', 72 'r', 75 'u', 73 's', 74 't', 65 'e', 64 'd', 0A '\n', 20 ' ', 2D '-', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 70 'p', 6F 'o', 77 'w', 65 'e', 72 'r', 73 's', 77 'w', 69 'i', 74 't', 63 'c', 68 'h', 20 ' ', 73 's', 65 'e', 65 'e', 6D 'm', 73 's', 20 ' ', 74 't', 6F 'o', 20 ' ', 62 'b', 65 'e', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 74 't', 72 'r', 75 'u', 73 's', 74 't', 65 'e', 64 'd', 20 ' ', 61 'a', 74 't', 6D 'm', 2E '.', 2E '.', 20 ' ', 6D 'm', 61 'a', 79 'y', 20 ' ', 6E 'n', 65 'e', 65 'e', 64 'd', 20 ' ', 66 'f', 69 'i', 72 'r', 65 'e', 77 'w', 61 'a', 6C 'l', 6C 'l', 69 'i', 6E 'n', 67 'g', 3F '?', 0A '\n', 2D '-', 20 ' ', 63 'c', 61 'a', 62 'b', 6C 'l', 65 'e', 20 ' ', 74 't', 6F 'o', 20 ' ', 6F 'o', 66 'f', 66 'f', 69 'i', 63 'c', 65 'e', 0A '\n', 2D '-', 20 ' ', 6D 'm', 6F 'o', 76 'v', 65 'e', 20 ' ', 65 'e', 75 'u', 66 'f', 79 'y', 20 ' ', 6C 'l', 61 'a', 64 'd', 79 'y', 20 ' ', 74 't', 6F 'o', 20 ' ', 6F 'o', 66 'f', 66 'f', 69 'i', 63 'c', 65 'e', 20 ' ', 6F 'o', 66 'f', 66 'f', 20 ' ', 6D 'm', 69 'i', 6B 'k', 72 'r', 6F 'o', 74 't', 69 'i', 6B 'k', 2C ',', 20 ' ', 74 't', 68 'h', 65 'e', 6E 'n', 20 ' ', 63 'c', 61 'a', 6E 'n', 20 ' ', 68 'h', 61 'a', 76 'v', 65 'e', 20 ' ', 68 'h', 65 'e', 72 'r', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 75 'u', 6E 'n', 74 't', 72 'r', 75 'u', 73 's', 74 't', 65 'e', 64 'd', 2C ',', 20 ' ', 74 't', 68 'h', 6F 'o', 75 'u', 67 'g', 68 'h', 20 ' ', 77 'w', 6F 'o', 75 'u', 6C 'l', 64 'd', 20 ' ', 73 's', 68 'h', 65 'e', 20 ' ', 72 'r', 65 'e', 61 'a', 63 'c', 68 'h', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 63 'c', 61 'a', 6D 'm', 65 'e', 72 'r', 61 'a', 73 's', 3F '?', 20 ' ', 74 't', 68 'h', 69 'i', 73 's', 20 ' ', 63 'c', 6F 'o', 75 'u', 6C 'l', 64 'd', 20 ' ', 61 'a', 6C 'l', 6C 'l', 6F 'o', 77 'w', 20 ' ', 66 'f', 6F 'o', 72 'r', 20 ' ', 61 'a', 20 ' ', 6E 'n', 65 'e', 77 'w', 20 ' ', 76 'v', 6C 'l', 61 'a', 6E 'n', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 77 'w', 69 'i', 66 'f', 69 'i', 2C ',', 20 ' ', 74 't', 68 'h', 61 'a', 74 't', 20 ' ', 69 'i', 73 's', 6E 'n', 27 ''', 74 't', 20 ' ', 74 't', 69 'i', 65 'e', 64 'd', 20 ' ', 74 't', 6F 'o', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 75 'u', 6E 'n', 69 'i', 66 'f', 69 'i', 20 ' ', 70 'p', 6F 'o', 72 'r', 74 't', 20 ' ', 28 '(', 63 'c', 61 'a', 6E 'n', 20 ' ', 62 'b', 65 'e', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 61 'a', 20 ' ', 74 't', 61 'a', 69 'i', 6C 'l', 20 ' ', 69 'i', 6E 'n', 74 't', 6F 'o', 20 ' ', 6D 'm', 67 'g', 6D 'm', 74 't', 29 ')', 0A '\n', 2D '-', 20 ' ', 72 'r', 6F 'o', 6F 'o', 66 'f', 20 ' ', 6C 'l', 61 'a', 64 'd', 64 'd', 65 'e', 72 'r', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 0A '\n', 61 'a', 6C 'l', 70 'p', 69 'i', 6E 'n', 65 'e', 3A ':', 0A '\n', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 6C 'l', 6F 'o', 67 'g', 67 'g', 69 'i', 6E 'n', 67 'g', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 3F '?', 0A '\n', 20 ' ', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 73 's', 79 'y', 73 's', 6C 'l', 6F 'o', 67 'g', 20 ' ', 66 'f', 6F 'o', 72 'r', 77 'w', 61 'a', 72 'r', 64 'd', 69 'i', 6E 'n', 67 'g', 20 ' ', 66 'f', 72 'r', 6F 'o', 6D 'm', 20 ' ', 75 'u', 6E 'n', 69 'i', 66 'f', 69 'i', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6D 'm', 69 'i', 6B 'k', 72 'r', 6F 'o', 74 't', 69 'i', 6B 'k', 2C ',', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6F 'o', 74 't', 68 'h', 65 'e', 72 'r', 73 's', 3F '?', 0A '\n', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 62 'b', 61 'a', 63 'c', 6B 'k', 75 'u', 70 'p', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 3F '?', 0A '\n', 20 ' ', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 62 'b', 61 'a', 63 'c', 6B 'k', 75 'u', 70 'p', 20 ' ', 66 'f', 6F 'o', 72 'r', 77 'w', 61 'a', 72 'r', 64 'd', 69 'i', 6E 'n', 67 'g', 20 ' ', 66 'f', 72 'r', 6F 'o', 6D 'm', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 6B 'k', 70 'p', 61 'a', 64 'd', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+line wrap pending
+line wrap
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+vt.c:579: [31mUNIMPLEMENTED[m: set attribute
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 4 (child stdout)
+red 107 from fd 4 (child stdout): (6F 'o', 74 't', 68 'h', 65 'e', 72 'r', 73 's', 3F '?', 0A '\n', 74 't', 6D 'm', 75 'u', 78 'x', 3A ':', 0A '\n', 20 ' ', 2D '-', 20 ' ', 74 't', 6D 'm', 75 'u', 78 'x', 2D '-', 6D 'm', 6F 'o', 76 'v', 65 'e', 20 ' ', 69 'i', 6E 'n', 20 ' ', 64 'd', 6F 'o', 74 't', 66 'f', 69 'i', 6C 'l', 65 'e', 73 's', 0A '\n', 0A '\n', 0A '\n', 77 'w', 6F 'o', 72 'r', 6B 'k', 3A ':', 0A '\n', 2D '-', 20 ' ', 6F 'o', 72 'r', 63 'c', 68 'h', 65 'e', 73 's', 74 't', 72 'r', 61 'a', 0A '\n', 0A '\n', 64 'd', 6F 'o', 6E 'n', 65 'e', 3F '?', 20 ' ', 65 'e', 64 'd', 69 'i', 74 't', 20 ' ', 7E '~', 2F '/', 74 't', 6F 'o', 64 'd', 6F 'o', 0A '\n', 35 '5', 30 '0', 32 '2', 20 ' ', 2F '/', 68 'h', 6F 'o', 6D 'm', 65 'e', 2F '/', 68 'h', 75 'u', 67 'g', 68 'h', 2F '/', 2E '.', 62 'b', 61 'a', 73 's', 68 'h', 5F '_', 68 'h', 69 'i', 73 's', 74 't', 6F 'o', 72 'r', 79 'y', 0A '\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+vt.c:579: [31mUNIMPLEMENTED[m: set attribute
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 6 (child stderr)
+red 131 from fd 6 (child stderr): (1B '\e', 5B '[', 30 '0', 31 '1', 3B ';', 33 '3', 32 '2', 6D 'm', 68 'h', 75 'u', 67 'g', 68 'h', 40 '@', 1B '\e', 5B '[', 30 '0', 31 '1', 3B ';', 33 '3', 35 '5', 6D 'm', 68 'h', 75 'u', 67 'g', 68 'h', 73 's', 69 'i', 65 'e', 73 's', 1B '\e', 5B '[', 30 '0', 30 '0', 6D 'm', 3A ':', 1B '\e', 5B '[', 30 '0', 31 '1', 3B ';', 33 '3', 34 '4', 6D 'm', 7E '~', 2F '/', 73 's', 72 'r', 63 'c', 2F '/', 70 'p', 65 'e', 72 'r', 73 's', 6F 'o', 6E 'n', 61 'a', 6C 'l', 2F '/', 76 'v', 74 't', 1B '\e', 5B '[', 30 '0', 30 '0', 6D 'm', 20 ' ', 28 '(', 1B '\e', 5B '[', 33 '3', 32 '2', 6D 'm', 6D 'm', 61 'a', 69 'i', 6E 'n', 1B '\e', 5B '[', 30 '0', 6D 'm', 20 ' ', 1B '\e', 5B '[', 33 '3', 31 '1', 6D 'm', 2A '*', 1B '\e', 5B '[', 30 '0', 6D 'm', 1B '\e', 5B '[', 31 '1', 3B ';', 33 '3', 34 '4', 6D 'm', 24 '$', 1B '\e', 5B '[', 30 '0', 6D 'm', 1B '\e', 5B '[', 33 '3', 31 '1', 6D 'm', 25 '%', 1B '\e', 5B '[', 30 '0', 6D 'm', 7C '|', 75 'u', 3D '=', 20 ' ', 6F 'o', 72 'r', 69 'i', 67 'g', 69 'i', 6E 'n', 2F '/', 6D 'm', 61 'a', 69 'i', 6E 'n', 29 ')', 24 '$', 20 ' ')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 32
+Got SGR code Bold
+realloc((nil), 4 (1 * 4)) => 0x502000000010
+size = 0, capacity = 0, cap = 1, sizeof(*) = 4
+memset(0x502000000010 ((...)0x502000000010 + 0), '\0', 4 ((1 - 0) * 4)
+Got SGR code Foreground Green
+realloc(0x502000000010, 5 (2 * 4)) => 0x502000000030
+size = 1, capacity = 1, cap = 2, sizeof(*) = 4
+memset(0x502000000034 ((...)0x502000000030 + 1), '\0', 4 ((2 - 1) * 4)
+=================================================================
+==1064609==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x502000000035 at pc 0x779eda2fa97d bp 0x7ffe1f602460 sp 0x7ffe1f601c08
+WRITE of size 4 at 0x502000000035 thread T0
+    #0 0x779eda2fa97c in memset ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors_memintrinsics.inc:87
+    #1 0x599dda9b8ce1 in _vt_select_graphic_rendition /home/hugh/src/personal/vt/vt.c:1137
+    #2 0x599dda9c0a60 in _vt_csi_dispatch /home/hugh/src/personal/vt/vt.c:1375
+    #3 0x599dda9c0da1 in _vt_action /home/hugh/src/personal/vt/vt.c:1403
+    #4 0x599dda9c24bd in vt_process /home/hugh/src/personal/vt/vt.c:1663
+    #5 0x599dda9c7642 in vt_main_loop /home/hugh/src/personal/vt/vt.c:2223
+    #6 0x599dda9c8688 in main /home/hugh/src/personal/vt/vt.c:2347
+    #7 0x779ed9e2a1c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #8 0x779ed9e2a28a in __libc_start_main_impl ../csu/libc-start.c:360
+    #9 0x599dda9ad8e4 in _start (/home/hugh/src/personal/vt/a.out+0xc8e4) (BuildId: 76c29ba7d64510b4bb23069d425f69066ebe3b14)
+
+0x502000000035 is located 0 bytes after 5-byte region [0x502000000030,0x502000000035)
+allocated by thread T0 here:
+    #0 0x779eda2fc778 in realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:85
+    #1 0x599dda9b89e8 in _vt_select_graphic_rendition /home/hugh/src/personal/vt/vt.c:1137
+    #2 0x599dda9c0a60 in _vt_csi_dispatch /home/hugh/src/personal/vt/vt.c:1375
+    #3 0x599dda9c0da1 in _vt_action /home/hugh/src/personal/vt/vt.c:1403
+    #4 0x599dda9c24bd in vt_process /home/hugh/src/personal/vt/vt.c:1663
+    #5 0x599dda9c7642 in vt_main_loop /home/hugh/src/personal/vt/vt.c:2223
+    #6 0x599dda9c8688 in main /home/hugh/src/personal/vt/vt.c:2347
+    #7 0x779ed9e2a1c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #8 0x779ed9e2a28a in __libc_start_main_impl ../csu/libc-start.c:360
+    #9 0x599dda9ad8e4 in _start (/home/hugh/src/personal/vt/a.out+0xc8e4) (BuildId: 76c29ba7d64510b4bb23069d425f69066ebe3b14)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors_memintrinsics.inc:87 in memset
+Shadow bytes around the buggy address:
+  0x501ffffffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x501ffffffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x501ffffffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x501fffffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x501fffffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x502000000000: fa fa fd fa fa fa[05]fa fa fa fa fa fa fa fa fa
+  0x502000000080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x502000000100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x502000000180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x502000000200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x502000000280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1064609==ABORTING

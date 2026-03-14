@@ -1,0 +1,9 @@
+rows=47
+cols=164
+start-row=0
+start-col=0
+mode=pty
+arg=./a.out
+arg=bash
+arg=--norc
+arg=-i
