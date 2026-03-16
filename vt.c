@@ -19,8 +19,9 @@
 #include <termios.h>
 #include <unistd.h>
 
-#define UNIMPL(fmt, ...) do { fprintf(stdout, "\n%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (false) exit(1); else return; } while (false)
-#define UNREACHABLE(fmt, ...) do { fprintf(stdout, "\n%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); exit(1); } while (false)
+#define HERE(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mHERE\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); } while (false)
+#define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (false) exit(1); else return; } while (false)
+#define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); exit(1); } while (false)
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
 
@@ -63,16 +64,24 @@
    X(VT_MODIFIER_SUPER)   E(1 << 3) /* Only used for certain special chars */
 
 #define VT_ATTRIBUTES_LIST \
-   C(0)  X(VT_ATTRIBUTE_NONE) L("Reset") \
-   C(1)  X(VT_ATTRIBUTE_BOLD) L("Bold") \
-   C(30) X(VT_ATTRIBUTE_FG_0) L("Foreground Black") \
-   C(31) X(VT_ATTRIBUTE_FG_1) L("Foreground Red") \
-   C(32) X(VT_ATTRIBUTE_FG_2) L("Foreground Green") \
-   C(33) X(VT_ATTRIBUTE_FG_3) L("Foreground Yellow") \
-   C(34) X(VT_ATTRIBUTE_FG_4) L("Foreground Blue") \
-   C(35) X(VT_ATTRIBUTE_FG_5) L("Foreground Magenta") \
-   C(36) X(VT_ATTRIBUTE_FG_6) L("Foreground Cyan") \
-   C(37) X(VT_ATTRIBUTE_FG_7) L("Foreground White")
+   C(0)  X(VT_ATTRIBUTE_NONE) O(0)  L("Reset") \
+   C(1)  X(VT_ATTRIBUTE_BOLD) O(1)  L("Bold") \
+   C(30) X(VT_ATTRIBUTE_FG_0) O(30) L("Foreground Black") \
+   C(31) X(VT_ATTRIBUTE_FG_1) O(31) L("Foreground Red") \
+   C(32) X(VT_ATTRIBUTE_FG_2) O(32) L("Foreground Green") \
+   C(33) X(VT_ATTRIBUTE_FG_3) O(33) L("Foreground Yellow") \
+   C(34) X(VT_ATTRIBUTE_FG_4) O(34) L("Foreground Blue") \
+   C(35) X(VT_ATTRIBUTE_FG_5) O(35) L("Foreground Magenta") \
+   C(36) X(VT_ATTRIBUTE_FG_6) O(36) L("Foreground Cyan") \
+   C(37) X(VT_ATTRIBUTE_FG_7) O(37) L("Foreground White") \
+   C(40) X(VT_ATTRIBUTE_BG_0) O(40) L("Background Black") \
+   C(41) X(VT_ATTRIBUTE_BG_1) O(41) L("Background Red") \
+   C(42) X(VT_ATTRIBUTE_BG_2) O(42) L("Background Green") \
+   C(43) X(VT_ATTRIBUTE_BG_3) O(43) L("Background Yellow") \
+   C(44) X(VT_ATTRIBUTE_BG_4) O(44) L("Background Blue") \
+   C(45) X(VT_ATTRIBUTE_BG_5) O(45) L("Background Magenta") \
+   C(46) X(VT_ATTRIBUTE_BG_6) O(46) L("Background Cyan") \
+   C(47) X(VT_ATTRIBUTE_BG_7) O(47) L("Background White")
 
 #define VT_STATES_LIST \
     X(VT_STATE_GROUND) \
@@ -172,15 +181,18 @@
    C(4)    X(VT_CSI_PRIVATE_TILDE_END)    K(VT_KEY_END)    L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END"))
 
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)        L("NONE")                      S(UNREACHABLE("Unexpected CSI private question function")) \
-   C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)     L("Show Cursor")               S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
-   C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)      L("Alternative Screen Buffer") S(_vt_alternate_buffer(vt, input)) \
-   C(1000) X(VT_CSI_PRIVATE_QUESTION_VT200_MOUSE) L("VT200 Mouse Reporting")     S(UNIMPL("VT_CSI_PRIVATE_VT200_MOUSE"))
+   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                         L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private question function")) \
+   C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                      L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
+   C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                       L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
+   C(1049) X(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)            L("Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit") S(_vt_alternate_buffer(vt, input)) \
+   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)          L("Mouse Reporting with Press and Release")                                                S(UNIMPL("VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE")) \
+   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG) L("Mouse Reporting with Press, Release, and Drag")                                         S(UNIMPL("VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG"))
 
 #define C(code)
 #define S(code)
 #define L(code)
 #define K(code)
+#define O(code)
 
 #define X(name) name
 #define E(code) = code, 
@@ -190,7 +202,7 @@ typedef enum { VT_MODIFIERS_LIST } vt_modifier;
 #undef X
 #define E(code)
 #define X(name) name,
-typedef enum { VT_ATTRIBUTES_LIST } vt_attribute;
+typedef enum { VT_ATTRIBUTES_LIST VT_NUM_ATTRIBUTES } vt_attribute;
 typedef enum { VT_KEYS_LIST VT_NUM_KEYS } vt_key;
 typedef enum { VT_STATES_LIST VT_NUM_STATES } vt_state;
 typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
@@ -202,6 +214,7 @@ typedef enum { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_TILDE_FUNC
 #undef X
 
 #define X(name) [name] = #name, 
+static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
@@ -211,6 +224,7 @@ static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TI
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
 
+#define VT_ATTRIBUTE_STRING(attr) (((attr) >= 0 && (attr) < VT_NUM_ATTRIBUTES) ? vt_attribute_strings[(attr)] : "(attribute out of bounds)")
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
 #define VT_ESCAPE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings[(func)] : "(escape_function out of bounds)")
@@ -242,14 +256,23 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 #define ARRAY(t) struct { t *data; size_t size; size_t capacity; }
 
 #define ARRAY_ENSURE_CAPACITY(arr, cap) do { \
-   if ((arr).capacity >= cap) break; \
-   (arr).data = realloc((arr).data, cap * sizeof(*(arr).data)); \
-   if (!(arr).data) break; \
-   memset((arr).data + (arr).size, '\0', (cap - (arr).size) * sizeof(*(arr).data)); \
-   (arr).capacity = cap; \
+   if ((arr).capacity >= (cap)) break; \
+   size_t _size = sizeof(*(arr).data); \
+   /* HERE("realloc(%p, %lu)", (void*)(arr).data, (cap) * _size); */ \
+   typeof((arr).data) data = realloc((arr).data, (cap) * _size); \
+   if (!data) break; \
+   (arr).data = data; \
+   memset((arr).data + (arr).size, '\0', ((cap) - (arr).size) * _size); \
+   (arr).capacity = (cap); \
 } while (false)
 
 #define ARRAY_CLEAR(arr) do { (arr).size = 0; } while (false)
+#define ARRAY_FREE(a) do { \
+   ARRAY_CLEAR(a); \
+   free(a.data); \
+   a.capacity = 0; \
+} while (false)
+
 #define ARRAY_CONTAINS(ret, arr, d) do { \
    (ret) = false; \
    for (size_t i = 0; i < (arr).size; i ++) { \
@@ -274,25 +297,39 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
    } \
 } while (false)
 
+#define ARRAY_FOREACH(arr, code) do { \
+   for (size_t idx = 0; idx < (arr).size; ++ idx) { \
+      typeof(*(arr).data) element = (arr).data[idx]; \
+      do { code; } while (false); \
+   } \
+} while (false)
+
 #define SET(t) ARRAY(t)
 #define SET_CLEAR(s) ARRAY_CLEAR(s)
 #define SET_CONTAINS(ret, s, d) ARRAY_CONTAINS(ret, s, d)
 #define SET_COPY(src, dst) ARRAY_COPY(src, dst)
+#define SET_FOREACH(arr, code) ARRAY_FOREACH(arr, code)
 #define SET_APPEND(s, d) do { \
    bool ret; \
    SET_CONTAINS(ret, s, d); \
    if (ret) break; \
    ARRAY_APPEND(s, d); \
 } while (false)
+#define SET_FREE(s) ARRAY_FREE(s)
 
 #define SET_EQUALS(ret, s1, s2) do { \
-   (ret) = false; \
-   if ((s1).size != (s2).size) break; \
+   if ((s1).size != (s2).size) { \
+      (ret) = false; \
+      break; \
+   } \
+   (ret) = true; \
    for (size_t i = 0; i < (s1).size; i ++) { \
       SET_CONTAINS(ret, (s2), (s1).data[i]); \
-      if (!ret) break; \
+      if (!(ret)) break; \
    } \
 } while (false)
+
+typedef SET(vt_attribute) vt_attribute_set;
 
 static_assert(VT_NUM_STATES == 14, "Not the same number as William's design");
 static_assert(VT_NUM_ACTIONS == 14, "Not the same number as William's design");
@@ -309,7 +346,7 @@ typedef struct
 {
     bool used;
     char c;
-    SET(vt_attribute) attributes;
+    vt_attribute_set attributes;
     bool cr;
     bool lf;
 } vt_cell;
@@ -414,7 +451,7 @@ typedef struct
     vt_buffer primary_buffer;
     vt_buffer *alternate_buffer;
     vt_sequence_state sequence_state;
-    SET(vt_attribute) current_attributes;
+    vt_attribute_set current_attributes;
     pid_t child_pid;
     int stdout[2];
     int stderr[2];
@@ -427,6 +464,11 @@ void vt_process(vt *vt, uint8_t input);
 void vt_free(vt *vt)
 {
     if (vt->primary_buffer.cells) {
+         for (size_t y = 0; y < vt->primary_buffer.height; y ++) {
+            for (size_t x = 0; x < vt->primary_buffer.width; x ++) {
+               SET_FREE(vt->primary_buffer.cells[y * vt->primary_buffer.width + x].attributes);
+            }
+         }
         free(vt->primary_buffer.cells);
         vt->primary_buffer.cells = NULL;
         vt->primary_buffer.width = 0;
@@ -438,6 +480,11 @@ void vt_free(vt *vt)
     }
     if (vt->alternate_buffer) {
        if (vt->alternate_buffer->cells) {
+         for (size_t y = 0; y < vt->alternate_buffer->height; y ++) {
+            for (size_t x = 0; x < vt->alternate_buffer->width; x ++) {
+               SET_FREE(vt->alternate_buffer->cells[y * vt->alternate_buffer->width + x].attributes);
+            }
+         }
           free(vt->alternate_buffer->cells);
           vt->alternate_buffer->cells = NULL;
           vt->alternate_buffer->width = 0;
@@ -450,6 +497,7 @@ void vt_free(vt *vt)
        free(vt->alternate_buffer);
        vt->alternate_buffer = NULL;
     }
+    SET_FREE(vt->current_attributes);
     vt->primary_buffer.cursor.x = 1;
     vt->primary_buffer.cursor.y = 1;
 }
@@ -464,6 +512,9 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
     switch (scroll) {
         case VT_SCROLL_UP:
             if (buffer->cursor.y <= 1) return;
+            for (size_t x = 0; x < buffer->width; x ++) {
+               SET_FREE(buffer->cells[(buffer->height - 1) * buffer->width + x].attributes);
+            }
             for (size_t row = 1; row < buffer->height; row ++) {
                 memcpy(buffer->cells + (row - 1) * buffer->width, buffer->cells + row * buffer->width, buffer->width * sizeof(*buffer->cells));
             }
@@ -473,7 +524,9 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
 
         case VT_SCROLL_DOWN:
             if (buffer->cursor.y >= buffer->height) return;
-
+            for (size_t x = 0; x < buffer->width; x ++) {
+               SET_FREE(buffer->cells[x].attributes);
+            }
             for (size_t row = buffer->height - 2; row >= 1; row --) {
                 memcpy(buffer->cells + (row + 1) * buffer->width, buffer->cells + row * buffer->width, buffer->width);
             }
@@ -483,11 +536,17 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
 
         case VT_SCROLL_LEFT:
             if (buffer->cursor.x <= 1) return;
+            for (size_t y = 0; y < buffer->height; y ++) {
+               SET_FREE(buffer->cells[y * buffer->width].attributes);
+            }
             UNIMPL("this will need something diff than memcpy");
             break;
 
         case VT_SCROLL_RIGHT:
             if (buffer->cursor.x >= buffer->width) return;
+            for (size_t y = 0; y < buffer->height; y ++) {
+               SET_FREE(buffer->cells[(y + 1) * buffer->width - 1].attributes);
+            }
             UNIMPL("this will need something diff than memcpy");
             break;
 
@@ -497,20 +556,17 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
 
 #define GUTTER_LEFT 3
 #define GUTTER_TOP 3
-
-void vt_draw_window(vt *vt)
-{
-#define CLEAR_SCREEN do { if (fprintf(vt->tty, VT_ED, 2) < 4) { perror("fprintf(CLEAR_SCREEN)"); fprintf(stderr, "Could not write CLEAR_SCREEN fully\n"); } } while (false)
 #define GOTO(x, y) do { if (fprintf(vt->tty, VT_CUP, (int)(y), (int)(x)) < 6) { perror("fprintf(GOTO)"); fprintf(stderr, "Could not write GOTO fully\n"); } } while (false)
+#define CLEAR_SCREEN do { if (fprintf(vt->tty, VT_ED, 2) < 4) { perror("fprintf(CLEAR_SCREEN)"); fprintf(stderr, "Could not write CLEAR_SCREEN fully\n"); } } while (false)
 
+void vt_draw_gutters(vt *vt)
+{
     if (!vt) return;
     vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
     if (!buffer->cells) return;
 
     if (!buffer->dirty) return;
-    /* fprintf(stderr, "redraw\n"); */
 
-    CLEAR_SCREEN;
     for (size_t x = 10; x <= buffer->width; x += 10) {
         GOTO(GUTTER_LEFT + x, 1);
         if (fputc("0123456789"[(x / 10) % 10], vt->tty) == EOF) {
@@ -557,17 +613,48 @@ void vt_draw_window(vt *vt)
             }
         }
     }
+}
 
-    SET(vt_attribute) last_attributes = {0};
+void vt_draw_window(vt *vt)
+{
+    if (!vt) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
+
+    if (!buffer->dirty) return;
+    /* fprintf(stderr, "redraw\n"); */
+
+    CLEAR_SCREEN;
+    vt_draw_gutters(vt);
+
+    vt_attribute_set empty_set = {0};
+    /* NOTE might break cow */
+    vt_attribute_set *last_attributes = &empty_set;
 
     for (size_t y = 1; y <= buffer->height; y ++) {
         for (size_t x = 1; x <= buffer->width; x ++) {
             vt_cell *cell = &buffer->cells[(y - 1) * buffer->width + x - 1];
             if (cell->used) {
                bool eq;
-               SET_EQUALS(eq, last_attributes, cell->attributes);
+               SET_EQUALS(eq, *last_attributes, cell->attributes);
                if (!eq) {
-                    UNIMPL("set attribute");
+                     fprintf(vt->tty, "\033[");
+#undef O
+#define X(enum_code) case enum_code: 
+#define O(sgr_code) fprintf(vt->tty, "%u", sgr_code); break;
+                     SET_FOREACH(cell->attributes, {
+                        if (idx) fputc(';', vt->tty);
+                        switch (element) {
+                           VT_ATTRIBUTES_LIST
+                           default: UNREACHABLE("Unexpected sgr element %s", VT_ATTRIBUTE_STRING(element));
+                        }
+                     });
+#undef X
+#undef O
+#define O(code)
+                     fprintf(vt->tty, "m");
+                     fflush(vt->tty);
+                     last_attributes = &cell->attributes;
                 }
                 if (x == 1 || !buffer->cells[(y - 1) * buffer->width + x - 2].used) {
                     GOTO(x + GUTTER_LEFT, y + GUTTER_TOP);
@@ -594,8 +681,9 @@ void vt_draw_window(vt *vt)
        break;
     }
     buffer->dirty = false;
-#undef GOTO
 }
+#undef GOTO
+#undef CLEAR_SCREEN
 
 int vt_fprintc(FILE *stream, char input)
 {
@@ -659,11 +747,24 @@ void vt_resize_window(vt *vt)
 
     buffer->cells = calloc(buffer->width * buffer->height, sizeof(*buffer->cells));
     if (!buffer->cells) {
-        if (original) free(original);
-        return;
+       if (original) {
+          for (size_t y = 0; y < original_size.ws_row; y ++) {
+             for (size_t x = 0; x < original_size.ws_col; x ++) {
+                SET_FREE(original[y * original_size.ws_col + x].attributes);
+             }
+          }
+          free(original);
+       }
+       return;
     }
 
     if (original) {
+       /* FIXME take note of the attributes when resizing */
+          for (size_t y = 0; y < original_size.ws_row; y ++) {
+             for (size_t x = 0; x < original_size.ws_col; x ++) {
+                SET_FREE(original[y * original_size.ws_col + x].attributes);
+             }
+          }
        /* FIXME store and retrieve points where a \r\n was done, then replay that */
        size_t dst_row = 0;
        size_t dst_col = 0;
@@ -919,6 +1020,11 @@ void _vt_alternate_buffer(vt *vt, uint8_t input)
       case 'l':
          if (!vt->alternate_buffer) return;
          if (vt->alternate_buffer->cells) {
+            for (size_t y = 0; y < vt->alternate_buffer->height; y ++) {
+               for (size_t x = 0; x < vt->alternate_buffer->width; x ++) {
+                  SET_FREE(vt->alternate_buffer->cells[y * vt->alternate_buffer->width + x].attributes);
+               }
+            }
             free(vt->alternate_buffer->cells);
             vt->alternate_buffer->cells = NULL;
          }
@@ -944,12 +1050,21 @@ void _vt_erase_in_line(vt *vt, uint16_t param)
 
    switch (param) {
       case 0:
+         for (size_t x = buffer->cursor.x - 1; x < buffer->width; x ++) {
+            SET_FREE(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x].attributes);
+         }
               memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1, '\0', sizeof(*buffer->cells) * (buffer->width - buffer->cursor.x + 1));
                  break;
       case 1:
+         for (size_t x = 0; x < buffer->cursor.x - 1; x ++) {
+            SET_FREE(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x].attributes);
+         }
               memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width, '\0', sizeof(*buffer->cells) * (buffer->cursor.x));
                  break;
       case 2:
+         for (size_t x = 0; x < buffer->width; x ++) {
+            SET_FREE(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x].attributes);
+         }
               memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width, '\0', sizeof(*buffer->cells) * buffer->width);
                  break;
       default: UNREACHABLE("Unexpected param to ED: %d", param);
@@ -966,12 +1081,27 @@ void _vt_erase_in_page(vt *vt, uint16_t param)
 
    switch (param) {
       case 0:
+         for (size_t y = buffer->cursor.y - 1; y < buffer->height; y ++) {
+            for (size_t x = (y == buffer->cursor.y - 1) ? (buffer->cursor.x - 1) : 0; x < buffer->width; x ++) {
+               SET_FREE(buffer->cells[y * buffer->width + x].attributes);
+            }
+         }
               memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1, '\0', sizeof(*buffer->cells) * ((buffer->width * buffer->height) - ((buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1)));
                  break;
       case 1:
+         for (size_t y = 0; y < buffer->cursor.y - 1; y ++) {
+            for (size_t x = 0; x < (y == buffer->cursor.y - 1) ? (buffer->cursor.x - 1) : buffer->width; x ++) {
+               SET_FREE(buffer->cells[y * buffer->width + x].attributes);
+            }
+         }
               memset(buffer->cells, '\0', sizeof(*buffer->cells) * (((buffer->cursor.y - 1) * buffer->width + buffer->cursor.x)));
                  break;
       case 2:
+         for (size_t y = 0; y < buffer->height; y ++) {
+            for (size_t x = 0; x < buffer->width; x ++) {
+               SET_FREE(buffer->cells[y * buffer->width + x].attributes);
+            }
+         }
               memset(buffer->cells, '\0', sizeof(*buffer->cells) * (buffer->width * buffer->height));
                  break;
       default: UNREACHABLE("Unexpected param to ED: %d", param);
@@ -1039,9 +1169,16 @@ void _vt_print(vt *vt, char input)
         buffer->cursor.wrap_pending = false;
     }
 
+    if (buffer->cursor.y > buffer->height || buffer->cursor.x > buffer->width) {
+        UNREACHABLE("buffer out of bounds %lux%lu vs %lux%lu", buffer->cursor.x, buffer->cursor.y, buffer->width, buffer->height);
+    }
     vt_cell *cell = &buffer->cells[(buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1];
     cell->used = true;
     cell->c = input;
+    /* FIXME do a copy-on-write type thing? */
+    // prob need to store a ref counter to GC it
+    // then on any write op, if ref count > 1 alloc new space and return new copy for that write, with ref count==1
+    // for any ref == 1, just do writre
     SET_COPY(cell->attributes, vt->current_attributes);
 
     if (buffer->cursor.x == buffer->width) {
@@ -1110,20 +1247,20 @@ void _vt_select_graphic_rendition(vt *vt)
 {
     if (!vt) return;
 
-    for (size_t p = 0; p < vt->sequence_state.num_params; p ++) {
+    for (size_t p = 0; p == 0 || p < vt->sequence_state.num_params; p ++) {
        uint16_t param = VT_PARAM(vt, p, 0);
-#define X(code)
 #define C(code) case code: 
-#define L(name) fprintf(stderr, "Got SGR code " name "\n"); break;
-       switch (param) {
-          VT_ATTRIBUTES_LIST
-          default: UNIMPL("Unimplemented param for SGR, param %u", param);
-       }
-#undef L
-#undef X
+/* #define X(code) */
+/* #define L(name) HERE("Got SGR param %u code %s", VT_PARAM(vt, p, 0), name); break; */
+/*        switch (param) { */
+/*           VT_ATTRIBUTES_LIST */
+/*           default: UNIMPL("Unimplemented param for SGR, param %u", param); */
+/*        } */
+/* #undef L */
+/* #undef X */
 
 #define L(typ)
-#define X(typ) if (typ) SET_APPEND(vt->current_attributes, typ); else SET_CLEAR(vt->current_attributes); break;
+#define X(typ) if (typ != VT_ATTRIBUTE_NONE) SET_APPEND(vt->current_attributes, typ); else SET_CLEAR(vt->current_attributes); break;
        switch (param) {
           VT_ATTRIBUTES_LIST
           default: UNIMPL("Unimplemented param for SGR, param %u", param);
@@ -1131,6 +1268,9 @@ void _vt_select_graphic_rendition(vt *vt)
 #undef X
 #undef C
     }
+
+    /* if (vt->current_attributes.size == 0) HERE("no attributes"); */
+   /* SET_FOREACH(vt->current_attributes, HERE("attr %zu: %s", idx, VT_ATTRIBUTE_STRING(element))); */
 }
 
 void _vt_execute(vt *vt, uint8_t input)
@@ -1304,7 +1444,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 4, "Not all functions handled");
+    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 6, "Not all functions handled");
     switch (func) {
        VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
