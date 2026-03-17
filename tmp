@@ -1,0 +1,292 @@
+Opening /dev/tty
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 173x42
+inner window size 170x39
+Parent 1608184
+Started child 1608185
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 4 (child stdout)
+red 512 from fd 4 (child stdout): (54 'T', 4F 'O', 44 'D', 4F 'O', 3A ':', 0A '\n', 6E 'n', 65 'e', 74 't', 77 'w', 6F 'o', 72 'r', 6B 'k', 69 'i', 6E 'n', 67 'g', 3A ':', 0A '\n', 2D '-', 20 ' ', 70 'p', 69 'i', 68 'h', 6F 'o', 6C 'l', 65 'e', 20 ' ', 6F 'o', 72 'r', 20 ' ', 73 's', 6F 'o', 6D 'm', 65 'e', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 20 ' ', 28 '(', 61 'a', 64 'd', 67 'g', 75 'u', 61 'a', 72 'r', 64 'd', 68 'h', 6F 'o', 6D 'm', 65 'e', 3F '?', 29 ')', 0A '\n', 20 ' ', 2D '-', 20 ' ', 6D 'm', 61 'a', 79 'y', 62 'b', 65 'e', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 75 'u', 6E 'n', 62 'b', 6F 'o', 75 'u', 6E 'n', 64 'd', 2E '.', 20 ' ', 6E 'n', 6F 'o', 20 ' ', 6E 'n', 65 'e', 65 'e', 64 'd', 20 ' ', 66 'f', 6F 'o', 72 'r', 20 ' ', 77 'w', 65 'e', 62 'b', 20 ' ', 69 'i', 6E 'n', 74 't', 65 'e', 72 'r', 66 'f', 61 'a', 63 'c', 65 'e', 2E '.', 2E '.', 2C ',', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 63 'c', 72 'r', 6F 'o', 6E 'n', 6A 'j', 6F 'o', 62 'b', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 73 's', 63 'c', 72 'r', 69 'i', 70 'p', 74 't', 20 ' ', 74 't', 6F 'o', 20 ' ', 70 'p', 61 'a', 72 'r', 73 's', 65 'e', 20 ' ', 62 'b', 6C 'l', 6F 'o', 63 'c', 6B 'k', 6C 'l', 69 'i', 73 's', 74 't', 73 's', 0A '\n', 2D '-', 20 ' ', 6C 'l', 6F 'o', 63 'c', 6B 'k', 20 ' ', 64 'd', 6F 'o', 77 'w', 6E 'n', 20 ' ', 41 'A', 50 'P', 20 ' ', 74 't', 6F 'o', 20 ' ', 73 's', 74 't', 61 'a', 74 't', 69 'i', 63 'c', 20 ' ', 49 'I', 50 'P', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6C 'l', 69 'i', 6D 'm', 69 'i', 74 't', 20 ' ', 70 'p', 6F 'o', 72 'r', 74 't', 73 's', 20 ' ', 74 't', 72 'r', 61 'a', 66 'f', 66 'f', 69 'i', 63 'c', 20 ' ', 74 't', 6F 'o', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 77 'w', 68 'h', 61 'a', 74 't', 20 ' ', 69 'i', 73 's', 20 ' ', 6E 'n', 65 'e', 65 'e', 64 'd', 65 'e', 64 'd', 0A '\n', 20 ' ', 2D '-', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6F 'o', 74 't', 68 'h', 65 'e', 72 'r', 20 ' ', 6D 'm', 67 'g', 6D 'm', 74 't', 20 ' ', 73 's', 74 't', 75 'u', 66 'f', 66 'f', 20 ' ', 63 'c', 6F 'o', 75 'u', 6C 'l', 64 'd', 20 ' ', 68 'h', 61 'a', 76 'v', 65 'e', 20 ' ', 66 'f', 69 'i', 72 'r', 65 'e', 77 'w', 61 'a', 6C 'l', 6C 'l', 65 'e', 64 'd', 20 ' ', 65 'e', 67 'g', 72 'r', 65 'e', 73 's', 73 's', 3F '?', 0A '\n', 2D '-', 20 ' ', 69 'i', 70 'p', 76 'v', 36 '6', 0A '\n', 20 ' ', 2D '-', 20 ' ', 6D 'm', 61 'a', 79 'y', 62 'b', 65 'e', 20 ' ', 74 't', 72 'r', 79 'y', 20 ' ', 62 'b', 72 'r', 6F 'o', 61 'a', 64 'd', 63 'c', 61 'a', 73 's', 74 't', 20 ' ', 74 't', 6F 'o', 20 ' ', 75 'u', 6E 'n', 69 'i', 63 'c', 61 'a', 73 's', 74 't', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 75 'u', 6E 'n', 69 'i', 66 'f', 69 'i', 2C ',', 20 ' ', 73 's', 65 'e', 65 'e', 20 ' ', 69 'i', 66 'f', 20 ' ', 74 't', 68 'h', 61 'a', 74 't', 20 ' ', 68 'h', 65 'e', 6C 'l', 70 'p', 73 's', 0A '\n', 20 ' ', 2D '-', 20 ' ', 73 's', 65 'e', 65 'e', 20 ' ', 69 'i', 66 'f', 20 ' ', 63 'c', 61 'a', 62 'b', 6C 'l', 65 'e', 20 ' ', 66 'f', 69 'i', 78 'x', 65 'e', 73 's', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 69 'i', 73 's', 73 's', 75 'u', 65 'e', 20 ' ', 28 '(', 69 'i', 65 'e', 20 ' ', 69 'i', 74 't', 20 ' ', 69 'i', 73 's', 20 ' ', 77 'w', 69 'i', 66 'f', 69 'i', 29 ')', 0A '\n', 20 ' ', 2D '-', 20 ' ', 74 't', 75 'u', 72 'r', 6E 'n', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 73 's', 6E 'n', 6F 'o', 6F 'o', 70 'p', 69 'i', 6E 'n', 67 'g', 20 ' ', 65 'e', 76 'v', 65 'e', 72 'r', 79 'y', 77 'w', 68 'h', 65 'e', 72 'r', 65 'e', 2C ',', 20 ' ', 74 't', 72 'r', 79 'y', 20 ' ', 64 'd', 69 'i', 66 'f', 66 'f', 20 ' ', 72 'r', 6F 'o', 75 'u', 74 't', 65 'e', 72 'r', 20 ' ', 62 'b', 65 'e', 69 'i', 6E 'n', 67 'g', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 71 'q', 75 'u', 65 'e', 72 'r', 69 'i', 65 'e', 72 'r', 20 ' ', 6F 'o', 6E 'n', 2C ',', 20 ' ', 73 's', 65 'e', 65 'e', 20 ' ', 77 'w', 68 'h', 61 'a', 74 't', 20 ' ', 77 'w', 6F 'o', 72 'r', 6B 'k', 73 's', 3F '?', 20 ' ', 69 'i', 66 'f', 20 ' ', 61 'a', 6E 'n', 79 'y', 0A '\n', 2D '-', 20 ' ', 6D 'm', 6F 'o', 76 'v', 65 'e', 20 ' ', 6E 'n', 65 'e', 77 'w', 20 ' ', 63 'c', 68 'h', 72 'r', 6F 'o', 6D 'm', 65 'e', 63 'c', 61 'a', 73 's', 74 't', 20 ' ')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 4 (child stdout)
+red 512 from fd 4 (child stdout): (74 't', 76 'v', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 20 ' ', 74 't', 6F 'o', 20 ' ', 75 'u', 6E 'n', 74 't', 72 'r', 75 'u', 73 's', 74 't', 65 'e', 64 'd', 0A '\n', 20 ' ', 2D '-', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 70 'p', 6F 'o', 77 'w', 65 'e', 72 'r', 73 's', 77 'w', 69 'i', 74 't', 63 'c', 68 'h', 20 ' ', 73 's', 65 'e', 65 'e', 6D 'm', 73 's', 20 ' ', 74 't', 6F 'o', 20 ' ', 62 'b', 65 'e', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 74 't', 72 'r', 75 'u', 73 's', 74 't', 65 'e', 64 'd', 20 ' ', 61 'a', 74 't', 6D 'm', 2E '.', 2E '.', 20 ' ', 6D 'm', 61 'a', 79 'y', 20 ' ', 6E 'n', 65 'e', 65 'e', 64 'd', 20 ' ', 66 'f', 69 'i', 72 'r', 65 'e', 77 'w', 61 'a', 6C 'l', 6C 'l', 69 'i', 6E 'n', 67 'g', 3F '?', 0A '\n', 2D '-', 20 ' ', 63 'c', 61 'a', 62 'b', 6C 'l', 65 'e', 20 ' ', 74 't', 6F 'o', 20 ' ', 6F 'o', 66 'f', 66 'f', 69 'i', 63 'c', 65 'e', 0A '\n', 2D '-', 20 ' ', 6D 'm', 6F 'o', 76 'v', 65 'e', 20 ' ', 65 'e', 75 'u', 66 'f', 79 'y', 20 ' ', 6C 'l', 61 'a', 64 'd', 79 'y', 20 ' ', 74 't', 6F 'o', 20 ' ', 6F 'o', 66 'f', 66 'f', 69 'i', 63 'c', 65 'e', 20 ' ', 6F 'o', 66 'f', 66 'f', 20 ' ', 6D 'm', 69 'i', 6B 'k', 72 'r', 6F 'o', 74 't', 69 'i', 6B 'k', 2C ',', 20 ' ', 74 't', 68 'h', 65 'e', 6E 'n', 20 ' ', 63 'c', 61 'a', 6E 'n', 20 ' ', 68 'h', 61 'a', 76 'v', 65 'e', 20 ' ', 68 'h', 65 'e', 72 'r', 20 ' ', 6F 'o', 6E 'n', 20 ' ', 75 'u', 6E 'n', 74 't', 72 'r', 75 'u', 73 's', 74 't', 65 'e', 64 'd', 2C ',', 20 ' ', 74 't', 68 'h', 6F 'o', 75 'u', 67 'g', 68 'h', 20 ' ', 77 'w', 6F 'o', 75 'u', 6C 'l', 64 'd', 20 ' ', 73 's', 68 'h', 65 'e', 20 ' ', 72 'r', 65 'e', 61 'a', 63 'c', 68 'h', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 63 'c', 61 'a', 6D 'm', 65 'e', 72 'r', 61 'a', 73 's', 3F '?', 20 ' ', 74 't', 68 'h', 69 'i', 73 's', 20 ' ', 63 'c', 6F 'o', 75 'u', 6C 'l', 64 'd', 20 ' ', 61 'a', 6C 'l', 6C 'l', 6F 'o', 77 'w', 20 ' ', 66 'f', 6F 'o', 72 'r', 20 ' ', 61 'a', 20 ' ', 6E 'n', 65 'e', 77 'w', 20 ' ', 76 'v', 6C 'l', 61 'a', 6E 'n', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 77 'w', 69 'i', 66 'f', 69 'i', 2C ',', 20 ' ', 74 't', 68 'h', 61 'a', 74 't', 20 ' ', 69 'i', 73 's', 6E 'n', 27 ''', 74 't', 20 ' ', 74 't', 69 'i', 65 'e', 64 'd', 20 ' ', 74 't', 6F 'o', 20 ' ', 74 't', 68 'h', 65 'e', 20 ' ', 75 'u', 6E 'n', 69 'i', 66 'f', 69 'i', 20 ' ', 70 'p', 6F 'o', 72 'r', 74 't', 20 ' ', 28 '(', 63 'c', 61 'a', 6E 'n', 20 ' ', 62 'b', 65 'e', 20 ' ', 6A 'j', 75 'u', 73 's', 74 't', 20 ' ', 61 'a', 20 ' ', 74 't', 61 'a', 69 'i', 6C 'l', 20 ' ', 69 'i', 6E 'n', 74 't', 6F 'o', 20 ' ', 6D 'm', 67 'g', 6D 'm', 74 't', 29 ')', 0A '\n', 2D '-', 20 ' ', 72 'r', 6F 'o', 6F 'o', 66 'f', 20 ' ', 6C 'l', 61 'a', 64 'd', 64 'd', 65 'e', 72 'r', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 0A '\n', 61 'a', 6C 'l', 70 'p', 69 'i', 6E 'n', 65 'e', 3A ':', 0A '\n', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 6C 'l', 6F 'o', 67 'g', 67 'g', 69 'i', 6E 'n', 67 'g', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 3F '?', 0A '\n', 20 ' ', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 73 's', 79 'y', 73 's', 6C 'l', 6F 'o', 67 'g', 20 ' ', 66 'f', 6F 'o', 72 'r', 77 'w', 61 'a', 72 'r', 64 'd', 69 'i', 6E 'n', 67 'g', 20 ' ', 66 'f', 72 'r', 6F 'o', 6D 'm', 20 ' ', 75 'u', 6E 'n', 69 'i', 66 'f', 69 'i', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6D 'm', 69 'i', 6B 'k', 72 'r', 6F 'o', 74 't', 69 'i', 6B 'k', 2C ',', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ', 6F 'o', 74 't', 68 'h', 65 'e', 72 'r', 73 's', 3F '?', 0A '\n', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 62 'b', 61 'a', 63 'c', 6B 'k', 75 'u', 70 'p', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 67 'g', 3F '?', 0A '\n', 20 ' ', 2D '-', 20 ' ', 73 's', 65 'e', 74 't', 20 ' ', 75 'u', 70 'p', 20 ' ', 62 'b', 61 'a', 63 'c', 6B 'k', 75 'u', 70 'p', 20 ' ', 66 'f', 6F 'o', 72 'r', 77 'w', 61 'a', 72 'r', 64 'd', 69 'i', 6E 'n', 67 'g', 20 ' ', 66 'f', 72 'r', 6F 'o', 6D 'm', 20 ' ', 74 't', 68 'h', 69 'i', 6E 'n', 6B 'k', 70 'p', 61 'a', 64 'd', 20 ' ', 61 'a', 6E 'n', 64 'd', 20 ' ')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+line wrap pending
+line wrap
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 4 (child stdout)
+red 107 from fd 4 (child stdout): (6F 'o', 74 't', 68 'h', 65 'e', 72 'r', 73 's', 3F '?', 0A '\n', 74 't', 6D 'm', 75 'u', 78 'x', 3A ':', 0A '\n', 20 ' ', 2D '-', 20 ' ', 74 't', 6D 'm', 75 'u', 78 'x', 2D '-', 6D 'm', 6F 'o', 76 'v', 65 'e', 20 ' ', 69 'i', 6E 'n', 20 ' ', 64 'd', 6F 'o', 74 't', 66 'f', 69 'i', 6C 'l', 65 'e', 73 's', 0A '\n', 0A '\n', 0A '\n', 77 'w', 6F 'o', 72 'r', 6B 'k', 3A ':', 0A '\n', 2D '-', 20 ' ', 6F 'o', 72 'r', 63 'c', 68 'h', 65 'e', 73 's', 74 't', 72 'r', 61 'a', 0A '\n', 0A '\n', 64 'd', 6F 'o', 6E 'n', 65 'e', 3F '?', 20 ' ', 65 'e', 64 'd', 69 'i', 74 't', 20 ' ', 7E '~', 2F '/', 74 't', 6F 'o', 64 'd', 6F 'o', 0A '\n', 35 '5', 33 '3', 35 '5', 20 ' ', 2F '/', 68 'h', 6F 'o', 6D 'm', 65 'e', 2F '/', 68 'h', 75 'u', 67 'g', 68 'h', 2F '/', 2E '.', 62 'b', 61 'a', 73 's', 68 'h', 5F '_', 68 'h', 69 'i', 73 's', 74 't', 6F 'o', 72 'r', 79 'y', 0A '\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 6 (child stderr)
+red 121 from fd 6 (child stderr): (1B '\e', 5B '[', 30 '0', 31 '1', 3B ';', 33 '3', 32 '2', 6D 'm', 68 'h', 75 'u', 67 'g', 68 'h', 40 '@', 1B '\e', 5B '[', 30 '0', 31 '1', 3B ';', 33 '3', 35 '5', 6D 'm', 68 'h', 75 'u', 67 'g', 68 'h', 73 's', 69 'i', 65 'e', 73 's', 1B '\e', 5B '[', 30 '0', 30 '0', 6D 'm', 3A ':', 1B '\e', 5B '[', 30 '0', 31 '1', 3B ';', 33 '3', 34 '4', 6D 'm', 7E '~', 2F '/', 73 's', 72 'r', 63 'c', 2F '/', 70 'p', 65 'e', 72 'r', 73 's', 6F 'o', 6E 'n', 61 'a', 6C 'l', 2F '/', 76 'v', 74 't', 1B '\e', 5B '[', 30 '0', 30 '0', 6D 'm', 20 ' ', 28 '(', 1B '\e', 5B '[', 33 '3', 32 '2', 6D 'm', 6D 'm', 61 'a', 69 'i', 6E 'n', 1B '\e', 5B '[', 30 '0', 6D 'm', 20 ' ', 1B '\e', 5B '[', 31 '1', 3B ';', 33 '3', 34 '4', 6D 'm', 24 '$', 1B '\e', 5B '[', 30 '0', 6D 'm', 1B '\e', 5B '[', 33 '3', 31 '1', 6D 'm', 25 '%', 1B '\e', 5B '[', 30 '0', 6D 'm', 7C '|', 75 'u', 3D '=', 20 ' ', 6F 'o', 72 'r', 69 'i', 67 'g', 69 'i', 6E 'n', 2F '/', 6D 'm', 61 'a', 69 'i', 6E 'n', 29 ')', 24 '$', 20 ' ')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 35
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 33 '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 31 '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 33 '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 30 '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6D 'm'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |t|
+emitted key t
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 6 (child stderr)
+red 1 from fd 6 (child stderr): |t|
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |m|
+emitted key m
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 6 (child stderr)
+red 1 from fd 6 (child stderr): |m|
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |u|
+emitted key u
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 6 (child stderr)
+red 1 from fd 6 (child stderr): |u|
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |x|
+emitted key x
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 6 (child stderr)
+red 1 from fd 6 (child stderr): |x|
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0D '\r')
+emitted key Enter
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 6 (child stderr)
+red 1 from fd 6 (child stderr): (0A '\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 8 (child tty)
+red 229 from fd 8 (child tty): (1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 34 '4', 39 '9', 68 'h', 1B '\e', 5B '[', 3F '?', 31 '1', 68 'h', 1B '\e', 3D '=', 1B '\e', 5B '[', 48 'H', 1B '\e', 5B '[', 4A 'J', 1B '\e', 5B '[', 33 '3', 34 '4', 68 'h', 1B '\e', 5B '[', 3F '?', 32 '2', 35 '5', 68 'h', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 30 '0', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 32 '2', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 33 '3', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 36 '6', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 35 '5', 6C 'l', 1B '\e', 5B '[', 3F '?', 32 '2', 30 '0', 30 '0', 34 '4', 68 'h', 1B '\e', 5B '[', 6D 'm', 0F, 1B '\e', 5B '[', 33 '3', 34 '4', 68 'h', 1B '\e', 5B '[', 3F '?', 32 '2', 35 '5', 68 'h', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 36 '6', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 30 '0', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 32 '2', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 33 '3', 6C 'l', 1B '\e', 5B '[', 31 '1', 3B ';', 31 '1', 48 'H', 1B '\e', 5B '[', 31 '1', 3B ';', 33 '3', 39 '9', 72 'r', 1B '\e', 5B '[', 63 'c', 1B '\e', 5B '[', 3E '>', 63 'c', 1B '\e', 5B '[', 3E '>', 71 'q', 1B '\e', 5D ']', 31 '1', 30 '0', 3B ';', 3F '?', 1B '\e', 5C '\\, 1B '\e', 5D ']', 31 '1', 31 '1', 3B ';', 3F '?', 1B '\e', 5C '\\, 1B '\e', 5B '[', 31 '1', 3B ';', 31 '1', 48 'H', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 36 '6', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 30 '0', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 32 '2', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 33 '3', 6C 'l', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 36 '6', 68 'h', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 30 '0', 68 'h', 1B '\e', 5B '[', 3F '?', 31 '1', 30 '0', 30 '0', 32 '2', 68 'h')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+state VT_STATE_CSI_PARAM, csi private question enable VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR (Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit)
+ 1049
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 68 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+vt.c:1427: [31mUNIMPLEMENTED[m: Unknown csi private question function param 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 68 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+vt.c:1344: [31mUNIMPLEMENTED[m: Unknown escape function input 0x3D '='
+transition from state VT_STATE_ESCAPE to state VT_STATE_GROUND, input 3D '='
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUP (Cursor Position), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 48 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_ED (Erase In Page), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 4A 'J'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 33 '3'
+vt.c:1486: [31mUNIMPLEMENTED[m: Unknown csi function input 0x68 'h'
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 68 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+state VT_STATE_CSI_PARAM, csi private question enable VT_CSI_PRIVATE_QUESTION_DECTCEM (Show Cursor)
+ 25
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 68 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+state VT_STATE_CSI_PARAM, csi private question disable VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE (Mouse Reporting with Press and Release)
+ 1000
+vt.c:1449: [31mUNIMPLEMENTED[m: VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+state VT_STATE_CSI_PARAM, csi private question disable VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG (Mouse Reporting with Press, Release, and Drag)
+ 1002
+vt.c:1449: [31mUNIMPLEMENTED[m: VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+vt.c:1427: [31mUNIMPLEMENTED[m: Unknown csi private question function param 1003
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+vt.c:1427: [31mUNIMPLEMENTED[m: Unknown csi private question function param 1006
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+vt.c:1427: [31mUNIMPLEMENTED[m: Unknown csi private question function param 1005
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+vt.c:1427: [31mUNIMPLEMENTED[m: Unknown csi private question function param 2004
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 68 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_SGR (Select Graphic Rendition), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 6D 'm'
+state VT_STATE_GROUND, execute VT_CONTROL_SI (Shift Out)
+vt.c:1316: [31mUNIMPLEMENTED[m: VT_CONTROL_SI
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 33 '3'
+vt.c:1486: [31mUNIMPLEMENTED[m: Unknown csi function input 0x68 'h'
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 68 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+state VT_STATE_CSI_PARAM, csi private question enable VT_CSI_PRIVATE_QUESTION_DECTCEM (Show Cursor)
+ 25
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 68 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+vt.c:1427: [31mUNIMPLEMENTED[m: Unknown csi private question function param 1006
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+state VT_STATE_CSI_PARAM, csi private question disable VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE (Mouse Reporting with Press and Release)
+ 1000
+vt.c:1449: [31mUNIMPLEMENTED[m: VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+state VT_STATE_CSI_PARAM, csi private question disable VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG (Mouse Reporting with Press, Release, and Drag)
+ 1002
+vt.c:1449: [31mUNIMPLEMENTED[m: VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3F '?'
+vt.c:1427: [31mUNIMPLEMENTED[m: Unknown csi private question function param 1003
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 6C 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 31 '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 48 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 31 '1'
+vt.c:1486: [31mUNIMPLEMENTED[m: Unknown csi function input 0x72 'r'
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 72 'r'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+vt.c:1486: [31mUNIMPLEMENTED[m: Unknown csi function input 0x63 'c'
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 63 'c'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3E '>'
+vt.c:1467: [31mUNIMPLEMENTED[m: CSI non private collected string
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 63 'c'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input 5B '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input 3E '>'
+vt.c:1467: [31mUNIMPLEMENTED[m: CSI non private collected string
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 71 'q'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input 1B '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_OSC_STRING, input 5D ']'
+vt.c:1534: [31mUNIMPLEMENTED[m: VT_ACTION_OSC_START
+vt.c:1534: [31mUNIMPLEMENTED[m: VT_ACTION_OSC_PUT
+vt.c:1534: [31mUNIMPLEMENTED[m: VT_ACTION_OSC_PUT
+vt.c:1534: [31mUNIMPLEMENTED[m: VT_ACTION_OSC_PUT
+vt.c:1534: [31mUNIMPLEMENTED[m: VT_ACTION_OSC_PUT
+transition from state VT_STATE_OSC_STRING to state VT_STATE_ESCAPE, input 1B '\e'
+vt.c:1534: [31mUNIMPLEMENTED[m: VT_ACTION_OSC_END
+vt.c:1692: UNREACHABLE: Missing case for VT_STATE_ESCAPE: 5C
