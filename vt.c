@@ -974,6 +974,7 @@ void vt_resize_window(vt *vt)
     if (!(buffer->cursor.x && buffer->cursor.y)) {
         buffer->cursor.x = 1;
         buffer->cursor.y = 1;
+        buffer->cursor.wrap_pending = buffer->width == 1;
     }
 
     buffer->dirty = true;
@@ -1018,7 +1019,10 @@ void _vt_line_feed(vt *vt)
    if (buffer->cursor.x > 1 || buffer->cursor.y > 1) buffer->cells[(buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1 - (buffer->cursor.wrap_pending ? 0 : 1)].lf = true;
    if (buffer->cursor.y == buffer->height) _vt_scroll(vt, VT_SCROLL_UP);
    buffer->cursor.y ++;
-   if (true /* FIXME add option for \n -> \r\n semantics */) buffer->cursor.x = 1;
+   if (true /* FIXME add option for \n -> \r\n semantics */) {
+      buffer->cursor.wrap_pending = buffer->width == 1;
+      buffer->cursor.x = 1;
+   }
    buffer->dirty = true;
 }
 
@@ -1031,6 +1035,7 @@ void _vt_carriage_return(vt *vt)
 
    if (buffer->cursor.x > 1 || buffer->cursor.y > 1) buffer->cells[(buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1 - (buffer->cursor.wrap_pending ? 0 : 1)].cr = true;
    buffer->cursor.x = 1;
+   buffer->cursor.wrap_pending = false;
    buffer->dirty = true;
 }
 
@@ -1089,6 +1094,7 @@ void _vt_move_cursor(vt *vt, uint16_t x, uint16_t y)
 
    buffer->cursor.x = x ? (x <= buffer->width ? x : buffer->width) : 1;
    buffer->cursor.y = y ? (y <= buffer->height ? y : buffer->height) : 1;
+   buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
    buffer->dirty = true;
 }
 
