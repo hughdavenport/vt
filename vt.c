@@ -66,24 +66,27 @@ void vt_reset(vt *vt);
    X(VT_MODIFIER_SUPER)   E(1 << 3) /* Only used for certain special chars */
 
 #define VT_ATTRIBUTES_LIST \
-   C(0)  X(VT_ATTRIBUTE_NONE) O(0)  L("Reset") \
-   C(1)  X(VT_ATTRIBUTE_BOLD) O(1)  L("Bold") \
-   C(30) X(VT_ATTRIBUTE_FG_0) O(30) L("Foreground Black") \
-   C(31) X(VT_ATTRIBUTE_FG_1) O(31) L("Foreground Red") \
-   C(32) X(VT_ATTRIBUTE_FG_2) O(32) L("Foreground Green") \
-   C(33) X(VT_ATTRIBUTE_FG_3) O(33) L("Foreground Yellow") \
-   C(34) X(VT_ATTRIBUTE_FG_4) O(34) L("Foreground Blue") \
-   C(35) X(VT_ATTRIBUTE_FG_5) O(35) L("Foreground Magenta") \
-   C(36) X(VT_ATTRIBUTE_FG_6) O(36) L("Foreground Cyan") \
-   C(37) X(VT_ATTRIBUTE_FG_7) O(37) L("Foreground White") \
-   C(40) X(VT_ATTRIBUTE_BG_0) O(40) L("Background Black") \
-   C(41) X(VT_ATTRIBUTE_BG_1) O(41) L("Background Red") \
-   C(42) X(VT_ATTRIBUTE_BG_2) O(42) L("Background Green") \
-   C(43) X(VT_ATTRIBUTE_BG_3) O(43) L("Background Yellow") \
-   C(44) X(VT_ATTRIBUTE_BG_4) O(44) L("Background Blue") \
-   C(45) X(VT_ATTRIBUTE_BG_5) O(45) L("Background Magenta") \
-   C(46) X(VT_ATTRIBUTE_BG_6) O(46) L("Background Cyan") \
-   C(47) X(VT_ATTRIBUTE_BG_7) O(47) L("Background White")
+   C(0)  X(VT_ATTRIBUTE_NONE)                  L("Reset") \
+   C(1)  X(VT_ATTRIBUTE_BOLD)                  L("Bold") \
+   C(2)  X(VT_ATTRIBUTE_DIM)                   L("Dim") \
+   C(23) X(VT_ATTRIBUTE_NOT_ITALIC_OR_GOTHIC)  L("Not italic or gothic") \
+   C(24) X(VT_ATTRIBUTE_NOT_UNDERLINED)        L("Not underlined") \
+   C(30) X(VT_ATTRIBUTE_FG_0)                  L("Foreground Black") \
+   C(31) X(VT_ATTRIBUTE_FG_1)                  L("Foreground Red") \
+   C(32) X(VT_ATTRIBUTE_FG_2)                  L("Foreground Green") \
+   C(33) X(VT_ATTRIBUTE_FG_3)                  L("Foreground Yellow") \
+   C(34) X(VT_ATTRIBUTE_FG_4)                  L("Foreground Blue") \
+   C(35) X(VT_ATTRIBUTE_FG_5)                  L("Foreground Magenta") \
+   C(36) X(VT_ATTRIBUTE_FG_6)                  L("Foreground Cyan") \
+   C(37) X(VT_ATTRIBUTE_FG_7)                  L("Foreground White") \
+   C(40) X(VT_ATTRIBUTE_BG_0)                  L("Background Black") \
+   C(41) X(VT_ATTRIBUTE_BG_1)                  L("Background Red") \
+   C(42) X(VT_ATTRIBUTE_BG_2)                  L("Background Green") \
+   C(43) X(VT_ATTRIBUTE_BG_3)                  L("Background Yellow") \
+   C(44) X(VT_ATTRIBUTE_BG_4)                  L("Background Blue") \
+   C(45) X(VT_ATTRIBUTE_BG_5)                  L("Background Magenta") \
+   C(46) X(VT_ATTRIBUTE_BG_6)                  L("Background Cyan") \
+   C(47) X(VT_ATTRIBUTE_BG_7)                  L("Background White")
 
 #define VT_STATES_LIST \
     X(VT_STATE_GROUND) \
@@ -190,11 +193,17 @@ void vt_reset(vt *vt);
    C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)          L("Mouse Reporting with Press and Release")                                                S(UNIMPL("VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE")) \
    C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG) L("Mouse Reporting with Press, Release, and Drag")                                         S(UNIMPL("VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG"))
 
-#define C(code)
 #define S(code)
 #define L(code)
 #define K(code)
-#define O(code)
+#define X(name)
+
+#define C(code) code, 
+static const char vt_attribute_codes[] = { VT_ATTRIBUTES_LIST };
+#define VT_ATTRIBUTE_CODE(enum_code) (((enum_code) >= 0 && (enum_code) < VT_NUM_ATTRIBUTES) ? vt_attribute_codes[(enum_code)] : 0)
+#undef C
+#undef X
+#define C(code)
 
 #define X(name) name
 #define E(code) = code, 
@@ -692,19 +701,10 @@ void vt_draw_window(vt *vt)
                SET_EQUALS(eq, *last_attributes, cell->attributes);
                if (!eq) {
                      fprintf(vt->tty, "\033[");
-#undef O
-#define X(enum_code) case enum_code: 
-#define O(sgr_code) fprintf(vt->tty, "%u", sgr_code); break;
                      SET_FOREACH(cell->attributes, {
                         if (idx) fputc(';', vt->tty);
-                        switch (element) {
-                           VT_ATTRIBUTES_LIST
-                           default: UNREACHABLE("Unexpected sgr element %s", VT_ATTRIBUTE_STRING(element));
-                        }
+                        fprintf(vt->tty, "%u", VT_ATTRIBUTE_CODE(element));
                      });
-#undef X
-#undef O
-#define O(code)
                      fprintf(vt->tty, "m");
                      fflush(vt->tty);
                      last_attributes = &cell->attributes;
