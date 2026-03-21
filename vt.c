@@ -579,7 +579,7 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
         case VT_SCROLL_UP:
             if (buffer->cursor.y <= 1) return;
             for (size_t x = 0; x < buffer->width; x ++) {
-               SET_FREE(buffer->cells[(buffer->height - 1) * buffer->width + x].attributes);
+               SET_FREE(buffer->cells[x].attributes);
             }
             for (size_t row = 1; row < buffer->height; row ++) {
                 memcpy(buffer->cells + (row - 1) * buffer->width, buffer->cells + row * buffer->width, buffer->width * sizeof(*buffer->cells));
@@ -591,7 +591,7 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
         case VT_SCROLL_DOWN:
             if (buffer->cursor.y >= buffer->height) return;
             for (size_t x = 0; x < buffer->width; x ++) {
-               SET_FREE(buffer->cells[x].attributes);
+               SET_FREE(buffer->cells[(buffer->height - 1) * buffer->width + x].attributes);
             }
             for (size_t row = buffer->height - 2; row >= 1; row --) {
                 memcpy(buffer->cells + (row + 1) * buffer->width, buffer->cells + row * buffer->width, buffer->width);
