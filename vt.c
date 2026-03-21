@@ -915,7 +915,7 @@ void vt_resize_window(vt *vt)
                 memcpy(dst_cell, src_cell, sizeof(*dst_cell));
 
                 if (src_cell->cr) {
-                   fprintf(stderr, "CR\n");
+                   /* fprintf(stderr, "CR\n"); */
                    dst_col = 0;
                 } else if (src_cell->lf) {
                    for (size_t off = 1; src_col + off < original_size.ws_col; off ++) {
@@ -930,7 +930,7 @@ void vt_resize_window(vt *vt)
                          memcpy(dst_cell + off, src_cell + off, sizeof(*dst_cell));
                       }
                    }
-                   fprintf(stderr, "LF\n");
+                   /* fprintf(stderr, "LF\n"); */
                    dst_row ++;
                    if (true /* FIXME add option for \n -> \r\n semantics */) {
                       dst_col = 0;
