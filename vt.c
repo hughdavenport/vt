@@ -281,7 +281,10 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 #define ARRAY_CLEAR(arr) do { (arr).size = 0; } while (false)
 #define ARRAY_FREE(a) do { \
    ARRAY_CLEAR(a); \
-   free(a.data); \
+   if (a.data) { \
+      free(a.data); \
+      a.data = NULL; \
+   } \
    a.capacity = 0; \
 } while (false)
 
