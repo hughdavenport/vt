@@ -782,25 +782,27 @@ void vt_draw_window(vt *vt)
 #undef GOTO
 #undef CLEAR_SCREEN
 
-int vt_fprintc(FILE *stream, char input)
+int vt_fprintc(vt *vt, FILE *stream, char input)
 {
-    int first = fprintf(stream, "%02X", input);
-    if (first == -1) return -1;
-    int second = 0;
     switch (input) {
-       case '"': second = fprintf(stream, " '\\\"'"); break;
-       case '\\': second = fprintf(stream, " '\\\\"); break;
-       case '\a': second = fprintf(stream, " '\\a"); break;
-       case '\033': second = fprintf(stream, " '\\e'"); break;
-       case '\b': second = fprintf(stream, " '\\b"); break;
-       case '\f': second = fprintf(stream, " '\\f"); break;
-       case '\n': second = fprintf(stream, " '\\n'"); break;
-       case '\r': second = fprintf(stream, " '\\r'"); break;
-       case '\t': second = fprintf(stream, " '\\t'"); break;
-       case '\v': second = fprintf(stream, " '\\v'"); break;
-       default: if (isprint(input)) second = fprintf(stream, " '%c'", input);
+       case '"': return fprintf(stream, "'\\\"'");
+       case '\\': return fprintf(stream, "'\\\\");
+       case '\a': return fprintf(stream, "'\\a");
+       case '\033': return fprintf(stream, "'\\e'");
+       case '\b': return fprintf(stream, "'\\b");
+       case '\f': return fprintf(stream, "'\\f");
+       case '\n': return fprintf(stream, "'\\n'");
+       case '\r': return fprintf(stream, "'\\r'");
+       case '\t': return fprintf(stream, "'\\t'");
+       case '\v': return fprintf(stream, "'\\v'");
+       default:
+          if (isprint(input)) {
+             return fprintf(stream, "'%c'", input);
+          } else {
+             return fprintf(stream, "0x%02X", input);
+          }
     }
-    return second == -1 ? -1 : first + second;
+    UNREACHABLE("all should return");
 }
 
 void vt_resize_window(vt *vt)
@@ -908,7 +910,7 @@ void vt_resize_window(vt *vt)
 
              if (src_cell->used) {
                 /* fprintf(stderr, "copying from %ldx%ld to %ldx%ld: ", src_col + 1, src_row + 1, dst_col + 1, dst_row + 1); */
-                /* vt_fprintc(stderr, src_cell->c); */
+                /* vt_fprintc(vt, stderr, src_cell->c); */
                 /* fprintf(stderr, "\n"); */
                 memcpy(dst_cell, src_cell, sizeof(*dst_cell));
 
@@ -923,7 +925,7 @@ void vt_resize_window(vt *vt)
                                src_col + off + 1, src_row + 1,
                                (dst_col + off) % buffer->width + 1,
                                (dst_col + off) / buffer->width + dst_row + 1);
-                         vt_fprintc(stderr, (src_cell + off)->c);
+                         vt_fprintc(vt, stderr, (src_cell + off)->c);
                          fprintf(stderr, "\n");
                          memcpy(dst_cell + off, src_cell + off, sizeof(*dst_cell));
                       }
@@ -1617,7 +1619,7 @@ void _vt_action(vt *vt, vt_action action, uint8_t input)
     if (!buffer->cells) return;
 
     /* fprintf(stderr, "state %s, action %s, input ", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action)); */
-    /* vt_fprintc(stderr, input); */
+    /* vt_fprintc(vt, stderr, input); */
     /* fprintf(stderr, ", cell %lux%lu", buffer->cursor.x, buffer->cursor.y); */
     /* if (buffer == vt->alternate_buffer) fprintf(stderr, " on alternate buffer"); */
     /* fprintf(stderr, "\n"); */
@@ -1642,7 +1644,7 @@ void _vt_transition(vt *vt, vt_state to, uint8_t input)
     if (!vt) return;
 
     fprintf(stderr, "transition from state %s to state %s, input ", VT_STATE_STRING(vt->state), VT_STATE_STRING(to));
-    vt_fprintc(stderr, input);
+    vt_fprintc(vt, stderr, input);
     fprintf(stderr, "\n");
 
     /* exit event */
@@ -2326,10 +2328,23 @@ int vt_main_loop(vt *vt)
                  fprintf(stderr, " |%.*s|\n", (int)red, buf);
               } else {
                  fprintf(stderr, " (");
+                 size_t count = 0;
                  for (ssize_t i = 0; i < red; i ++) {
-                    if (i) fprintf(stderr, ", ");
-                    vt_fprintc(stderr, buf[i]);
+                    if (count) {
+                       if (buf[i-1] == buf[i]) {
+                          count ++;
+                       } else {
+                          fprintf(stderr, "*%lu", count);
+                          count = 0;
+                       }
+                    } else if (i && buf[i] == buf[i - 1]) {
+                       count = 2;
+                    } else {
+                       if (i) fprintf(stderr, ", ");
+                       vt_fprintc(vt, stderr, buf[i]);
+                    }
                  }
+                 if (count) fprintf(stderr, "*%lu", count);
                  fprintf(stderr, ")\n");
               }
 
