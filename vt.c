@@ -1355,6 +1355,7 @@ void _vt_select_graphic_rendition(vt *vt)
     for (size_t p = 0; p == 0 || p < vt->sequence_state.num_params; p ++) {
        uint16_t param = VT_PARAM(vt, p, 0);
 #define C(code) case code: 
+
 /* #define X(code) */
 /* #define L(name) HERE("Got SGR param %u code %s", VT_PARAM(vt, p, 0), name); break; */
 /*        switch (param) { */
@@ -1375,7 +1376,7 @@ void _vt_select_graphic_rendition(vt *vt)
     }
 
     /* if (vt->current_attributes.size == 0) HERE("no attributes"); */
-   /* SET_FOREACH(vt->current_attributes, HERE("attr %zu: %s", idx, VT_ATTRIBUTE_STRING(element))); */
+    /* SET_FOREACH(vt->current_attributes, HERE("attr %zu: %s", idx, VT_ATTRIBUTE_STRING(element))); */
 }
 
 void _vt_execute(vt *vt, uint8_t input)
