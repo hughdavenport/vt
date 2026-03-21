@@ -132,7 +132,7 @@ void vt_reset(vt *vt);
    C(0x05) X(VT_CONTROL_ENQ)   K(VT_KEY_NONE)      L("Enquire")                     S(UNIMPL("VT_CONTROL_ENQ")) \
    C(0x07) X(VT_CONTROL_BEL)   K(VT_KEY_NONE)      L("Bell")                        S(_vt_bell(vt)) \
    C(0x08) X(VT_CONTROL_BS)    K(VT_KEY_NONE)      L("Backspace")                   S(_vt_backspace(vt)) \
-   C(0x09) X(VT_CONTROL_HT)    K(VT_KEY_TAB)       L("Horizontal Tab")              S(UNIMPL("VT_CONTROL_HT")) \
+   C(0x09) X(VT_CONTROL_HT)    K(VT_KEY_TAB)       L("Horizontal Tab")              S(_vt_tab(vt)) \
    C(0x0A) X(VT_CONTROL_LF)    K(VT_KEY_NONE)      L("Line Feed")                   S(_vt_line_feed(vt)) \
    C(0x0B) X(VT_CONTROL_VT)    K(VT_KEY_NONE)      L("Vertical Tab")                S(UNIMPL("VT_CONTROL_VT")) \
    C(0x0C) X(VT_CONTROL_FF)    K(VT_KEY_NONE)      L("Form Feed")                   S(UNIMPL("VT_CONTROL_FF")) \
@@ -996,6 +996,19 @@ void _vt_bell(vt *vt)
    // needs extra param to draw_window to invert, which would apply ontop of any SGR mods
    // then draw inverted, sleep a tiny bit, draw back to normal
    //vt_draw_window(vt);
+}
+
+void _vt_tab(vt *vt)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (buffer->cursor.x < buffer->width) {
+      buffer->cursor.x += 8;
+      if (buffer->cursor.x > buffer->width) buffer->cursor.x = buffer->width;
+      buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
+      buffer->dirty = true;
+   }
 }
 
 void _vt_backspace(vt *vt)
