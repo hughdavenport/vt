@@ -1734,24 +1734,6 @@ void vt_process(vt *vt, uint8_t input)
        if (vt->emitted_key.key != VT_KEY_REQUEST) return;
     }
 
-    /* anywhere state transistions */
-    switch (input) {
-        case 0x18: case 0x1A: case 0x80: case 0x81: case 0x82: case 0x83: case 0x84: case 0x85: case 0x86: case 0x87: case 0x88: case 0x89: case 0x8A: case 0x8B: case 0x8C: case 0x8D: case 0x8E: case 0x8F: case 0x9C:
-            _vt_action(vt, input == 0x9C ? VT_ACTION_IGNORE : VT_ACTION_EXECUTE, input);
-            _vt_transition(vt, VT_STATE_GROUND, input);
-            return;
-
-        case 0x1B: _vt_transition(vt, VT_STATE_ESCAPE, input); return;
-        case 0x90: _vt_transition(vt, VT_STATE_DCS_ENTRY, input); return;
-
-        case 0x98: case 0x9E: case 0x9F:
-            _vt_transition(vt, VT_STATE_SOS_PM_APC_STRING, input);
-            return;
-
-        case 0x9B: _vt_transition(vt, VT_STATE_CSI_ENTRY, input); return;
-        case 0x9D: _vt_transition(vt, VT_STATE_OSC_STRING, input); return;
-    }
-
 #define NUM_00_0F N(0x00) N(0x01) N(0x02) N(0x03) N(0x04) N(0x05) N(0x06) N(0x07) N(0x08) N(0x09) N(0x0A) N(0x0B) N(0x0C) N(0x0D) N(0x0e) N(0x0F)
 #define NUM_10_1F N(0x10) N(0x11) N(0x12) N(0x13) N(0x14) N(0x15) N(0x16) N(0x17) N(0x18) N(0x19) N(0x1A) N(0x1B) N(0x1C) N(0x1D) N(0x1e) N(0x1F)
 #define NUM_20_2F N(0x20) N(0x21) N(0x22) N(0x23) N(0x24) N(0x25) N(0x26) N(0x27) N(0x28) N(0x29) N(0x2A) N(0x2B) N(0x2C) N(0x2D) N(0x2e) N(0x2F)
@@ -1770,6 +1752,28 @@ void vt_process(vt *vt, uint8_t input)
 #define NUM_F0_FF N(0xF0) N(0xF1) N(0xF2) N(0xF3) N(0xF4) N(0xF5) N(0xF6) N(0xF7) N(0xF8) N(0xF9) N(0xFA) N(0xFB) N(0xFC) N(0xFD) N(0xFE) N(0xFF)
 
 #define N(num) case num: 
+
+    /* anywhere state transistions */
+    switch (input) {
+        case 0x18: case 0x1A:
+        NUM_80_8F
+        case 0x91: case 0x92: case 0x93: case 0x94: case 0x95: case 0x96: case 0x97: case 0x99: case 0x9A:
+        case 0x9C:
+            _vt_action(vt, input == 0x9C ? VT_ACTION_IGNORE : VT_ACTION_EXECUTE, input);
+            _vt_transition(vt, VT_STATE_GROUND, input);
+            return;
+
+        case 0x1B: _vt_transition(vt, VT_STATE_ESCAPE, input); return;
+        case 0x90: _vt_transition(vt, VT_STATE_DCS_ENTRY, input); return;
+
+        case 0x98: case 0x9E: case 0x9F:
+            _vt_transition(vt, VT_STATE_SOS_PM_APC_STRING, input);
+            return;
+
+        case 0x9B: _vt_transition(vt, VT_STATE_CSI_ENTRY, input); return;
+        case 0x9D: _vt_transition(vt, VT_STATE_OSC_STRING, input); return;
+    }
+
     /* all cases must return */
     static_assert(VT_NUM_STATES == 14, "Not all states handled");
     switch (vt->state) {
@@ -1801,7 +1805,7 @@ void vt_process(vt *vt, uint8_t input)
                     break;
 
                 NUM_30_3F NUM_40_4F
-                case 0x51: case 0x52: case 0x53: case 0x54: case 0x55: case 0x56: case 0x57: case 0x59: case 0x5A:
+                case 0x51: case 0x52: case 0x53: case 0x54: case 0x55: case 0x56: case 0x57: case 0x59: case 0x5A: case 0x5C:
                 NUM_60_6F
                 case 0x70: case 0x71: case 0x72: case 0x73: case 0x74: case 0x75: case 0x76: case 0x77: case 0x78: case 0x79: case 0x7A: case 0x7B: case 0x7C: case 0x7D: case 0x7E:
                     _vt_action(vt, VT_ACTION_ESC_DISPATCH, input);
