@@ -131,6 +131,7 @@ void vt_reset(vt *vt);
 #define VT_CONTROL_FUNCTIONS_LIST \
    C(0x00) X(VT_CONTROL_NULL)  K(VT_KEY_NONE)      L("Null")                        S(UNIMPL("VT_CONTROL_NULL")) \
    C(0x03) X(VT_CONTROL_ETX)   K(VT_KEY_NONE)      L("End of Text")                 S(kill(getpid(), SIGINT)) \
+   C(0x04) X(VT_CONTROL_EOT)   K(VT_KEY_NONE)      L("End of Transmission")         S(HERE("VT_CONTROL_EOT")) \
    C(0x05) X(VT_CONTROL_ENQ)   K(VT_KEY_NONE)      L("Enquire")                     S(UNIMPL("VT_CONTROL_ENQ")) \
    C(0x07) X(VT_CONTROL_BEL)   K(VT_KEY_NONE)      L("Bell")                        S(_vt_bell(vt)) \
    C(0x08) X(VT_CONTROL_BS)    K(VT_KEY_NONE)      L("Backspace")                   S(_vt_backspace(vt)) \
@@ -1441,7 +1442,7 @@ void _vt_execute(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CONTROL_FUNCTIONS == 33, "Not all functions handled");
+    static_assert(VT_NUM_CONTROL_FUNCTIONS == 34, "Not all functions handled");
     switch (func) {
         VT_CONTROL_FUNCTIONS_LIST
         case VT_NUM_CONTROL_FUNCTIONS: break;
