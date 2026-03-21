@@ -168,6 +168,10 @@ void vt_reset(vt *vt);
 #define VT_ED "\033[%dJ"
 #define VT_CUP "\033[%d;%dH"
 #define VT_SGR "\033[%dm"
+#define VT_ALT_BUFFER_ENABLE "\033[?1049h"
+#define VT_ALT_BUFFER_DISABLE "\033[?1049l"
+#define VT_MOUSE_MODE_ENABLE "\033[?1003h"
+#define VT_MOUSE_MODE_DISABLE "\033[?1003l"
 
 #define VT_CSI_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                     S(UNREACHABLE("Unexpected CSI function")) \
@@ -556,6 +560,8 @@ void vt_restore_io(vt *vt)
 
 void vt_reset(vt *vt)
 {
+    fprintf(vt->tty, VT_ALT_BUFFER_DISABLE VT_MOUSE_MODE_DISABLE);
+
     if (vt->child_pid) {
        if (vt->stdout[1] > 0) close(vt->stdout[0]);
        if (vt->stderr[1] > 0) close(vt->stderr[0]);
@@ -2128,6 +2134,7 @@ int vt_setup_io(vt *vt)
     }
     setbuf(vt->tty, NULL);
 
+    fprintf(vt->tty, VT_ALT_BUFFER_ENABLE VT_MOUSE_MODE_ENABLE);
 
     if (tcgetattr(STDIN_FILENO, &vt->original_ios) == 0) {
         struct termios new_ios = vt->original_ios;
