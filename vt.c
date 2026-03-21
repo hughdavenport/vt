@@ -19,9 +19,11 @@
 #include <termios.h>
 #include <unistd.h>
 
+typedef struct vt vt;
+void vt_reset(vt *vt);
 #define HERE(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mHERE\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); } while (false)
-#define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (false) exit(1); else return; } while (false)
-#define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); exit(1); } while (false)
+#define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (true) { vt_reset(vt); exit(1); } else return; } while (false)
+#define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); vt_reset(vt); exit(1); } while (false)
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
 
@@ -391,7 +393,7 @@ typedef struct
    char raw;
 } vt_key_modifier;
 
-int vt_fprint_key_modifier(FILE *stream, vt_key_modifier key)
+int vt_fprint_key_modifier(vt *vt, FILE *stream, vt_key_modifier key)
 {
    if (key.key == VT_KEY_NONE) return 0;
 
@@ -439,7 +441,7 @@ int vt_fprint_key_modifier(FILE *stream, vt_key_modifier key)
 #undef print
 }
 
-typedef struct
+struct vt
 {
     vt_state state;
     struct termios original_ios;
@@ -457,7 +459,7 @@ typedef struct
     int stderr[2];
     int child_tty;
     vt_key_modifier emitted_key;
-} vt;
+};
 
 void vt_process(vt *vt, uint8_t input);
 
@@ -500,6 +502,57 @@ void vt_free(vt *vt)
     SET_FREE(vt->current_attributes);
     vt->primary_buffer.cursor.x = 1;
     vt->primary_buffer.cursor.y = 1;
+    vt->primary_buffer.cursor.wrap_pending = vt->primary_buffer.width == 1;
+}
+
+void vt_restore_io(vt *vt)
+{
+    if (!vt) return;
+
+    if (vt->tty && vt->tty != stdout && vt->tty != stderr) {
+        fclose(vt->tty);
+        vt->tty = NULL;
+    }
+
+    if (vt->raw) {
+        if (tcsetattr(STDOUT_FILENO, TCSANOW, &vt->original_ios) == 0) {
+            vt->raw = false;
+        }
+    }
+
+    if (vt->nonblocking) {
+        int fl = fcntl(STDIN_FILENO, F_GETFL);
+        if (fl != -1) {
+            if (fcntl(STDIN_FILENO, F_SETFL, fl & ~O_NONBLOCK) == 0) {
+                vt->nonblocking = false;
+            }
+        }
+    }
+
+#define GOTO(x, y) fprintf(stdout, VT_CUP, (int)(y), (int)(x))
+    GOTO(vt->outer_window.ws_col, vt->outer_window.ws_row);
+    printf("\n");
+    fflush(stdout);
+#undef GOTO
+}
+
+void vt_reset(vt *vt)
+{
+    if (vt->child_pid) {
+       if (vt->stdout[1] > 0) close(vt->stdout[0]);
+       if (vt->stderr[1] > 0) close(vt->stderr[0]);
+       int wstatus;
+       int waited = waitpid(vt->child_pid, &wstatus, WNOHANG);
+       if (waited == -1) {
+          perror("waitpid(child)");
+       } else if (waited != vt->child_pid) {
+          fprintf(stderr, "killing child %u\n", vt->child_pid);
+          kill(vt->child_pid, SIGKILL);
+       }
+       vt->child_pid = 0;
+    }
+    vt_restore_io(vt);
+    vt_free(vt);
 }
 
 void _vt_scroll(vt *vt, vt_scroll scroll)
@@ -2023,37 +2076,6 @@ int vt_setup_io(vt *vt)
     return 0;
 }
 
-void vt_restore_io(vt *vt)
-{
-    if (!vt) return;
-
-    if (vt->tty && vt->tty != stdout && vt->tty != stderr) {
-        fclose(vt->tty);
-        vt->tty = NULL;
-    }
-
-    if (vt->raw) {
-        if (tcsetattr(STDOUT_FILENO, TCSANOW, &vt->original_ios) == 0) {
-            vt->raw = false;
-        }
-    }
-
-    if (vt->nonblocking) {
-        int fl = fcntl(STDIN_FILENO, F_GETFL);
-        if (fl != -1) {
-            if (fcntl(STDIN_FILENO, F_SETFL, fl & ~O_NONBLOCK) == 0) {
-                vt->nonblocking = false;
-            }
-        }
-    }
-
-#define GOTO(x, y) fprintf(stdout, VT_CUP, (int)(y), (int)(x))
-    GOTO(vt->outer_window.ws_col, vt->outer_window.ws_row);
-    printf("\n");
-    fflush(stdout);
-#undef GOTO
-}
-
 #define _signalfd(...) __signalfd(-1, ##__VA_ARGS__, NULL)
 int __signalfd(int fd, ...)
 {
@@ -2292,7 +2314,7 @@ int vt_main_loop(vt *vt)
                        /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
                        if (vt->emitted_key.key != VT_KEY_REQUEST) {
                           fprintf(stderr, "emitted key ");
-                          vt_fprint_key_modifier(stderr, vt->emitted_key);
+                          vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
                           fprintf(stderr, "\n");
                           memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
                        }
@@ -2326,7 +2348,7 @@ int vt_main_loop(vt *vt)
                           default: UNREACHABLE("Unexpected read packet that didn't parse a key, state %s", VT_STATE_STRING(vt->state));
                        }
                        fprintf(stderr, "emitted key ");
-                       vt_fprint_key_modifier(stderr, vt->emitted_key);
+                       vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
                        fprintf(stderr, "\n");
                        memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
                        vt->emitted_key.key = VT_KEY_REQUEST;
@@ -2477,17 +2499,8 @@ int main(int argc, char * const *argv)
 
     ret = vt_main_loop(&vt);
     fprintf(stderr, "ret = %d\n", ret);
-    if (vt.child_pid) {
-       if (vt.stdout[1] > 0) close(vt.stdout[0]);
-       if (vt.stderr[1] > 0) close(vt.stderr[0]);
-       int wstatus;
-       if (waitpid(vt.child_pid, &wstatus, 0) != vt.child_pid) {
-          perror("waitpid(child)");
-       }
-       vt.child_pid = 0;
-    }
-    vt_restore_io(&vt);
-    vt_free(&vt);
+
+    vt_reset(&vt);
     return ret;
 #undef NEXT_ARG
 }
