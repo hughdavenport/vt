@@ -165,6 +165,7 @@ void vt_reset(vt *vt);
 
 #define VT_ED "\033[%dJ"
 #define VT_CUP "\033[%d;%dH"
+#define VT_SGR "\033[%dm"
 
 #define VT_CSI_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                     S(UNREACHABLE("Unexpected CSI function")) \
@@ -614,12 +615,15 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
 
         default: UNREACHABLE("Unexpected scroll value %d", scroll);
     }
+    buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
 }
 
 #define GUTTER_LEFT 3
 #define GUTTER_TOP 3
 #define GOTO(x, y) do { if (fprintf(vt->tty, VT_CUP, (int)(y), (int)(x)) < 6) { perror("fprintf(GOTO)"); fprintf(stderr, "Could not write GOTO fully\n"); } } while (false)
 #define CLEAR_SCREEN do { if (fprintf(vt->tty, VT_ED, 2) < 4) { perror("fprintf(CLEAR_SCREEN)"); fprintf(stderr, "Could not write CLEAR_SCREEN fully\n"); } } while (false)
+#define RESET_GRAPHICS do { if (fprintf(vt->tty, VT_SGR, 0) < 4) { perror("fprintf(RESET_GRAPHICS)"); fprintf(stderr, "Could not write RESET_GRAPHICS fully\n"); } } while (false)
+#define SELECT_GRAPHICS(n) do { if (fprintf(vt->tty, VT_SGR, VT_ATTRIBUTE_CODE(n)) < 4) { perror("fprintf(SELECT_GRAPHICS)"); fprintf(stderr, "Could not write SELECT_GRAPHICS fully\n"); } } while (false)
 
 void vt_draw_gutters(vt *vt)
 {
@@ -629,37 +633,72 @@ void vt_draw_gutters(vt *vt)
 
     if (!buffer->dirty) return;
 
+    RESET_GRAPHICS;
+    CLEAR_SCREEN;
+
     for (size_t x = 10; x <= buffer->width; x += 10) {
         GOTO(GUTTER_LEFT + x, 1);
+        if (x == buffer->cursor.x) {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+        } else {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
+        }
         if (fputc("0123456789"[(x / 10) % 10], vt->tty) == EOF) {
             perror("fputc()");
             fprintf(stderr, "Couldn't write char for top gutter row 1\n");
         }
         /* fprintf(vt->tty, "%d", (x / 10) % 10); */
     }
+
     GOTO(GUTTER_LEFT + 1, GUTTER_TOP - 1);
-    for (size_t y = 1; y <= buffer->width; y ++) {
-        if (fputc("0123456789"[y % 10], vt->tty) == EOF) {
+    for (size_t x = 1; x <= buffer->width; x ++) {
+        if (x == buffer->cursor.x) {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+        } else {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
+        }
+        if (fputc("0123456789"[x % 10], vt->tty) == EOF) {
             perror("fputc()");
             fprintf(stderr, "Couldn't write char for top gutter row 2\n");
         }
         /* fprintf(vt->tty, "%d", y % 10); */
     }
+
     GOTO(GUTTER_LEFT, GUTTER_TOP);
     if (fputc('+', vt->tty) == EOF) {
         perror("fputc()");
         fprintf(stderr, "Couldn't write char for gutter corner\n");
     }
     /* fprintf(vt->tty, "+"); */
+
     for (size_t x = 1; x <= buffer->width; x ++) {
+        if (x == buffer->cursor.x) {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+        } else {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
+        }
         if (fputc('-', vt->tty) == EOF) {
             perror("fputc()");
             fprintf(stderr, "Couldn't write char for top gutter border\n");
         }
         /* fprintf(vt->tty, "-"); */
     }
+
     for (size_t y = 1; y <= buffer->height; y ++) {
         GOTO(1, GUTTER_TOP + y);
+        if (y == buffer->cursor.y) {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+        } else {
+           RESET_GRAPHICS;
+           SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
+        }
         int mod = y % 10;
         if (mod) {
             int writ = fprintf(vt->tty, " %d|", mod);
@@ -675,6 +714,8 @@ void vt_draw_gutters(vt *vt)
             }
         }
     }
+
+    RESET_GRAPHICS;
 }
 
 void vt_draw_window(vt *vt)
@@ -686,8 +727,8 @@ void vt_draw_window(vt *vt)
     if (!buffer->dirty) return;
     /* fprintf(stderr, "redraw\n"); */
 
-    CLEAR_SCREEN;
     vt_draw_gutters(vt);
+    RESET_GRAPHICS;
 
     vt_attribute_set empty_set = {0};
     /* NOTE might break cow */
