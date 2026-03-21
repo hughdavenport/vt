@@ -121,10 +121,12 @@ void vt_reset(vt *vt);
     X(VT_ACTION_OSC_END)      S(UNIMPL("VT_ACTION_OSC_END"))
 
 #define VT_ESCAPE_FUNCTIONS_LIST \
-   C(0x00)         X(VT_ESCAPE_NONE)  L("NONE")                   S(UNREACHABLE("Unexpected Escape function")) \
-   C(0x37 /* 7 */) X(VT_ESCAPE_DECSC) L("Save Cursor")            S(_vt_save_cursor(vt)) \
-   C(0x4F /* O */) X(VT_ESCAPE_SS3)   L("Single Shift 3")         S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
-   C(0x63 /* c */) X(VT_ESCAPE_RIS)   L("Reset to Initial State") S(vt_free(vt); vt_resize_window(vt))
+   C(0x00)         X(VT_ESCAPE_NONE)    L("NONE")                     S(UNREACHABLE("Unexpected Escape function")) \
+   C(0x37 /* 7 */) X(VT_ESCAPE_DECSC)   L("Save Cursor")              S(_vt_save_cursor(vt)) \
+   C(0x3D /* = */) X(VT_ESCAPE_DECKPAM) L("Keypad Application Modes") S(HERE("TODO DECKPAM, need to transform input done before write()")) \
+   C(0x3E /* > */) X(VT_ESCAPE_DECKPNM) L("Keypad Numeric Modes")     S(HERE("TODO DECKPNM, need to transform input done before write() (or toggle a flag back to not)")) \
+   C(0x4F /* O */) X(VT_ESCAPE_SS3)     L("Single Shift 3")           S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
+   C(0x63 /* c */) X(VT_ESCAPE_RIS)     L("Reset to Initial State")   S(vt_free(vt); vt_resize_window(vt))
 
 #define VT_CONTROL_FUNCTIONS_LIST \
    C(0x00) X(VT_CONTROL_NULL)  K(VT_KEY_NONE)      L("Null")                        S(UNIMPL("VT_CONTROL_NULL")) \
@@ -177,6 +179,7 @@ void vt_reset(vt *vt);
    C(0x4A /* J */) X(VT_CSI_ED)            K(VT_KEY_NONE)  L("Erase In Page")            S(_vt_erase_in_page(vt, VT_PARAM(vt, 0, 0))) \
    C(0x4B /* K */) X(VT_CSI_EL)            K(VT_KEY_NONE)  L("Erase In Line")            S(_vt_erase_in_line(vt, VT_PARAM(vt, 0, 0))) \
    C(0x6D /* m */) X(VT_CSI_SGR)           K(VT_KEY_NONE)  L("Select Graphic Rendition") S(_vt_select_graphic_rendition(vt)) \
+   C(0x72 /* r */) X(VT_CSI_DECSTBM)       K(VT_KEY_NONE)  L("Set Top and Bottom Margins") S(HERE("TODO DECSTBM set top and bot margins")) \
    C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")        S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
 #define VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST \
@@ -188,11 +191,13 @@ void vt_reset(vt *vt);
 
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
    C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                         L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private question function")) \
+   C(1)    X(VT_CSI_PRIVATE_QUESTION_DECCKM)                       L("Cursor Keys Mode")                                                                      S(HERE("TODO DECCKM, need to transform input done before write()")) \
    C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                      L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
    C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                       L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
    C(1049) X(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)            L("Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit") S(_vt_alternate_buffer(vt, input)) \
-   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)          L("Mouse Reporting with Press and Release")                                                S(UNIMPL("VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE")) \
-   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG) L("Mouse Reporting with Press, Release, and Drag")                                         S(UNIMPL("VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG"))
+   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)          L("Mouse Reporting with Press and Release")                                                S(HERE("VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE")) \
+   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG) L("Mouse Reporting with Press, Release, and Drag")                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG")) \
+   C(1003) X(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT)               L("Mouse Reporting with Movement")                                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT"))
 
 #define S(code)
 #define L(code)
@@ -226,13 +231,13 @@ typedef enum { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_TILDE_FUNC
 #undef X
 
 #define X(name) [name] = #name, 
-static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
 static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
+__attribute__((unused)) static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
 
@@ -1471,7 +1476,7 @@ void _vt_escape_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_ESCAPE_FUNCTIONS == 4, "Not all functions handled");
+    static_assert(VT_NUM_ESCAPE_FUNCTIONS == 6, "Not all functions handled");
     switch (func) {
         VT_ESCAPE_FUNCTIONS_LIST
         case VT_NUM_ESCAPE_FUNCTIONS: break;
@@ -1563,7 +1568,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 6, "Not all functions handled");
+    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 8, "Not all functions handled");
     switch (func) {
        VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
@@ -1620,7 +1625,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_FUNCTIONS == 10, "Not all functions handled");
+    static_assert(VT_NUM_CSI_FUNCTIONS == 11, "Not all functions handled");
     switch (func) {
         VT_CSI_FUNCTIONS_LIST
         case VT_NUM_CSI_FUNCTIONS: break;
@@ -2372,6 +2377,10 @@ int vt_main_loop(vt *vt)
                  if (fd == STDIN_FILENO) {
                     size_t written = 0;
                     while (written != (unsigned)red) {
+
+                       // FIXME need a way to determine if DECKPAM or DECCKM is set, then can't write
+                       // perhaps after getting each key, the key also has a string view of the buffer
+                       // then write just the amount for the key (may be from this buf, or a static string)
                        ssize_t writ = write(vt->child_tty, buf + written, red - written);
                        if (writ == -1) {
                           perror("write(child stdin)");
@@ -2440,6 +2449,10 @@ int vt_main_loop(vt *vt)
                  } else if (fd == vt->stderr[0] && false /* FIXME add option to send stderr to vt */) {
                     size_t written = 0;
                     while (written != (unsigned)red) {
+
+                       // FIXME need a way to determine if DECKPAM or DECCKM is set, then can't write
+                       // perhaps after getting each key, the key also has a string view of the buffer
+                       // then write just the amount for the key (may be from this buf, or a static string)
                        ssize_t writ = write(STDERR_FILENO, buf + written, red - written);
                        if (writ == -1) {
                           perror("write(stderr)");
