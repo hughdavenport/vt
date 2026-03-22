@@ -7,6 +7,13 @@ This repo contains a state machine of the VT500 series terminals, using [a state
 
 This library is being developed in a [YouTube series](https://www.youtube.com/watch?v=Kp4_0pBnDSc&list=PL5r5Q39GjMDf59oF4c0LTaCvJ_-12EViD).
 
+General references I used:
+- https://vt100.net/
+- https://ansi.tools/
+- https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf
+- https://terminalguide.namepad.de/
+- https://en.wikipedia.org/wiki/ANSI_escape_code
+
 Please leave any comments about what you liked. Feel free to suggest any features or improvements.
 
 You are welcome to support me financially if you would like on my [patreon](https://www.patreon.com/hughdavenport).
