@@ -1,0 +1,5 @@
+#!/bin/bash
+old=$(stty -g)
+trap "stty '$old'" EXIT
+stty -echo
+cat &>/dev/null

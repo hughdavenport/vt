@@ -1,0 +1,2395 @@
+tty is stdout
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 86x17
+inner window size 83x14
+Parent 453768
+Started child 453769
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 131 from fd 5 (child stderr): ('\e', '[', '0', '1', ';', '3', '2', 'm', 'h', 'u', 'g', 'h', '@', '\e', '[', '0', '1', ';', '3', '5', 'm', 'h', 'u', 'g', 'h', 's', 'i', 'e', 's', '\e', '[', '0'*2, 'm', ':', '\e', '[', '0', '1', ';', '3', '4', 'm', '~', '/', 's', 'r', 'c', '/', 'p', 'e', 'r', 's', 'o', 'n', 'a', 'l', '/', 'v', 't', '\e', '[', '0'*2, 'm', ' ', '(', '\e', '[', '3', '2', 'm'*2, 'a', 'i', 'n', '\e', '[', '0', 'm', ' ', '\e', '[', '3', '1', 'm', '*', '\e', '[', '0', 'm', '\e', '[', '1', ';', '3', '4', 'm', '$', '\e', '[', '0', 'm', '\e', '[', '3', '1', 'm', '%', '\e', '[', '0', 'm', '|', 'u', '=', ' ', 'o', 'r', 'i', 'g', 'i', 'n', '/', 'm', 'a', 'i', 'n', ')', '$', ' ')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 35
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x10)
+emitted key C-p
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 13 from fd 5 (child stderr): ('.', '/', 'a', '.', 'o', 'u', 't', ' ', '2', '>', 't', 'm', 'p')
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\r')
+emitted key Enter
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 1 from fd 5 (child stderr): ('\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 7 (child tty)
+red 24 from fd 7 (child tty): ('\e', '[', '?', '1', '0'*2, '3', 'h', '\e', '[', '?', '1', '0', '4', '9', 'h', '\e', '[', '?', '1', '0'*2, '6', 'h')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '?'
+state VT_STATE_CSI_PARAM, csi private '?' enable VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT (Mouse Reporting with Movement)
+ 1003
+vt.c:1835: [31mHERE[m: VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '?'
+state VT_STATE_CSI_PARAM, csi private '?' enable VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR (Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit)
+ 1049
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'h'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '?'
+state VT_STATE_CSI_PARAM, csi private '?' enable VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS (Mouse Reporting Format Digits)
+ 1006
+vt.c:1835: [31mHERE[m: VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'h'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 7 (child tty)
+red 512 from fd 7 (child tty): ('\e', '[', '0', 'm', '\e', '[', '2', 'J', '\e', '[', '1', ';', '1', '3', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e', '[', '1', ';', '2', '3', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '1', ';', '3'*2, 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '1', ';', '4', '3', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '1', ';', '5', '3', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '1', ';', '6', '3', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '1', ';', '7', '3', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '1', ';', '8', '3', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '2', ';', '4', 'H', '\e', '[', '0', 'm', '\e', '[', '1', 'm', '1', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_ED (Erase In Page), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'J'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 23
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 33
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 43
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 53
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 63
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 73
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 1, 83
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+line wrap
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 2, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 7 (child tty)
+red 512 from fd 7 (child tty): ('[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '2', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '3', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '4', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '5', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '6', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '7', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '8', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '9', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '0', '\e', '[', '3', ';', '3', 'H', '+', '\e', '[', '0', 'm', '\e', '[', '1', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[')
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+line wrap pending
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 3, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 7 (child tty)
+red 512 from fd 7 (child tty): ('0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e')
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 7 (child tty)
+red 259 from fd 7 (child tty): ('[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '-', '\e', '[', '4', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '1', 'm', ' ', '1', '|', '\e', '[', '5', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '2', '|', '\e', '[', '6', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '3', '|', '\e', '[', '7', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '4', '|', '\e', '[', '8', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '5', '|', '\e', '[', '9', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '6', '|', '\e', '[', '1', '0', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '7', '|', '\e', '[', '1'*2, ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '8', '|', '\e', '[', '1', '2', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '9', '|', '\e', '[', '1', '3', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', '1', '0', '|', '\e', '[', '1', '4', ';', '1', 'H', '\e', '[', '0', 'm', '\e', '[', '2', 'm', ' ', '1', '|', '\e', '[', '0', 'm', '\e', '[', '0', 'm', '\e', '[', '4', ';', '4', 'H')
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+line wrap pending
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '4'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 4, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '5'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 5, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '6'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 6, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '7'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 7, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '8'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 8, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '9'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 9, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 10, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 11, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 12, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 13, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 14, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '2'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '4'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 4, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '6', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x8 (No Buttons)
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 7 (child tty)
+red 24 from fd 7 (child tty): ('\e', '[', '?', '1', '0'*2, '3', 'l', '\e', '[', '?', '1', '0', '4', '9', 'l', '\e', '[', '?', '1', '0'*2, '6', 'l')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '?'
+state VT_STATE_CSI_PARAM, csi private '?' disable VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT (Mouse Reporting with Movement)
+ 1003
+vt.c:1835: [31mHERE[m: VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '?'
+state VT_STATE_CSI_PARAM, csi private '?' disable VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR (Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit)
+ 1049
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'l'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '?'
+state VT_STATE_CSI_PARAM, csi private '?' disable VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS (Mouse Reporting Format Digits)
+ 1006
+vt.c:1835: [31mHERE[m: VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'l'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 3 (child stdout)
+red 9 from fd 3 (child stdout): ('\e', '[', '1', '4', ';', '8', '3', 'H', '\n')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_CUP (Cursor Position), args: 14, 83
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'H'
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '6', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x9 (No Buttons)
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 131 from fd 5 (child stderr): ('\e', '[', '0', '1', ';', '3', '2', 'm', 'h', 'u', 'g', 'h', '@', '\e', '[', '0', '1', ';', '3', '5', 'm', 'h', 'u', 'g', 'h', 's', 'i', 'e', 's', '\e', '[', '0'*2, 'm', ':', '\e', '[', '0', '1', ';', '3', '4', 'm', '~', '/', 's', 'r', 'c', '/', 'p', 'e', 'r', 's', 'o', 'n', 'a', 'l', '/', 'v', 't', '\e', '[', '0'*2, 'm', ' ', '(', '\e', '[', '3', '2', 'm'*2, 'a', 'i', 'n', '\e', '[', '0', 'm', ' ', '\e', '[', '3', '1', 'm', '*', '\e', '[', '0', 'm', '\e', '[', '1', ';', '3', '4', 'm', '$', '\e', '[', '0', 'm', '\e', '[', '3', '1', 'm', '%', '\e', '[', '0', 'm', '|', 'u', '=', ' ', 'o', 'r', 'i', 'g', 'i', 'n', '/', 'm', 'a', 'i', 'n', ')', '$', ' ')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 35
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x9 (No Buttons)
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x10 (No Buttons)
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x12)
+emitted key C-r
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |s|
+emitted key s
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |p|
+emitted key p
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |i|
+emitted key i
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x03)
+emitted key C-c
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 2 from fd 5 (child stderr): |^C|
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 1 from fd 5 (child stderr): ('\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 131 from fd 5 (child stderr): ('\e', '[', '0', '1', ';', '3', '2', 'm', 'h', 'u', 'g', 'h', '@', '\e', '[', '0', '1', ';', '3', '5', 'm', 'h', 'u', 'g', 'h', 's', 'i', 'e', 's', '\e', '[', '0'*2, 'm', ':', '\e', '[', '0', '1', ';', '3', '4', 'm', '~', '/', 's', 'r', 'c', '/', 'p', 'e', 'r', 's', 'o', 'n', 'a', 'l', '/', 'v', 't', '\e', '[', '0'*2, 'm', ' ', '(', '\e', '[', '3', '2', 'm'*2, 'a', 'i', 'n', '\e', '[', '0', 'm', ' ', '\e', '[', '3', '1', 'm', '*', '\e', '[', '0', 'm', '\e', '[', '1', ';', '3', '4', 'm', '$', '\e', '[', '0', 'm', '\e', '[', '3', '1', 'm', '%', '\e', '[', '0', 'm', '|', 'u', '=', ' ', 'o', 'r', 'i', 'g', 'i', 'n', '/', 'm', 'a', 'i', 'n', ')', '$', ' ')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 35
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |r|
+emitted key r
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |e|
+emitted key e
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x03)
+emitted key C-c
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 2 from fd 5 (child stderr): |^C|
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 1 from fd 5 (child stderr): ('\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 131 from fd 5 (child stderr): ('\e', '[', '0', '1', ';', '3', '2', 'm', 'h', 'u', 'g', 'h', '@', '\e', '[', '0', '1', ';', '3', '5', 'm', 'h', 'u', 'g', 'h', 's', 'i', 'e', 's', '\e', '[', '0'*2, 'm', ':', '\e', '[', '0', '1', ';', '3', '4', 'm', '~', '/', 's', 'r', 'c', '/', 'p', 'e', 'r', 's', 'o', 'n', 'a', 'l', '/', 'v', 't', '\e', '[', '0'*2, 'm', ' ', '(', '\e', '[', '3', '2', 'm'*2, 'a', 'i', 'n', '\e', '[', '0', 'm', ' ', '\e', '[', '3', '1', 'm', '*', '\e', '[', '0', 'm', '\e', '[', '1', ';', '3', '4', 'm', '$', '\e', '[', '0', 'm', '\e', '[', '3', '1', 'm', '%', '\e', '[', '0', 'm', '|', 'u', '=', ' ', 'o', 'r', 'i', 'g', 'i', 'n', '/', 'm', 'a', 'i', 'n', ')', '$', ' ')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 35
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 32
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '1'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 1, 34
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 31
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '0'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_SGR (Select Graphic Rendition), args: 0
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x04)
+emitted key C-d
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 5 (child stderr)
+red 5 from fd 5 (child stderr): ('e', 'x', 'i', 't', '\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 4 (signal)
+signal 17 (Child exited)
+child exited with code 130
+ret = 130
