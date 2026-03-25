@@ -27,6 +27,31 @@ void vt_reset(vt *vt);
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
 
+#define _GET_NTH_ARG(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, N, ...) N
+#define COUNT(...) _GET_NTH_ARG(__VA_ARGS__, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+
+#define _CAT(a, b) a##b
+#define CAT(a, b) _CAT(a, b)
+
+#define REPEAT_0(str)
+#define REPEAT_1(str) REPEAT_0(str) str
+#define REPEAT_2(str) REPEAT_1(str) str
+#define REPEAT_3(str) REPEAT_2(str) str
+#define REPEAT_4(str) REPEAT_3(str) str
+#define REPEAT_5(str) REPEAT_4(str) str
+#define REPEAT_6(str) REPEAT_5(str) str
+#define REPEAT_7(str) REPEAT_6(str) str
+#define REPEAT_8(str) REPEAT_7(str) str
+#define REPEAT_9(str) REPEAT_8(str) str
+#define REPEAT_10(str) REPEAT_9(str) str
+#define REPEAT_11(str) REPEAT_10(str) str
+#define REPEAT_12(str) REPEAT_11(str) str
+#define REPEAT_13(str) REPEAT_12(str) str
+#define REPEAT_14(str) REPEAT_13(str) str
+#define REPEAT_15(str) REPEAT_14(str) str
+#define REPEAT_16(str) REPEAT_15(str) str
+#define REPEAT(n, str) CAT(REPEAT_, n)(str)
+
 #define VT_KEYS_LIST \
    X(VT_KEY_NONE) \
    X(VT_KEY_REQUEST) \
@@ -60,14 +85,14 @@ void vt_reset(vt *vt);
    X(VT_KEY_LEFT)
 
 #define VT_MOUSE_BUTTONS_LIST \
-   X(VT_BUTTON_LEFT) \
-   X(VT_BUTTON_MIDDLE) \
-   X(VT_BUTTON_RIGHT) \
-   X(VT_BUTTON_NONE) \
-   X(VT_BUTTON_WHEEL_UP) \
-   X(VT_BUTTON_WHEEL_DOWN) \
-   X(VT_BUTTON_WHEEL_LEFT) \
-   X(VT_BUTTON_WHEEL_RIGHT) \
+   X(VT_BUTTON_LEFT) L("Left Button") \
+   X(VT_BUTTON_MIDDLE) L("Middle Button") \
+   X(VT_BUTTON_RIGHT) L("Right Button") \
+   X(VT_BUTTON_NONE) L("No Buttons") \
+   X(VT_BUTTON_WHEEL_UP) L("Scroll Wheel Up") \
+   X(VT_BUTTON_WHEEL_DOWN) L("Scroll Wheel Down") \
+   X(VT_BUTTON_WHEEL_LEFT) L("Scroll Wheel Left") \
+   X(VT_BUTTON_WHEEL_RIGHT) L("Scroll Wheel Right")
 
 #define VT_MODIFIERS_LIST \
    X(VT_MODIFIER_NONE)    E(0) \
@@ -177,13 +202,13 @@ void vt_reset(vt *vt);
 
 #define VT_PARAM(vt, idx, def) ((idx) < (vt)->sequence_state.num_params && (vt)->sequence_state.params[(idx)].non_default ? (vt)->sequence_state.params[(idx)].value : (def))
 
-#define VT_ED "\033[%dJ"
-#define VT_CUP "\033[%d;%dH"
-#define VT_SGR "\033[%dm"
-#define VT_ALT_BUFFER_ENABLE "\033[?1049h"
-#define VT_ALT_BUFFER_DISABLE "\033[?1049l"
-#define VT_MOUSE_MODE_ENABLE "\033[?1003h"
-#define VT_MOUSE_MODE_DISABLE "\033[?1003l"
+#define VT_ED "\033[%uJ"
+#define VT_CUP "\033[%u;%uH"
+#define VT_SGR "\033[%um"
+#define VT_CSI_PRIVATE_QUESTION_ENABLE(...) fprintf(vt->tty, REPEAT(COUNT(__VA_ARGS__), "\033[?%uh"), ##__VA_ARGS__)
+#define VT_CSI_PRIVATE_QUESTION_DISABLE(...) fprintf(vt->tty, REPEAT(COUNT(__VA_ARGS__), "\033[?%ul"), ##__VA_ARGS__)
+#define VT_MOUSE_MODE_FORMAT_DIGITS_ENABLE "\033[?1006h"
+#define VT_MOUSE_MODE_FORMAT_DIGITS_DISABLE "\033[?1006l"
 
 #define VT_CSI_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                     S(UNREACHABLE("Unexpected CSI function")) \
@@ -199,23 +224,28 @@ void vt_reset(vt *vt);
    C(0x72 /* r */) X(VT_CSI_DECSTBM)       K(VT_KEY_NONE)  L("Set Top and Bottom Margins") S(HERE("TODO DECSTBM set top and bot margins")) \
    C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")        S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
+#define VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST \
+   C(0x00)         X(VT_CSI_PRIVATE_LESS_THAN_NONE)          K(VT_KEY_NONE) L("NONE")   S(UNREACHABLE("Unexpected CSI private < function")) \
+   C(0x4D /* M */) X(VT_CSI_PRIVATE_LESS_THAN_MOUSE)         K(VT_KEY_NONE) L("Mouse Report")  S(_vt_csi_mouse_report(vt, false)) \
+   C(0x6D /* m */) X(VT_CSI_PRIVATE_LESS_THAN_MOUSE_RELEASE) K(VT_KEY_NONE) L("Mouse Release Report")  S(_vt_csi_mouse_report(vt, true))
+
 #define VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   K(VT_KEY_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private tilde function")) \
+   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   K(VT_KEY_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private '~' function")) \
    C(1)    X(VT_CSI_PRIVATE_TILDE_HOME)   K(VT_KEY_HOME)   L("Home")   S(UNIMPL("VT_CSI_PRIVATE_TILDE_HOME")) \
    C(2)    X(VT_CSI_PRIVATE_TILDE_INSERT) K(VT_KEY_INSERT) L("Insert") S(UNIMPL("VT_CSI_PRIVATE_TILDE_INSERT")) \
    C(3)    X(VT_CSI_PRIVATE_TILDE_DELETE) K(VT_KEY_DELETE) L("Delete") S(UNIMPL("VT_CSI_PRIVATE_TILDE_DELETE")) \
    C(4)    X(VT_CSI_PRIVATE_TILDE_END)    K(VT_KEY_END)    L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END"))
 
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                         L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private question function")) \
-   C(1)    X(VT_CSI_PRIVATE_QUESTION_DECCKM)                       L("Cursor Keys Mode")                                                                      S(HERE("TODO DECCKM, need to transform input done before write()")) \
-   C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                      L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
-   C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                       L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
-   C(1049) X(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)            L("Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit") S(_vt_alternate_buffer(vt, input)) \
-   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)          L("Mouse Reporting with Press and Release")                                                S(HERE("VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE")) \
-   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG) L("Mouse Reporting with Press, Release, and Drag")                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG")) \
-   C(1003) X(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT)               L("Mouse Reporting with Movement")                                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT"))
-
+   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                          L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private '?' function")) \
+   C(1)    X(VT_CSI_PRIVATE_QUESTION_DECCKM)                        L("Cursor Keys Mode")                                                                      S(HERE("TODO DECCKM, need to transform input done before write()")) \
+   C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                       L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
+   C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                        L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
+   C(1049) X(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)             L("Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit") S(_vt_alternate_buffer(vt, input)) \
+   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)           L("Mouse Reporting with Press and Release")                                                S(HERE("VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE")) \
+   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG)  L("Mouse Reporting with Press, Release, and Drag")                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG")) \
+   C(1003) X(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT)                L("Mouse Reporting with Movement")                                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT")) \
+   C(1006) X(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS) L("Mouse Reporting Format Digits")                                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS"))
 #define S(code)
 #define L(code)
 #define K(code)
@@ -223,7 +253,12 @@ void vt_reset(vt *vt);
 
 #define C(code) code, 
 static const char vt_attribute_codes[] = { VT_ATTRIBUTES_LIST };
+static const int vt_csi_private_question_function_codes[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
+__attribute__((unused)) static const int vt_csi_private_less_than_function_codes[] = { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST };
+
 #define VT_ATTRIBUTE_CODE(enum_code) (((enum_code) >= 0 && (enum_code) < VT_NUM_ATTRIBUTES) ? vt_attribute_codes[(enum_code)] : 0)
+#define VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(enum_code) (((enum_code) >= 0 && (enum_code) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_codes[(enum_code)] : 0)
+#define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_CODE(enum_code) (((enum_code) >= 0 && (enum_code) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_codes[(enum_code)] : 0)
 #undef C
 #undef X
 #define C(code)
@@ -245,17 +280,19 @@ typedef enum { VT_ESCAPE_FUNCTIONS_LIST VT_NUM_ESCAPE_FUNCTIONS } vt_escape_func
 typedef enum { VT_CONTROL_FUNCTIONS_LIST VT_NUM_CONTROL_FUNCTIONS } vt_control_function;
 typedef enum { VT_CSI_FUNCTIONS_LIST VT_NUM_CSI_FUNCTIONS } vt_csi_function;
 typedef enum { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS } vt_csi_private_question_function;
+typedef enum { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS } vt_csi_private_less_than_function;
 typedef enum { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS } vt_csi_private_tilde_function;
 #undef X
 
 #define X(name) [name] = #name, 
-static const char *vt_mouse_button_strings[] = { VT_MOUSE_BUTTONS_LIST };
 static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
 static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
+static const char *vt_csi_private_less_than_function_strings[] = { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
+__attribute__((unused)) static const char *vt_mouse_button_strings[] = { VT_MOUSE_BUTTONS_LIST };
 __attribute__((unused)) static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
@@ -268,6 +305,7 @@ __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
 #define VT_CONTROL_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings[(func)] : "(control_function out of bounds)")
 #define VT_CSI_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings[(func)] : "(csi_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings[(func)] : "(csi_private_question_function out of bounds)")
+#define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_strings[(func)] : "(csi_private_less_than_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings[(func)] : "(csi_private_tilde_function out of bounds)")
 #define VT_KEY_STRING(func) (((func) >= 0 && (func) < VT_NUM_KEYS) ? vt_key_strings[(func)] : "(key out of bounds)")
 #undef X
@@ -275,14 +313,18 @@ __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
 #define X(code)
 #undef L
 #define L(name) name, 
+static const char *vt_mouse_button_strings_long[] = { VT_MOUSE_BUTTONS_LIST };
 static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings_long[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
+static const char *vt_csi_private_less_than_function_strings_long[] = { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings_long[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 static const char *vt_escape_function_strings_long[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
 
+#define VT_MOUSE_BUTTON_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings_long[(btn)] : "(mouse_button out of bounds)")
 #define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings_long[(func)] : "(csi_private_question_function out of bounds)")
+#define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_strings_long[(func)] : "(csi_private_less_than_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings_long[(func)] : "(csi_private_tilde_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings_long[(func)] : "(control_function out of bounds)")
 #define VT_ESCAPE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings_long[(func)] : "(escape_function out of bounds)")
@@ -433,6 +475,7 @@ typedef struct
       size_t column;
       size_t row;
       bool movement;
+      bool release;
    } mouse;
 } vt_key_value;
 
@@ -487,7 +530,25 @@ int vt_fprint_key(vt *vt, FILE *stream, vt_key_value *key)
       case VT_KEY_DOWN: print("Down"); break;
       case VT_KEY_LEFT: print("Left"); break;
 
-      case VT_KEY_MOUSE: print("Mouse TODO"); break;
+      case VT_KEY_MOUSE:
+         if (key->mouse.movement) {
+            print("Mouse movement at %lux%lu", key->mouse.column, key->mouse.row);
+            if (key->mouse.button != VT_BUTTON_NONE) {
+               print(" with %s held down", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            }
+            print(" (%s)", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+         } else {
+            if (key->mouse.release) {
+               print("Mouse Release at %lux%lu of %s", key->mouse.column, key->mouse.row, VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            } else if (key->mouse.button < VT_BUTTON_NONE) {
+               print("Mouse Press at %lux%lu with %s", key->mouse.column, key->mouse.row, VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            } else if (key->mouse.button > VT_BUTTON_NONE) {
+               print("Mouse %s at %lux%lu", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button), key->mouse.column, key->mouse.row);
+            } else {
+               print("Mouse Release at %lux%lu", key->mouse.column, key->mouse.row);
+            }
+         }
+         break;
 
       case VT_KEY_NONE:
       default: UNREACHABLE("Unexpected key %d", key->type);
@@ -605,7 +666,13 @@ void vt_restore_io(vt *vt)
 
 void vt_reset(vt *vt)
 {
-    fprintf(vt->tty, VT_ALT_BUFFER_DISABLE VT_MOUSE_MODE_DISABLE);
+    VT_CSI_PRIVATE_QUESTION_DISABLE(
+      VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT),
+      VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR),
+      VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS)
+    );
+
+    /* fprintf(vt->tty, VT_MOUSE_MODE_FORMAT_DIGITS_DISABLE); */
 
     if (vt->child_pid) {
        if (vt->stdout[1] > 0) close(vt->stdout[0]);
@@ -735,7 +802,7 @@ void vt_draw_gutters(vt *vt)
     /* fprintf(vt->tty, "+"); */
 
     for (size_t x = 1; x <= buffer->width; x ++) {
-        if (x == buffer->cursor.x) {
+        if (x == buffer->cursor.x || x % 100 == 0) {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
         } else {
@@ -766,7 +833,17 @@ void vt_draw_gutters(vt *vt)
                 fprintf(stderr, "Could not write single digit left gutter\n");
             }
         } else {
-            int writ = fprintf(vt->tty, "%02ld|", y % 100);
+            int writ;
+            if (y != buffer->cursor.y && y % 100 == 0) {
+                writ = fprintf(vt->tty, "%02ld", y % 100);
+                if (writ == 2) {
+                    RESET_GRAPHICS;
+                    SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+                    writ += fprintf(vt->tty, "|");
+                }
+            } else {
+                writ = fprintf(vt->tty, "%02ld|", y % 100);
+            }
             if (writ != 3) {
                 perror("fprintf()");
                 fprintf(stderr, "Could not write double digit left gutter\n");
@@ -1215,6 +1292,78 @@ void _vt_alternate_buffer(vt *vt, uint8_t input)
    }
 }
 
+void _vt_mouse_check_button(vt *vt)
+{
+   while (vt->emitted_key.key.mouse.button >= VT_NUM_MOUSE_BUTTONS) {
+      /* static_assert(VT_NUM_MOUSE_BUTTONS <= 0x04); */
+      if (vt->emitted_key.key.mouse.button & 0x04) {
+         vt->emitted_key.key.mouse.button &= ~0x04;
+         vt->emitted_key.modifier |= VT_MODIFIER_SHIFT;
+         continue;
+      }
+
+      static_assert(VT_NUM_MOUSE_BUTTONS <= 0x08);
+      if (vt->emitted_key.key.mouse.button & 0x08) {
+         vt->emitted_key.key.mouse.button &= ~0x08;
+         vt->emitted_key.modifier |= VT_MODIFIER_ALT;
+         continue;
+      }
+
+      static_assert(VT_NUM_MOUSE_BUTTONS <= 0x10);
+      if (vt->emitted_key.key.mouse.button & 0x10) {
+         vt->emitted_key.key.mouse.button &= ~0x10;
+         vt->emitted_key.modifier |= VT_MODIFIER_CONTROL;
+         continue;
+      }
+
+      static_assert(VT_NUM_MOUSE_BUTTONS <= 0x20);
+      if (vt->emitted_key.key.mouse.button & 0x20) {
+         vt->emitted_key.key.mouse.movement = true;
+         vt->emitted_key.key.mouse.button &= ~0x20;
+         continue;
+      }
+
+      static_assert(VT_NUM_MOUSE_BUTTONS <= 0x40);
+      static_assert(VT_NUM_MOUSE_BUTTONS > 4);
+      if (vt->emitted_key.key.mouse.button & 0x40) {
+         vt->emitted_key.key.mouse.movement = true;
+         vt->emitted_key.key.mouse.button &= ~0x40;
+         vt->emitted_key.key.mouse.button += 4;
+         continue;
+      }
+
+      UNREACHABLE("Unknown button %u", vt->emitted_key.key.mouse.button);
+   }
+}
+
+void _vt_csi_mouse_report(vt *vt, bool release)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key.type != VT_KEY_REQUEST) UNREACHABLE("Unsure what to do on receipt of \\e[<...M/m");
+
+   if (vt->sequence_state.num_params != 3) UNREACHABLE("Expected 3 more characters to describe mouse");
+
+   vt->emitted_key.key.type = VT_KEY_MOUSE;
+   vt->emitted_key.key.mouse.release = release;
+
+   vt->emitted_key.key.mouse.button = VT_PARAM(vt, 0, 0);
+   _vt_mouse_check_button(vt);
+
+   vt->emitted_key.key.mouse.column = VT_PARAM(vt, 1, 0);
+   if (vt->emitted_key.key.mouse.column <= GUTTER_LEFT) {
+      memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+      return;
+   }
+   vt->emitted_key.key.mouse.column -= GUTTER_LEFT;
+
+   vt->emitted_key.key.mouse.row = VT_PARAM(vt, 2, 0);
+   if (vt->emitted_key.key.mouse.row <= GUTTER_TOP) {
+      memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+      return;
+   }
+   vt->emitted_key.key.mouse.row -= GUTTER_TOP;
+}
+
 void _vt_delete_line(vt *vt, uint16_t param)
 {
    if (!vt) return;
@@ -1573,12 +1722,12 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
 #define X(name) func = name; break;
     vt_csi_private_tilde_function func = -1;
     switch (param) { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST }
-    if ((signed)func == -1) UNIMPL("Unknown csi private tilde function param %d", param);
+    if ((signed)func == -1) UNIMPL("Unknown csi private '~' function param %d", param);
 #undef C
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi private tilde %s (%s)\n", VT_STATE_STRING(vt->state),VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func), VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func));
+    fprintf(stderr, "state %s, csi private '~' %s (%s)\n", VT_STATE_STRING(vt->state),VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func), VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
           if (param) fputc(',', stderr);
@@ -1596,7 +1745,56 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
        VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS: break;
     }
-    UNREACHABLE("Unexpected csi private tilde func %d", func);
+    UNREACHABLE("Unexpected csi private '~' func %d", func);
+#undef X
+#undef S
+#undef C
+#undef K
+}
+
+void _vt_csi_private_less_than_dispatch(vt *vt, uint8_t input)
+{
+    if (!vt) return;
+
+#define S(code)
+#define X(name)
+#define C(code) case code:
+#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key = (vt_key_modifier){.key.type = _k}; break;
+    if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
+       switch (input) { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST }
+       if (vt->emitted_key.key.type != VT_KEY_REQUEST) return;
+    }
+#undef K
+#undef X
+
+#define K(code)
+#define X(name) func = name; break;
+    vt_csi_private_less_than_function func = -1;
+    switch (input) { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown csi '<' function input 0x%02X '%c'", input, input);
+#undef C
+#undef S
+#undef X
+
+    fprintf(stderr, "state %s, csi '<' function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING(func), VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING_LONG(func));
+    for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
+       if (vt->sequence_state.params[param].non_default) {
+          if (param) fputc(',', stderr);
+          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+       }
+    }
+    fprintf(stderr, "\n");
+
+#define C(name)
+#define X(name) case name:
+#define S(code) code; return;
+    /* all cases must return */
+    static_assert(VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS == 3, "Not all functions handled");
+    switch (func) {
+        VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST
+        case VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected csi '<' func %d", func);
 #undef X
 #undef S
 #undef C
@@ -1617,7 +1815,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi private question %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
+    fprintf(stderr, "state %s, csi private '?' %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
           if (param) fputc(',', stderr);
@@ -1626,18 +1824,18 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
     }
     fprintf(stderr, "\n");
 
-    if (input != 'h' && input != 'l') UNREACHABLE("Invalid CSI terminator for private sequence"); 
+    if (input != 'h' && input != 'l') UNREACHABLE("Invalid CSI terminator for private '?' sequence"); 
 
 #define C(name)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 8, "Not all functions handled");
+    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 9, "Not all functions handled");
     switch (func) {
        VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
     }
-    UNREACHABLE("Unexpected csi private question func %d", func);
+    UNREACHABLE("Unexpected csi private '?' func %d", func);
 #undef X
 #undef S
 #undef C
@@ -1648,11 +1846,15 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
     if (!vt) return;
 
     if (vt->sequence_state.num_collected) {
-       if (vt->sequence_state.num_collected == 1 && vt->sequence_state.collected[0] == '?') {
-          _vt_csi_private_question_dispatch(vt, VT_PARAM(vt, 0, 0), input);
+       if (vt->sequence_state.num_collected == 1) {
+          switch (vt->sequence_state.collected[0]) {
+             case '?': _vt_csi_private_question_dispatch(vt, VT_PARAM(vt, 0, 0), input); break;
+             case '<': _vt_csi_private_less_than_dispatch(vt, input); break;
+             default: UNIMPL("CSI unknown collected string char %c", vt->sequence_state.collected[0]);
+          }
           return;
        } else {
-          UNIMPL("CSI non private collected string");
+          UNIMPL("CSI multiple collected string");
        }
     }
 
@@ -2196,7 +2398,14 @@ int vt_setup_io(vt *vt)
     }
     setbuf(vt->tty, NULL);
 
-    fprintf(vt->tty, VT_ALT_BUFFER_ENABLE VT_MOUSE_MODE_ENABLE);
+    VT_CSI_PRIVATE_QUESTION_ENABLE(
+        VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT),
+        VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)
+        ,
+        VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS)
+    );
+
+    /* fprintf(vt->tty, VT_MOUSE_MODE_FORMAT_DIGITS_ENABLE); */
 
     if (tcgetattr(STDIN_FILENO, &vt->original_ios) == 0) {
         struct termios new_ios = vt->original_ios;
@@ -2466,14 +2675,14 @@ int vt_main_loop(vt *vt)
                           vt->state = VT_STATE_GROUND;
                        }
 
-                       fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
+                       /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
                        vt_process(vt, buf[i]);
-                       fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state));
-                       fprintf(stderr, "cell now %ldx%ld\n", (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.x, (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.y);
-                       if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n");
+                       /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                       /* fprintf(stderr, "cell now %ldx%ld\n", (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.x, (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.y); */
+                       /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
 
                        if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
-                          if (vt->emitted_key.key.type == VT_KEY_MOUSE) {
+                          if (vt->emitted_key.key.type == VT_KEY_MOUSE && vt->emitted_key.key.mouse.column + vt->emitted_key.key.mouse.row == 0) {
                              if (i + 3 >= (unsigned)red) UNREACHABLE("Expected 3 more characters to describe mouse");
                              i += 3;
                              vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
@@ -2484,46 +2693,7 @@ int vt_main_loop(vt *vt)
                                 UNREACHABLE("Expected value of 0x20-0xff to describe mouse button");
                              }
                              vt->emitted_key.key.mouse.button = buf[i-2] - 0x20;
-                             while (vt->emitted_key.key.mouse.button >= VT_NUM_MOUSE_BUTTONS) {
-                                /* static_assert(VT_NUM_MOUSE_BUTTONS <= 0x04); */
-                                if (vt->emitted_key.key.mouse.button & 0x04) {
-                                   vt->emitted_key.key.mouse.button &= ~0x04;
-                                   vt->emitted_key.modifier |= VT_MODIFIER_SHIFT;
-                                   continue;
-                                }
-
-                                static_assert(VT_NUM_MOUSE_BUTTONS <= 0x08);
-                                if (vt->emitted_key.key.mouse.button & 0x08) {
-                                   vt->emitted_key.key.mouse.button &= ~0x08;
-                                   vt->emitted_key.modifier |= VT_MODIFIER_ALT;
-                                   continue;
-                                }
-
-                                static_assert(VT_NUM_MOUSE_BUTTONS <= 0x10);
-                                if (vt->emitted_key.key.mouse.button & 0x10) {
-                                   vt->emitted_key.key.mouse.button &= ~0x10;
-                                   vt->emitted_key.modifier |= VT_MODIFIER_CONTROL;
-                                   continue;
-                                }
-
-                                static_assert(VT_NUM_MOUSE_BUTTONS <= 0x20);
-                                if (vt->emitted_key.key.mouse.button & 0x20) {
-                                   vt->emitted_key.key.mouse.movement = true;
-                                   vt->emitted_key.key.mouse.button &= ~0x20;
-                                   continue;
-                                }
-
-                                static_assert(VT_NUM_MOUSE_BUTTONS <= 0x40);
-                                static_assert(VT_NUM_MOUSE_BUTTONS > 4);
-                                if (vt->emitted_key.key.mouse.button & 0x40) {
-                                   vt->emitted_key.key.mouse.movement = true;
-                                   vt->emitted_key.key.mouse.button &= ~0x40;
-                                   vt->emitted_key.key.mouse.button += 4;
-                                   continue;
-                                }
-
-                                UNREACHABLE("Unknown button %u", vt->emitted_key.key.mouse.button);
-                             }
+                             _vt_mouse_check_button(vt);
 
                              if (buf[i-1] < 0x20) {
                                 UNREACHABLE("Expected value of 0x20-0xff to describe mouse column");
@@ -2553,18 +2723,14 @@ int vt_main_loop(vt *vt)
                                       vt->emitted_key.key.mouse.row, buffer->height);
                              }
 
-                             vt_fprint_modifier(vt, stderr, vt->emitted_key.modifier);
-                             fprintf(stderr, "got %smouse button %s col %lu row %lu\n",
-                                   (vt->emitted_key.key.mouse.movement ? "moving " : ""),
-                                   VT_MOUSE_BUTTON_STRING(vt->emitted_key.key.mouse.button),
-                                   vt->emitted_key.key.mouse.column,
-                                   vt->emitted_key.key.mouse.row);
+                          }
 
-                          } else {
+                          if (vt->emitted_key.key.type != VT_KEY_NONE) {
                              fprintf(stderr, "emitted key ");
                              vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
                              fprintf(stderr, "\n");
                           }
+
                           memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
                        }
                     }
