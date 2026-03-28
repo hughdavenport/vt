@@ -359,8 +359,8 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 
 #define ARRAY_CONTAINS(ret, arr, d) do { \
    (ret) = false; \
-   for (size_t i = 0; i < (arr).size; i ++) { \
-      if ((arr).data[i] == (d)) { \
+   for (size_t _i = 0; _i < (arr).size; _i ++) { \
+      if ((arr).data[_i] == (d)) { \
          (ret) = true; \
          break; \
       } \
@@ -376,8 +376,8 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 #define ARRAY_COPY(dst, src) do { \
    ARRAY_CLEAR(dst); \
    ARRAY_ENSURE_CAPACITY(dst, (src).size); \
-   for (size_t i = 0; i < (src).size; i ++) { \
-      ARRAY_APPEND(dst, (src).data[i]); \
+   for (size_t _i = 0; _i < (src).size; _i ++) { \
+      ARRAY_APPEND(dst, (src).data[_i]); \
    } \
 } while (false)
 
@@ -393,7 +393,7 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 #define SET_CONTAINS(ret, s, d) ARRAY_CONTAINS(ret, s, d)
 #define SET_COPY(src, dst) ARRAY_COPY(src, dst)
 #define SET_FOREACH(arr, code) ARRAY_FOREACH(arr, code)
-#define SET_APPEND(s, d) do { \
+#define SET_ADD(s, d) do { \
    bool ret; \
    SET_CONTAINS(ret, s, d); \
    if (ret) break; \
@@ -407,8 +407,8 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
       break; \
    } \
    (ret) = true; \
-   for (size_t i = 0; i < (s1).size; i ++) { \
-      SET_CONTAINS(ret, (s2), (s1).data[i]); \
+   for (size_t _i = 0; _i < (s1).size; _i ++) { \
+      SET_CONTAINS(ret, (s2), (s1).data[_i]); \
       if (!(ret)) break; \
    } \
 } while (false)
@@ -1583,7 +1583,7 @@ void _vt_select_graphic_rendition(vt *vt)
 /* #undef X */
 
 #define L(typ)
-#define X(typ) if (typ != VT_ATTRIBUTE_NONE) SET_APPEND(vt->current_attributes, typ); else SET_CLEAR(vt->current_attributes); break;
+#define X(typ) if (typ != VT_ATTRIBUTE_NONE) SET_ADD(vt->current_attributes, typ); else SET_CLEAR(vt->current_attributes); break;
        switch (param) {
           VT_ATTRIBUTES_LIST
           default: UNIMPL("Unimplemented param for SGR, param %u", param);
