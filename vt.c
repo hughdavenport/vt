@@ -27,6 +27,31 @@ void vt_reset(vt *vt);
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
 
+#define _GET_NTH_ARG(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, N, ...) N
+#define COUNT(...) _GET_NTH_ARG(__VA_ARGS__, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+
+#define _CAT(a, b) a##b
+#define CAT(a, b) _CAT(a, b)
+
+#define REPEAT_0(str)
+#define REPEAT_1(str) REPEAT_0(str) str
+#define REPEAT_2(str) REPEAT_1(str) str
+#define REPEAT_3(str) REPEAT_2(str) str
+#define REPEAT_4(str) REPEAT_3(str) str
+#define REPEAT_5(str) REPEAT_4(str) str
+#define REPEAT_6(str) REPEAT_5(str) str
+#define REPEAT_7(str) REPEAT_6(str) str
+#define REPEAT_8(str) REPEAT_7(str) str
+#define REPEAT_9(str) REPEAT_8(str) str
+#define REPEAT_10(str) REPEAT_9(str) str
+#define REPEAT_11(str) REPEAT_10(str) str
+#define REPEAT_12(str) REPEAT_11(str) str
+#define REPEAT_13(str) REPEAT_12(str) str
+#define REPEAT_14(str) REPEAT_13(str) str
+#define REPEAT_15(str) REPEAT_14(str) str
+#define REPEAT_16(str) REPEAT_15(str) str
+#define REPEAT(n, str) CAT(REPEAT_, n)(str)
+
 #define VT_KEYS_LIST \
    X(VT_KEY_NONE) \
    X(VT_KEY_REQUEST) \
@@ -177,13 +202,15 @@ void vt_reset(vt *vt);
 
 #define VT_PARAM(vt, idx, def) ((idx) < (vt)->sequence_state.num_params && (vt)->sequence_state.params[(idx)].non_default ? (vt)->sequence_state.params[(idx)].value : (def))
 
-#define VT_ED "\033[%dJ"
-#define VT_CUP "\033[%d;%dH"
-#define VT_SGR "\033[%dm"
-#define VT_ALT_BUFFER_ENABLE "\033[?1049h"
-#define VT_ALT_BUFFER_DISABLE "\033[?1049l"
-#define VT_MOUSE_MODE_ENABLE "\033[?1003h"
-#define VT_MOUSE_MODE_DISABLE "\033[?1003l"
+#define VT_ED "\033[%uJ"
+#define VT_CUP "\033[%u;%uH"
+#define VT_SGR "\033[%um"
+#define VT_CSI_PRIVATE_QUESTION_ENABLE(...) fprintf(vt->tty, REPEAT(COUNT(__VA_ARGS__), "\033[?%uh"), ##__VA_ARGS__)
+#define VT_CSI_PRIVATE_QUESTION_DISABLE(...) fprintf(vt->tty, REPEAT(COUNT(__VA_ARGS__), "\033[?%ul"), ##__VA_ARGS__)
+#define VT_CSI_QUESTION_SETUP \
+      VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT), \
+      VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR), \
+      VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS)
 
 #define VT_CSI_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                     S(UNREACHABLE("Unexpected CSI function")) \
@@ -605,7 +632,7 @@ void vt_restore_io(vt *vt)
 
 void vt_reset(vt *vt)
 {
-    fprintf(vt->tty, VT_ALT_BUFFER_DISABLE VT_MOUSE_MODE_DISABLE);
+    VT_CSI_PRIVATE_QUESTION_DISABLE(VT_CSI_QUESTION_SETUP);
 
     if (vt->child_pid) {
        if (vt->stdout[1] > 0) close(vt->stdout[0]);
@@ -2196,7 +2223,7 @@ int vt_setup_io(vt *vt)
     }
     setbuf(vt->tty, NULL);
 
-    fprintf(vt->tty, VT_ALT_BUFFER_ENABLE VT_MOUSE_MODE_ENABLE);
+    VT_CSI_PRIVATE_QUESTION_ENABLE(VT_CSI_QUESTION_SETUP);
 
     if (tcgetattr(STDIN_FILENO, &vt->original_ios) == 0) {
         struct termios new_ios = vt->original_ios;
