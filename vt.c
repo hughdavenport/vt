@@ -85,14 +85,14 @@ void vt_reset(vt *vt);
    X(VT_KEY_LEFT)
 
 #define VT_MOUSE_BUTTONS_LIST \
-   X(VT_BUTTON_LEFT) \
-   X(VT_BUTTON_MIDDLE) \
-   X(VT_BUTTON_RIGHT) \
-   X(VT_BUTTON_NONE) \
-   X(VT_BUTTON_WHEEL_UP) \
-   X(VT_BUTTON_WHEEL_DOWN) \
-   X(VT_BUTTON_WHEEL_LEFT) \
-   X(VT_BUTTON_WHEEL_RIGHT) \
+   X(VT_BUTTON_LEFT) L("Left Button") \
+   X(VT_BUTTON_MIDDLE) L("Middle Button") \
+   X(VT_BUTTON_RIGHT) L("Right Button") \
+   X(VT_BUTTON_NONE) L("No Buttons") \
+   X(VT_BUTTON_WHEEL_UP) L("Scroll Wheel Up") \
+   X(VT_BUTTON_WHEEL_DOWN) L("Scroll Wheel Down") \
+   X(VT_BUTTON_WHEEL_LEFT) L("Scroll Wheel Left") \
+   X(VT_BUTTON_WHEEL_RIGHT) L("Scroll Wheel Right")
 
 #define VT_MODIFIERS_LIST \
    X(VT_MODIFIER_NONE)    E(0) \
@@ -276,13 +276,13 @@ typedef enum { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_TILDE_FUNC
 #undef X
 
 #define X(name) [name] = #name, 
-static const char *vt_mouse_button_strings[] = { VT_MOUSE_BUTTONS_LIST };
 static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
 static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
+__attribute__((unused)) static const char *vt_mouse_button_strings[] = { VT_MOUSE_BUTTONS_LIST };
 __attribute__((unused)) static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
@@ -302,12 +302,14 @@ __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
 #define X(code)
 #undef L
 #define L(name) name, 
+static const char *vt_mouse_button_strings_long[] = { VT_MOUSE_BUTTONS_LIST };
 static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings_long[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings_long[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 static const char *vt_escape_function_strings_long[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
 
+#define VT_MOUSE_BUTTON_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings_long[(btn)] : "(mouse_button out of bounds)")
 #define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings_long[(func)] : "(csi_private_question_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings_long[(func)] : "(csi_private_tilde_function out of bounds)")
@@ -460,6 +462,7 @@ typedef struct
       size_t column;
       size_t row;
       bool movement;
+      bool release;
    } mouse;
 } vt_key_value;
 
@@ -514,7 +517,25 @@ int vt_fprint_key(vt *vt, FILE *stream, vt_key_value *key)
       case VT_KEY_DOWN: print("Down"); break;
       case VT_KEY_LEFT: print("Left"); break;
 
-      case VT_KEY_MOUSE: print("Mouse TODO"); break;
+      case VT_KEY_MOUSE:
+         if (key->mouse.movement) {
+            print("Mouse movement at %lux%lu", key->mouse.column, key->mouse.row);
+            if (key->mouse.button != VT_BUTTON_NONE) {
+               print(" with %s held down", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            }
+            print(" (%s)", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+         } else {
+            if (key->mouse.release) {
+               print("Mouse Release at %lux%lu of %s", key->mouse.column, key->mouse.row, VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            } else if (key->mouse.button < VT_BUTTON_NONE) {
+               print("Mouse Press at %lux%lu with %s", key->mouse.column, key->mouse.row, VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            } else if (key->mouse.button > VT_BUTTON_NONE) {
+               print("Mouse %s at %lux%lu", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button), key->mouse.column, key->mouse.row);
+            } else {
+               print("Mouse Release at %lux%lu", key->mouse.column, key->mouse.row);
+            }
+         }
+         break;
 
       case VT_KEY_NONE:
       default: UNREACHABLE("Unexpected key %d", key->type);
@@ -2580,18 +2601,14 @@ int vt_main_loop(vt *vt)
                                       vt->emitted_key.key.mouse.row, buffer->height);
                              }
 
-                             vt_fprint_modifier(vt, stderr, vt->emitted_key.modifier);
-                             fprintf(stderr, "got %smouse button %s col %lu row %lu\n",
-                                   (vt->emitted_key.key.mouse.movement ? "moving " : ""),
-                                   VT_MOUSE_BUTTON_STRING(vt->emitted_key.key.mouse.button),
-                                   vt->emitted_key.key.mouse.column,
-                                   vt->emitted_key.key.mouse.row);
+                          }
 
-                          } else {
+                          if (vt->emitted_key.key.type != VT_KEY_NONE) {
                              fprintf(stderr, "emitted key ");
                              vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
                              fprintf(stderr, "\n");
                           }
+
                           memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
                        }
                     }
