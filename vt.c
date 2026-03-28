@@ -1135,12 +1135,12 @@ void vt_resize_window(vt *vt)
 
         /* size_t cursor = (vt->cursor.y - 1) * original_size.ws_col + vt->cursor.x - 1; */
         size_t cursor = dst_cursor ? dst_cursor - buffer->cells : 0;
-        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n", 
+        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n",
               buffer->cursor.x, buffer->cursor.y,
               cursor % buffer->width + 1, cursor / buffer->width + 1);
         if (cursor >= new_size) cursor = new_size - 1;
 
-        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n", 
+        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n",
               buffer->cursor.x, buffer->cursor.y,
               cursor % buffer->width + 1, cursor / buffer->width + 1);
         buffer->cursor.x = cursor % buffer->width + 1;
@@ -1639,7 +1639,7 @@ void _vt_select_graphic_rendition(vt *vt)
 
     for (size_t p = 0; p == 0 || p < vt->sequence_state.num_params; p ++) {
        uint16_t param = VT_PARAM(vt, p, 0);
-#define C(code) case code: 
+#define C(code) case code:
 
 /* #define X(code) */
 /* #define L(name) HERE("Got SGR param %u code %s", VT_PARAM(vt, p, 0), name); break; */
@@ -2067,7 +2067,7 @@ void vt_process(vt *vt, uint8_t input)
 #define NUM_E0_EF N(0xE0) N(0xE1) N(0xE2) N(0xE3) N(0xE4) N(0xE5) N(0xE6) N(0xE7) N(0xE8) N(0xE9) N(0xEA) N(0xEB) N(0xEC) N(0xED) N(0xEE) N(0xEF)
 #define NUM_F0_FF N(0xF0) N(0xF1) N(0xF2) N(0xF3) N(0xF4) N(0xF5) N(0xF6) N(0xF7) N(0xF8) N(0xF9) N(0xFA) N(0xFB) N(0xFC) N(0xFD) N(0xFE) N(0xFF)
 
-#define N(num) case num: 
+#define N(num) case num:
 
     /* anywhere state transistions */
     switch (input) {
