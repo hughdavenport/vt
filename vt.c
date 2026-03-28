@@ -227,14 +227,14 @@ void vt_reset(vt *vt);
    C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")        S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
 #define VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   K(VT_KEY_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private tilde function")) \
+   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   K(VT_KEY_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private '~' function")) \
    C(1)    X(VT_CSI_PRIVATE_TILDE_HOME)   K(VT_KEY_HOME)   L("Home")   S(UNIMPL("VT_CSI_PRIVATE_TILDE_HOME")) \
    C(2)    X(VT_CSI_PRIVATE_TILDE_INSERT) K(VT_KEY_INSERT) L("Insert") S(UNIMPL("VT_CSI_PRIVATE_TILDE_INSERT")) \
    C(3)    X(VT_CSI_PRIVATE_TILDE_DELETE) K(VT_KEY_DELETE) L("Delete") S(UNIMPL("VT_CSI_PRIVATE_TILDE_DELETE")) \
    C(4)    X(VT_CSI_PRIVATE_TILDE_END)    K(VT_KEY_END)    L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END"))
 
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                         L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private question function")) \
+   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                          L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private '?' function")) \
    C(1)    X(VT_CSI_PRIVATE_QUESTION_DECCKM)                       L("Cursor Keys Mode")                                                                      S(HERE("TODO DECCKM, need to transform input done before write()")) \
    C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                      L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
    C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                       L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
@@ -1621,12 +1621,12 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
 #define X(name) func = name; break;
     vt_csi_private_tilde_function func = -1;
     switch (param) { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST }
-    if ((signed)func == -1) UNIMPL("Unknown csi private tilde function param %d", param);
+    if ((signed)func == -1) UNIMPL("Unknown csi private '~' function param %d", param);
 #undef C
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi private tilde %s (%s)\n", VT_STATE_STRING(vt->state),VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func), VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func));
+    fprintf(stderr, "state %s, csi private '~' %s (%s)\n", VT_STATE_STRING(vt->state),VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func), VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
           if (param) fputc(',', stderr);
@@ -1644,7 +1644,7 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
        VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS: break;
     }
-    UNREACHABLE("Unexpected csi private tilde func %d", func);
+    UNREACHABLE("Unexpected csi private '~' func %d", func);
 #undef X
 #undef S
 #undef C
@@ -1665,7 +1665,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi private question %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
+    fprintf(stderr, "state %s, csi private '?' %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
           if (param) fputc(',', stderr);
@@ -1674,7 +1674,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
     }
     fprintf(stderr, "\n");
 
-    if (input != 'h' && input != 'l') UNREACHABLE("Invalid CSI terminator for private sequence"); 
+    if (input != 'h' && input != 'l') UNREACHABLE("Invalid CSI terminator for private '?' sequence");
 
 #define C(name)
 #define X(name) case name:
@@ -1685,7 +1685,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
        VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
     }
-    UNREACHABLE("Unexpected csi private question func %d", func);
+    UNREACHABLE("Unexpected csi private '?' func %d", func);
 #undef X
 #undef S
 #undef C
