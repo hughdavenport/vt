@@ -758,11 +758,39 @@ void vt_draw_gutters(vt *vt)
     RESET_GRAPHICS;
     CLEAR_SCREEN;
 
+    if (!buffer->cursor.x || !buffer->cursor.y) {
+        UNREACHABLE("buffer cursor not set");
+    }
+    if (buffer->cursor.x > buffer->width || buffer->cursor.y > buffer->height) {
+        UNREACHABLE("buffer cursor out of bounds: %lux%lu vs %lux%lu",
+                buffer->cursor.x, buffer->cursor.y,
+                buffer->width, buffer->height);
+    }
+
+    vt_attribute colors[] = {
+        VT_ATTRIBUTE_FG_0, VT_ATTRIBUTE_FG_1, VT_ATTRIBUTE_FG_2, VT_ATTRIBUTE_FG_3, VT_ATTRIBUTE_FG_4, VT_ATTRIBUTE_FG_5, VT_ATTRIBUTE_FG_6, VT_ATTRIBUTE_FG_7,
+        VT_ATTRIBUTE_BG_0, VT_ATTRIBUTE_BG_1, VT_ATTRIBUTE_BG_2, VT_ATTRIBUTE_BG_3, VT_ATTRIBUTE_BG_4, VT_ATTRIBUTE_BG_5, VT_ATTRIBUTE_BG_6, VT_ATTRIBUTE_BG_7,
+    };
+    vt_attribute_set cursor_colors = {0};
+    for (size_t i = 0; i < C_ARRAY_LEN(colors); i ++) {
+        bool used; SET_CONTAINS(used, vt->current_attributes, colors[i]);
+        if (used) SET_ADD(cursor_colors, colors[i]);
+    }
+
     for (size_t x = 10; x <= buffer->width; x += 10) {
         GOTO(GUTTER_LEFT + x, 1);
         if (x == buffer->cursor.x) {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+           if (cursor_colors.size) {
+               fprintf(vt->tty, "\033[");
+               SET_FOREACH(cursor_colors, {
+                   if (idx) fputc(';', vt->tty);
+                   fprintf(vt->tty, "%u", VT_ATTRIBUTE_CODE(element));
+               });
+               fprintf(vt->tty, "m");
+               fflush(vt->tty);
+           }
         } else {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
@@ -779,6 +807,15 @@ void vt_draw_gutters(vt *vt)
         if (x == buffer->cursor.x) {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+           if (cursor_colors.size) {
+               fprintf(vt->tty, "\033[");
+               SET_FOREACH(cursor_colors, {
+                   if (idx) fputc(';', vt->tty);
+                   fprintf(vt->tty, "%u", VT_ATTRIBUTE_CODE(element));
+               });
+               fprintf(vt->tty, "m");
+               fflush(vt->tty);
+           }
         } else {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
@@ -798,9 +835,18 @@ void vt_draw_gutters(vt *vt)
     /* fprintf(vt->tty, "+"); */
 
     for (size_t x = 1; x <= buffer->width; x ++) {
-        if (x == buffer->cursor.x) {
+        if (x == buffer->cursor.x || x % 100 == 0) {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+           if (cursor_colors.size) {
+               fprintf(vt->tty, "\033[");
+               SET_FOREACH(cursor_colors, {
+                   if (idx) fputc(';', vt->tty);
+                   fprintf(vt->tty, "%u", VT_ATTRIBUTE_CODE(element));
+               });
+               fprintf(vt->tty, "m");
+               fflush(vt->tty);
+           }
         } else {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
@@ -817,6 +863,15 @@ void vt_draw_gutters(vt *vt)
         if (y == buffer->cursor.y) {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+           if (cursor_colors.size) {
+               fprintf(vt->tty, "\033[");
+               SET_FOREACH(cursor_colors, {
+                   if (idx) fputc(';', vt->tty);
+                   fprintf(vt->tty, "%u", VT_ATTRIBUTE_CODE(element));
+               });
+               fprintf(vt->tty, "m");
+               fflush(vt->tty);
+           }
         } else {
            RESET_GRAPHICS;
            SELECT_GRAPHICS(VT_ATTRIBUTE_DIM);
@@ -829,7 +884,17 @@ void vt_draw_gutters(vt *vt)
                 fprintf(stderr, "Could not write single digit left gutter\n");
             }
         } else {
-            int writ = fprintf(vt->tty, "%02ld|", y % 100);
+            int writ;
+            if (y != buffer->cursor.y && y % 100 == 0) {
+                writ = fprintf(vt->tty, "%02ld", y % 100);
+                if (writ == 2) {
+                    RESET_GRAPHICS;
+                    SELECT_GRAPHICS(VT_ATTRIBUTE_BOLD);
+                    writ += fprintf(vt->tty, "|");
+                }
+            } else {
+                writ = fprintf(vt->tty, "%02ld|", y % 100);
+            }
             if (writ != 3) {
                 perror("fprintf()");
                 fprintf(stderr, "Could not write double digit left gutter\n");
@@ -838,6 +903,7 @@ void vt_draw_gutters(vt *vt)
     }
 
     RESET_GRAPHICS;
+    SET_FREE(cursor_colors);
 }
 
 void vt_draw_window(vt *vt)
@@ -1568,6 +1634,8 @@ void _vt_param(vt *vt, uint8_t input)
 void _vt_select_graphic_rendition(vt *vt)
 {
     if (!vt) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
 
     for (size_t p = 0; p == 0 || p < vt->sequence_state.num_params; p ++) {
        uint16_t param = VT_PARAM(vt, p, 0);
@@ -1594,6 +1662,8 @@ void _vt_select_graphic_rendition(vt *vt)
 
     /* if (vt->current_attributes.size == 0) HERE("no attributes"); */
     /* SET_FOREACH(vt->current_attributes, HERE("attr %zu: %s", idx, VT_ATTRIBUTE_STRING(element))); */
+
+    buffer->dirty = true;
 }
 
 void _vt_execute(vt *vt, uint8_t input)
