@@ -159,8 +159,8 @@ void vt_reset(vt *vt);
 #define VT_ESCAPE_FUNCTIONS_LIST \
    C(0x00)         X(VT_ESCAPE_NONE)    L("NONE")                     S(UNREACHABLE("Unexpected Escape function")) \
    C(0x37 /* 7 */) X(VT_ESCAPE_DECSC)   L("Save Cursor")              S(_vt_save_cursor(vt)) \
-   C(0x3D /* = */) X(VT_ESCAPE_DECKPAM) L("Keypad Application Modes") S(HERE("TODO DECKPAM, need to transform input done before write()")) \
-   C(0x3E /* > */) X(VT_ESCAPE_DECKPNM) L("Keypad Numeric Modes")     S(HERE("TODO DECKPNM, need to transform input done before write() (or toggle a flag back to not)")) \
+   C(0x3D /* = */) X(VT_ESCAPE_DECKPAM) L("Keypad Application Modes") S(UNIMPL("TODO DECKPAM, need to transform input done before write()")) \
+   C(0x3E /* > */) X(VT_ESCAPE_DECKPNM) L("Keypad Numeric Modes")     S(UNIMPL("TODO DECKPNM, need to transform input done before write() (or toggle a flag back to not)")) \
    C(0x4F /* O */) X(VT_ESCAPE_SS3)     L("Single Shift 3")           S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
    C(0x63 /* c */) X(VT_ESCAPE_RIS)     L("Reset to Initial State")   S(vt_free(vt); vt_resize_window(vt))
 
