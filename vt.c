@@ -7,7 +7,6 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -612,7 +611,8 @@ struct vt
     pid_t child_pid;
     int stdout[2];
     int stderr[2];
-    int child_tty;
+    int child_tty_fd;
+    FILE *child_tty;
     vt_key_modifier emitted_key;
     vt_mouse_mode mouse;
     vt_mouse_reporting_mode mouse_reporting;
@@ -2516,23 +2516,20 @@ int __signalfd(int fd, ...)
     return signalfd(fd, &mask, SFD_NONBLOCK | SFD_CLOEXEC);
 }
 
-#define _select(...) __select(0, ##__VA_ARGS__, -1)
-int __select(int dummy, ...)
+#define _select(...) __select(C_ARRAY_LEN(((int[]){__VA_ARGS__})), (int[]){__VA_ARGS__});
+
+int __select(size_t n, int *fds)
 {
-    va_list va;
     int nfds = 0;
     fd_set readables;
     FD_ZERO(&readables);
-    va_start(va, dummy);
-    while (true) {
-        int fd = va_arg(va, int);
-        if (fd == -1) break;
+    for (size_t i = 0; i < n; i ++) {
+        int fd = fds[i];
         if (fcntl(fd, F_GETFD) != -1) {
            if (fd >= nfds) nfds = fd + 1;
            FD_SET(fd, &readables);
         }
     }
-    va_end(va);
 
     int sel;
     do {
@@ -2540,16 +2537,13 @@ int __select(int dummy, ...)
     } while (sel == -1 && errno == EINTR);
     int ret = -1;
     if (sel) {
-        va_start(va, dummy);
-        while (true) {
-            int fd = va_arg(va, int);
-            if (fd == -1) break;
+        for (size_t i = 0; i < n; i ++) {
+            int fd = fds[i];
             if (fcntl(fd, F_GETFD) != -1 && FD_ISSET(fd, &readables)) {
                 ret = fd;
                 break;
             }
         }
-        va_end(va);
     }
     return ret;
 }
@@ -2565,7 +2559,7 @@ int handle_signal(vt *vt, int signo)
                   .ws_col = vt->alternate_buffer ? vt->alternate_buffer->width : vt->primary_buffer.width,
                   .ws_row = vt->alternate_buffer ? vt->alternate_buffer->height : vt->primary_buffer.height,
                };
-               if (ioctl(vt->child_tty, TIOCSWINSZ, &window) != 0) {
+               if (ioctl(vt->child_tty_fd, TIOCSWINSZ, &window) != 0) {
                   perror("ioctl(child_tty, TIOCSWINSZ, &window)");
                   return 1;
                }
@@ -2740,7 +2734,7 @@ void vt_process_key(vt *vt)
             }
 
          default:
-            if (vt_write(vt, vt->child_tty, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
+            if (vt_write(vt, vt->child_tty_fd, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
                return;
             }
       }
@@ -2767,14 +2761,14 @@ int vt_main_loop(vt *vt)
           if (stdin_eof && stdout_eof && stderr_eof && tty_eof) break;
 
           fprintf(stderr, "select(sigfd, stdin, stdout, stderr, tty)\n");
-          fd = _select(sigfd, STDIN_FILENO, vt->stdout[0], vt->stderr[0], vt->child_tty);
+          fd = _select(sigfd, STDIN_FILENO, vt->stdout[0], vt->stderr[0], vt->child_tty_fd);
        } else {
           if (stdin_eof) break;
 
           fprintf(stderr, "select(sigfd, stdin)\n");
           fd = _select(sigfd, STDIN_FILENO);
        }
-       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty ? "child tty" : "unknown"))))));
+       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown"))))));
        if (fd == sigfd) {
           struct signalfd_siginfo siginfo;
           ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
@@ -2792,7 +2786,8 @@ int vt_main_loop(vt *vt)
              tty_eof = true;
              close(vt->stdout[0]);
              close(vt->stderr[0]);
-             close(vt->child_tty);
+             fclose(vt->child_tty);
+             /* close(vt->child_tty_fd); */
           }
 
           int ret = handle_signal(vt, siginfo.ssi_signo);
@@ -2808,7 +2803,7 @@ int vt_main_loop(vt *vt)
                  return 1;
 
               } else if (red == 0) {
-                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty ? "child tty" : "unknown")))));
+                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown")))));
                  close(fd);
                  if (fd == STDIN_FILENO) {
                     stdin_eof = true;
@@ -2816,7 +2811,7 @@ int vt_main_loop(vt *vt)
                     stdout_eof = true;
                  } else if (fd == vt->stderr[0]) {
                     stderr_eof = true;
-                 } else if (fd == vt->child_tty) {
+                 } else if (fd == vt->child_tty_fd) {
                     tty_eof = true;
                  } else {
                     fprintf(stderr, "Unexpected fd\n");
@@ -2824,7 +2819,7 @@ int vt_main_loop(vt *vt)
                  break;
               }
 
-              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty ? "child tty" : "unknown")))));
+              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown")))));
               bool allgraph = true;
               for (ssize_t i = 0; i < red; i ++) {
                   if (!isgraph(buf[i])) {
@@ -2857,7 +2852,7 @@ int vt_main_loop(vt *vt)
                  fprintf(stderr, ")\n");
               }
 
-              if (vt->child_tty > 0) {
+              if (vt->child_tty_fd > 0) {
                  if (fd == STDIN_FILENO) {
                     for (size_t i = 0; i < (unsigned)red; i ++) {
                        if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
@@ -3029,7 +3024,7 @@ int vt_setup_child(vt *vt, char * const *argv)
 
    vt->child_ios = vt->original_ios;
    struct winsize window = {.ws_col = vt->primary_buffer.width, .ws_row = vt->primary_buffer.height};
-   vt->child_pid = forkpty(&vt->child_tty, NULL, &vt->child_ios, &window);
+   vt->child_pid = forkpty(&vt->child_tty_fd, NULL, &vt->child_ios, &window);
 
    if (vt->child_pid == -1) {
       perror("fork()");
@@ -3056,6 +3051,8 @@ int vt_setup_child(vt *vt, char * const *argv)
       }
       _exit(1);
    }
+
+   vt->child_tty = fdopen(vt->child_tty_fd, "w");
 
    fprintf(stderr, "Parent %d\n", getpid());
    fprintf(stderr, "Started child %d\n", vt->child_pid);
