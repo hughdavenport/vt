@@ -22,6 +22,7 @@ typedef struct vt vt;
 void vt_reset(vt *vt);
 #define HERE(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mHERE\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); } while (false)
 #define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (true) { vt_reset(vt); exit(1); } else return; } while (false)
+#define UNIMPL_RET(retval, fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (true) { vt_reset(vt); exit(1); } else return (retval); } while (false)
 #define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); vt_reset(vt); exit(1); } while (false)
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
@@ -106,6 +107,7 @@ void vt_reset(vt *vt);
    X(VT_BUTTON_WHEEL_DOWN) L("Scroll Wheel Down") \
    X(VT_BUTTON_WHEEL_LEFT) L("Scroll Wheel Left") \
    X(VT_BUTTON_WHEEL_RIGHT) L("Scroll Wheel Right")
+/* NOTE: buttons past wheel right need to have a higher id */
 
 #define VT_MODIFIERS_LIST \
    X(VT_MODIFIER_NONE)    E(0) \
@@ -488,17 +490,19 @@ typedef struct
     bool shift_lock;
 } vt_sequence_state;
 
+typedef struct {
+   vt_mouse_button button;
+   size_t column;
+   size_t row;
+   bool movement;
+   bool release;
+} vt_mouse;
+
 typedef struct
 {
    vt_key type;
    char raw;
-   struct {
-      vt_mouse_button button;
-      size_t column;
-      size_t row;
-      bool movement;
-      bool release;
-   } mouse;
+   vt_mouse mouse;
 } vt_key_value;
 
 typedef struct
@@ -593,6 +597,14 @@ int vt_fprint_key_modifier(vt *vt, FILE *stream, vt_key_modifier key)
    if (key_ret == -1) return -1;
 
    return ret + key_ret;
+}
+
+int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
+{
+   UNIMPL_RET(-1, "send mouse event in the preferred manner");
+   (void)stream;
+   (void)mouse;
+   (void)modifiers;
 }
 
 struct vt
@@ -2708,14 +2720,17 @@ void vt_process_key(vt *vt)
                      return;
                   }
 
-                  UNIMPL("send mouse event in the preferred manner");
+                  vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, (vt_modifier){0});
+                  break;
 
                case VT_MOUSE_MODE_PRESS_RELEASE:
                   if (vt->emitted_key.key.mouse.movement) {
                      fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
                      return;
                   }
-                  UNIMPL("send mouse event in the preferred manner");
+
+                  vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, vt->emitted_key.modifier);
+                  break;
 
                case VT_MOUSE_MODE_HIGHLIGHT:
                   UNIMPL("Unsure how to handle with mouse highlight mode just yet");
@@ -2725,13 +2740,17 @@ void vt_process_key(vt *vt)
                      HERE("need to work out if mouse button is down");
                      return;
                   }
-                  UNIMPL("send mouse event in the preferred manner");
+
+                  vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, vt->emitted_key.modifier);
+                  break;
 
                case VT_MOUSE_MODE_MOVEMENT:
-                  UNIMPL("send mouse event in the preferred manner");
+                  vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, vt->emitted_key.modifier);
+                  break;
 
                default: UNREACHABLE("unexpected mouse mode %d", vt->mouse);
             }
+            break;
 
          default:
             if (vt_write(vt, vt->child_tty_fd, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
