@@ -52,6 +52,20 @@ void vt_reset(vt *vt);
 #define REPEAT_16(str) REPEAT_15(str) str
 #define REPEAT(n, str) CAT(REPEAT_, n)(str)
 
+#define VT_MOUSE_MODES_LIST \
+   X(VT_MOUSE_MODE_NONE) \
+   X(VT_MOUSE_MODE_CLICK_TRACKING) /* mode ?9, only shows up outside of tmux */ \
+   X(VT_MOUSE_MODE_PRESS_RELEASE) /* mode ?1000 */ \
+   X(VT_MOUSE_MODE_HIGHLIGHT) /* mode ?1001, not used or can break stuff... */ \
+   X(VT_MOUSE_MODE_PRESS_RELEASE_AND_DRAG) /* mode ?1002 */ \
+   X(VT_MOUSE_MODE_MOVEMENT) /* mode ?1003 */ \
+
+#define VT_MOUSE_REPORTING_MODES_LIST \
+   X(VT_MOUSE_REPORTING_MODE_DEFAULT) \
+   X(VT_MOUSE_REPORTING_MODE_MULTIBYTE) /* mode ?1005 */ \
+   X(VT_MOUSE_REPORTING_MODE_DIGITS) /* mode ?1006 */ \
+   X(VT_MOUSE_REPORTING_MODE_URXVT) /* mode ?1015 */ \
+
 #define VT_KEYS_LIST \
    X(VT_KEY_NONE) \
    X(VT_KEY_REQUEST) \
@@ -241,13 +255,14 @@ void vt_reset(vt *vt);
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
    C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                          L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private '?' function")) \
    C(1)    X(VT_CSI_PRIVATE_QUESTION_DECCKM)                        L("Cursor Keys Mode")                                                                      S(HERE("TODO DECCKM, need to transform input done before write()")) \
+   C(9)    X(VT_CSI_PRIVATE_QUESTION_MOUSE_CLICK_TRACKING)          L("Mouse Reporting with click only tracking")                                              S(vt->mouse = VT_MOUSE_MODE_CLICK_TRACKING) \
    C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                       L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
    C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                        L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
    C(1049) X(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)             L("Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit") S(_vt_alternate_buffer(vt, input)) \
-   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)           L("Mouse Reporting with Press and Release")                                                S(HERE("VT_CSI_PRIVATE_MOUSE_PRESS_RELEASE")) \
-   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG)  L("Mouse Reporting with Press, Release, and Drag")                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG")) \
-   C(1003) X(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT)                L("Mouse Reporting with Movement")                                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT")) \
-   C(1006) X(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS) L("Mouse Reporting Format Digits")                                                         S(HERE("VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS"))
+   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)           L("Mouse Reporting with Press and Release")                                                S(vt->mouse = VT_MOUSE_MODE_PRESS_RELEASE) \
+   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG)  L("Mouse Reporting with Press, Release, and Drag")                                         S(vt->mouse = VT_MOUSE_MODE_PRESS_RELEASE_AND_DRAG) \
+   C(1003) X(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT)                L("Mouse Reporting with Movement")                                                         S(vt->mouse = VT_MOUSE_MODE_MOVEMENT) \
+   C(1006) X(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS) L("Mouse Reporting Format Digits")                                                         S(vt->mouse_reporting = VT_MOUSE_REPORTING_MODE_DIGITS)
 #define S(code)
 #define L(code)
 #define K(code)
@@ -276,6 +291,8 @@ typedef enum { VT_MODIFIERS_LIST } vt_modifier;
 typedef enum { VT_MOUSE_BUTTONS_LIST VT_NUM_MOUSE_BUTTONS } vt_mouse_button;
 typedef enum { VT_ATTRIBUTES_LIST VT_NUM_ATTRIBUTES } vt_attribute;
 typedef enum { VT_KEYS_LIST VT_NUM_KEYS } vt_key;
+typedef enum { VT_MOUSE_MODES_LIST VT_NUM_MOUSE_MODES } vt_mouse_mode;
+typedef enum { VT_MOUSE_REPORTING_MODES_LIST VT_NUM_MOUSE_REPORTING_MODES } vt_mouse_reporting_mode;
 typedef enum { VT_STATES_LIST VT_NUM_STATES } vt_state;
 typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
 typedef enum { VT_ESCAPE_FUNCTIONS_LIST VT_NUM_ESCAPE_FUNCTIONS } vt_escape_function;
@@ -298,6 +315,8 @@ __attribute__((unused)) static const char *vt_mouse_button_strings[] = { VT_MOUS
 __attribute__((unused)) static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
+__attribute__((unused)) static const char *vt_mouse_mode_strings[] = { VT_MOUSE_MODES_LIST };
+__attribute__((unused)) static const char *vt_mouse_reporting_mode_strings[] = { VT_MOUSE_REPORTING_MODES_LIST };
 
 #define VT_MOUSE_BUTTON_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings[(btn)] : "(mouse_button out of bounds)")
 #define VT_ATTRIBUTE_STRING(attr) (((attr) >= 0 && (attr) < VT_NUM_ATTRIBUTES) ? vt_attribute_strings[(attr)] : "(attribute out of bounds)")
@@ -310,6 +329,8 @@ __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_strings[(func)] : "(csi_private_less_than_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings[(func)] : "(csi_private_tilde_function out of bounds)")
 #define VT_KEY_STRING(func) (((func) >= 0 && (func) < VT_NUM_KEYS) ? vt_key_strings[(func)] : "(key out of bounds)")
+#define VT_MOUSE_MODE_STRING(func) (((func) >= 0 && (func) < VT_NUM_MOUSE_MODES) ? vt_mouse_mode_strings[(func)] : "(mouse_mode out of bounds)")
+#define VT_MOUSE_REPORTING_MODE_STRING(func) (((func) >= 0 && (func) < VT_NUM_MOUSE_REPORTING_MODES) ? vt_mouse_reporting_mode_strings[(func)] : "(mouse_reporting_mode out of bounds)")
 #undef X
 
 #define X(code)
@@ -593,6 +614,8 @@ struct vt
     int stderr[2];
     int child_tty;
     vt_key_modifier emitted_key;
+    vt_mouse_mode mouse;
+    vt_mouse_reporting_mode mouse_reporting;
 };
 
 void vt_process(vt *vt, uint8_t input);
@@ -1889,7 +1912,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 9, "Not all functions handled");
+    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 10, "Not all functions handled");
     switch (func) {
        VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
@@ -2676,7 +2699,45 @@ void vt_process_key(vt *vt)
 
       switch (vt->emitted_key.key.type) {
          case VT_KEY_MOUSE:
-            UNIMPL("handle sending mouse to client");
+            switch (vt->mouse) {
+               case VT_MOUSE_MODE_NONE:
+                  fprintf(stderr, "ignoring mouse event as client hasn't asked for it\n");
+                  return;
+
+               case VT_MOUSE_MODE_CLICK_TRACKING:
+                  if (vt->emitted_key.key.mouse.movement) {
+                     fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
+                     return;
+                  }
+                  if (vt->emitted_key.key.mouse.release) {
+                     fprintf(stderr, "ignoring mouse release as client hasn't asked for it\n");
+                     return;
+                  }
+
+                  UNIMPL("send mouse event in the preferred manner");
+
+               case VT_MOUSE_MODE_PRESS_RELEASE:
+                  if (vt->emitted_key.key.mouse.movement) {
+                     fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
+                     return;
+                  }
+                  UNIMPL("send mouse event in the preferred manner");
+
+               case VT_MOUSE_MODE_HIGHLIGHT:
+                  UNIMPL("Unsure how to handle with mouse highlight mode just yet");
+
+               case VT_MOUSE_MODE_PRESS_RELEASE_AND_DRAG:
+                  if (vt->emitted_key.key.mouse.movement) {
+                     HERE("need to work out if mouse button is down");
+                     return;
+                  }
+                  UNIMPL("send mouse event in the preferred manner");
+
+               case VT_MOUSE_MODE_MOVEMENT:
+                  UNIMPL("send mouse event in the preferred manner");
+
+               default: UNREACHABLE("unexpected mouse mode %d", vt->mouse);
+            }
 
          default:
             if (vt_write(vt, vt->child_tty, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
