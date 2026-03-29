@@ -485,6 +485,10 @@ typedef struct
 {
    vt_key_value key;
    vt_modifier modifier;
+   struct {
+      uint8_t *data;
+      size_t size;
+   } view;
 } vt_key_modifier;
 
 int vt_fprint_modifier(__attribute__((unused)) vt *vt, FILE *stream, vt_modifier mod)
@@ -1504,8 +1508,11 @@ void _vt_print(vt *vt, char input)
        switch (vt->sequence_state.shift) {
           case 0:
              switch (input) {
-                case 0x7F: vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_BACKSPACE}; break;
-                default: vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_RAW, .key.raw = input}; break;
+                case 0x7F: vt->emitted_key.key.type = VT_KEY_BACKSPACE; break;
+                default:
+                   vt->emitted_key.key.type = VT_KEY_RAW;
+                   vt->emitted_key.key.raw = input;
+                   break;
              }
              break;
 
@@ -1515,10 +1522,10 @@ void _vt_print(vt *vt, char input)
 
           case 3:
              switch (input) {
-                case 'P': vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_F1}; break;
-                case 'Q': vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_F2}; break;
-                case 'R': vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_F3}; break;
-                case 'S': vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_F4}; break;
+                case 'P': vt->emitted_key.key.type = VT_KEY_F1; break;
+                case 'Q': vt->emitted_key.key.type = VT_KEY_F2; break;
+                case 'R': vt->emitted_key.key.type = VT_KEY_F3; break;
+                case 'S': vt->emitted_key.key.type = VT_KEY_F4; break;
 
                 default: UNIMPL("Shift G3"); break;
              }
@@ -1673,17 +1680,15 @@ void _vt_execute(vt *vt, uint8_t input)
 #define S(code)
 #define X(name)
 #define C(code) case code:
-#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key = (vt_key_modifier){.key.type = _k}; break;
+#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key.key.type = _k; break;
     if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
        switch (input) { VT_CONTROL_FUNCTIONS_LIST }
        if (vt->emitted_key.key.type != VT_KEY_REQUEST) return;
 
        if (!iscntrl(input)) UNREACHABLE("Unexpected input for execute %02X", input);
-       vt->emitted_key = (vt_key_modifier){
-          .modifier = VT_MODIFIER_CONTROL,
-             .key.type = VT_KEY_RAW,
-             .key.raw = input + 'a' - 1,
-       };
+       vt->emitted_key.modifier = VT_MODIFIER_CONTROL;
+       vt->emitted_key.key.type = VT_KEY_RAW;
+       vt->emitted_key.key.raw = input + 'a' - 1;
        return;
     }
 #undef K
@@ -1721,11 +1726,9 @@ void _vt_escape_dispatch(vt *vt, uint8_t input)
     if (!vt) return;
 
     if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
-       vt->emitted_key = (vt_key_modifier){
-          .modifier = VT_MODIFIER_ALT | (iscntrl(input) ? VT_MODIFIER_CONTROL : VT_MODIFIER_NONE),
-          .key.type = VT_KEY_RAW,
-          .key.raw = iscntrl(input) ? input + 'a' - 1 : input,
-       };
+       vt->emitted_key.modifier = VT_MODIFIER_ALT | (iscntrl(input) ? VT_MODIFIER_CONTROL : VT_MODIFIER_NONE);
+       vt->emitted_key.key.type = VT_KEY_RAW;
+       vt->emitted_key.key.raw = iscntrl(input) ? input + 'a' - 1 : input;
        return;
     }
 
@@ -1763,7 +1766,7 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
 #define S(code)
 #define X(name)
 #define C(code) case code:
-#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key = (vt_key_modifier){.key.type = _k}; break;
+#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key.key.type = _k; break;
     if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
        if (vt->sequence_state.num_params > 1) {
           UNIMPL("modifiers");
@@ -1815,7 +1818,7 @@ void _vt_csi_private_less_than_dispatch(vt *vt, uint8_t input)
 #define S(code)
 #define X(name)
 #define C(code) case code:
-#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key = (vt_key_modifier){.key.type = _k}; break;
+#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key.key.type = _k; break;
     if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
        switch (input) { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST }
        if (vt->emitted_key.key.type != VT_KEY_REQUEST) return;
@@ -1917,7 +1920,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #define S(code)
 #define X(name)
 #define C(code) case code:
-#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key = (vt_key_modifier){.key.type = _k}; break;
+#define K(_k) if (_k != VT_KEY_NONE) vt->emitted_key.key.type = _k; break;
     if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
        switch (input) { VT_CSI_FUNCTIONS_LIST }
        if (vt->emitted_key.key.type != VT_KEY_REQUEST) return;
@@ -2033,17 +2036,13 @@ void vt_process(vt *vt, uint8_t input)
        if (vt->state == VT_STATE_ESCAPE) {
           switch (input) {
              case '\033':
-                vt->emitted_key = (vt_key_modifier){
-                   .key.type = VT_KEY_ESCAPE,
-                   .modifier = VT_MODIFIER_ALT,
-                };
+                vt->emitted_key.key.type = VT_KEY_ESCAPE;
+                vt->emitted_key.modifier = VT_MODIFIER_ALT;
                 break;
 
              case '\r':
-                vt->emitted_key = (vt_key_modifier){
-                   .key.type = VT_KEY_ENTER,
-                   .modifier = VT_MODIFIER_ALT,
-                };
+                vt->emitted_key.key.type = VT_KEY_ENTER;
+                vt->emitted_key.modifier = VT_MODIFIER_ALT;
                 break;
           }
        }
@@ -2593,6 +2592,102 @@ int handle_signal(vt *vt, int signo)
     return 1;
 }
 
+bool vt_default_mouse_report(vt *vt, uint8_t a, uint8_t b, uint8_t c)
+{
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+
+    fprintf(stderr, "got mouse %02x %02x %02x\n", a, b, c);
+
+    if (a < 0x20) {
+        UNREACHABLE("Expected value of 0x20-0xff to describe mouse button");
+    }
+    vt->emitted_key.key.mouse.button = a - 0x20;
+    _vt_mouse_check_button(vt);
+
+    if (b < 0x20) {
+        UNREACHABLE("Expected value of 0x20-0xff to describe mouse column");
+    }
+    vt->emitted_key.key.mouse.column = b - 0x20;
+    if (vt->emitted_key.key.mouse.column <= GUTTER_LEFT) {
+        memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+        return false;
+    }
+    vt->emitted_key.key.mouse.column -= GUTTER_LEFT;
+    if (vt->emitted_key.key.mouse.column > buffer->width) {
+        UNREACHABLE("Unexpected mouse column out of bounds %lu > %lu",
+                vt->emitted_key.key.mouse.column, buffer->width);
+    }
+
+    if (c < 0x20) {
+        UNREACHABLE("Expected value of 0x20-0xff to describe mouse column");
+    }
+    vt->emitted_key.key.mouse.row = c - 0x20;
+    if (vt->emitted_key.key.mouse.row <= GUTTER_TOP) {
+        memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+        return false;
+    }
+    vt->emitted_key.key.mouse.row -= GUTTER_TOP;
+    if (vt->emitted_key.key.mouse.row > buffer->height) {
+        UNREACHABLE("Unexpected mouse row out of bounds %lu > %lu",
+                vt->emitted_key.key.mouse.row, buffer->height);
+    }
+
+    return true;
+}
+
+ssize_t vt_write(vt *vt, int fd, const uint8_t *buffer, size_t count)
+{
+   fprintf(stderr, "vt_write(%d, ", fd);
+   if (buffer) {
+      fprintf(stderr, "{");
+      for (size_t i = 0; i < count; i ++) {
+         if (i) fprintf(stderr, ", ");
+         vt_fprintc(vt, stderr, buffer[i]);
+      }
+      fprintf(stderr, "}");
+   } else {
+      fprintf(stderr, "(null)");
+   }
+   if (count > 100) {
+      fprintf(stderr, ", %d)\n", (signed)count);
+   } else {
+      fprintf(stderr, ", %lu)\n", count);
+   }
+
+   size_t written = 0;
+   while (written != count) {
+      ssize_t writ = write(fd, buffer + written, count - written);
+      if (writ == -1) {
+         perror("write()");
+         return -1;
+      }
+      written += writ;
+      if (written > count) UNREACHABLE("kernel wrote too much");
+   }
+   return count;
+}
+
+void vt_process_key(vt *vt)
+{
+   if (vt->emitted_key.key.type != VT_KEY_NONE) {
+      fprintf(stderr, "emitted key ");
+      vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
+      fprintf(stderr, "\n");
+
+      switch (vt->emitted_key.key.type) {
+         case VT_KEY_MOUSE:
+            UNIMPL("handle sending mouse to client");
+
+         default:
+            if (vt_write(vt, vt->child_tty, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
+               return;
+            }
+      }
+   }
+
+   memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+}
+
 int vt_main_loop(vt *vt)
 {
     if (!vt) return 1;
@@ -2703,26 +2798,14 @@ int vt_main_loop(vt *vt)
 
               if (vt->child_tty > 0) {
                  if (fd == STDIN_FILENO) {
-                    size_t written = 0;
-                    while (written != (unsigned)red) {
-
-                       // FIXME need a way to determine if DECKPAM or DECCKM is set, then can't write
-                       // perhaps after getting each key, the key also has a string view of the buffer
-                       // then write just the amount for the key (may be from this buf, or a static string)
-                       ssize_t writ = write(vt->child_tty, buf + written, red - written);
-                       if (writ == -1) {
-                          perror("write(child stdin)");
-                          return 1;
-                       }
-                       written += writ;
-                       if (written > (unsigned)red) UNREACHABLE("kernel wrote too much");
-                    }
-
                     for (size_t i = 0; i < (unsigned)red; i ++) {
                        if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
                           vt->emitted_key.key.type = VT_KEY_REQUEST;
+                          vt->emitted_key.view.data = buf + i;
                           vt->state = VT_STATE_GROUND;
                        }
+
+                       HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
 
                        fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
                        vt_process(vt, buf[i]);
@@ -2730,92 +2813,68 @@ int vt_main_loop(vt *vt)
                        fprintf(stderr, "cell now %ldx%ld\n", (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.x, (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.y);
                        if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n");
 
+                       if (vt->emitted_key.key.type == VT_KEY_MOUSE && vt->emitted_key.key.mouse.column + vt->emitted_key.key.mouse.row == 0) {
+                          if (i + 3 >= (unsigned)red) UNREACHABLE("Expected 3 more characters to describe mouse");
+                          i += 3;
+                          if (!vt_default_mouse_report(vt, buf[i-2], buf[i-1], buf[i])) continue;
+                       }
+
+                       HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
                        if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
-                          if (vt->emitted_key.key.type == VT_KEY_MOUSE && vt->emitted_key.key.mouse.column + vt->emitted_key.key.mouse.row == 0) {
-                             if (i + 3 >= (unsigned)red) UNREACHABLE("Expected 3 more characters to describe mouse");
-                             i += 3;
-                             vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
-
-                             fprintf(stderr, "got mouse %02x %02x %02x\n", buf[i-2], buf[i-1], buf[i]);
-
-                             if (buf[i-2] < 0x20) {
-                                UNREACHABLE("Expected value of 0x20-0xff to describe mouse button");
-                             }
-                             vt->emitted_key.key.mouse.button = buf[i-2] - 0x20;
-                             _vt_mouse_check_button(vt);
-
-                             if (buf[i-1] < 0x20) {
-                                UNREACHABLE("Expected value of 0x20-0xff to describe mouse column");
-                             }
-                             vt->emitted_key.key.mouse.column = buf[i-1] - 0x20;
-                             if (vt->emitted_key.key.mouse.column <= GUTTER_LEFT) {
-                                memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
-                                continue;
-                             }
-                             vt->emitted_key.key.mouse.column -= GUTTER_LEFT;
-                             if (vt->emitted_key.key.mouse.column > buffer->width) {
-                                UNREACHABLE("Unexpected mouse column out of bounds %lu > %lu",
-                                      vt->emitted_key.key.mouse.column, buffer->width);
-                             }
-
-                             if (buf[i] < 0x20) {
-                                UNREACHABLE("Expected value of 0x20-0xff to describe mouse column");
-                             }
-                             vt->emitted_key.key.mouse.row = buf[i] - 0x20;
-                             if (vt->emitted_key.key.mouse.row <= GUTTER_TOP) {
-                                memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
-                                continue;
-                             }
-                             vt->emitted_key.key.mouse.row -= GUTTER_TOP;
-                             if (vt->emitted_key.key.mouse.row > buffer->height) {
-                                UNREACHABLE("Unexpected mouse row out of bounds %lu > %lu",
-                                      vt->emitted_key.key.mouse.row, buffer->height);
-                             }
-
+                          if (!vt->emitted_key.view.data) {
+                             HERE("null here");
                           }
-
-                          if (vt->emitted_key.key.type != VT_KEY_NONE) {
-                             fprintf(stderr, "emitted key ");
-                             vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
-                             fprintf(stderr, "\n");
-                          }
-
-                          memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+                          vt->emitted_key.view.size = (buf + i) - vt->emitted_key.view.data + 1;
+                          vt_process_key(vt);
                        }
                     }
+                    HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
 
                     if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
                        switch (vt->state) {
                           case VT_STATE_ESCAPE:
-                             vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_ESCAPE};
+                             vt->emitted_key.key.type = VT_KEY_ESCAPE;
                              break;
 
                           case VT_STATE_DCS_ENTRY:
-                             vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_RAW, .key.raw = 'P', .modifier = VT_MODIFIER_ALT};
+                             vt->emitted_key.key.type = VT_KEY_RAW;
+                             vt->emitted_key.key.raw = 'P';
+                             vt->emitted_key.modifier = VT_MODIFIER_ALT;
                              break;
 
                           case VT_STATE_CSI_ENTRY:
-                             vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_RAW, .key.raw = '[', .modifier = VT_MODIFIER_ALT};
+                             vt->emitted_key.key.type = VT_KEY_RAW;
+                             vt->emitted_key.key.raw = '[';
+                             vt->emitted_key.modifier = VT_MODIFIER_ALT;
                              break;
 
                           case VT_STATE_OSC_STRING:
-                             vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_RAW, .key.raw = ']', .modifier = VT_MODIFIER_ALT};
+                             vt->emitted_key.key.type = VT_KEY_RAW;
+                             vt->emitted_key.key.raw = ']';
+                             vt->emitted_key.modifier = VT_MODIFIER_ALT;
                              break;
 
                           case VT_STATE_ESCAPE_INTERMEDIATE:
                           case VT_STATE_SOS_PM_APC_STRING:
                              if (!vt->sequence_state.num_collected) UNREACHABLE("No collected state to determine last character, state %s", VT_STATE_STRING(vt->state));
                              if (vt->sequence_state.num_collected > 1) UNREACHABLE("Extra collected state gives ambiguity to determine last character, state %s", VT_STATE_STRING(vt->state));
-                             vt->emitted_key = (vt_key_modifier){.key.type = VT_KEY_RAW, .key.raw = *vt->sequence_state.collected, .modifier = VT_MODIFIER_ALT};
+                             vt->emitted_key.key.type = VT_KEY_RAW;
+                             vt->emitted_key.key.raw = *vt->sequence_state.collected;
+                             vt->emitted_key.modifier = VT_MODIFIER_ALT;
                              break;
 
                           default: UNREACHABLE("Unexpected read packet that didn't parse a key, state %s", VT_STATE_STRING(vt->state));
                        }
-                       fprintf(stderr, "emitted key ");
-                       vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
-                       fprintf(stderr, "\n");
-                       memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
-                       vt->emitted_key.key.type = VT_KEY_REQUEST;
+
+                       HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
+                       if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
+                          if (!vt->emitted_key.view.data) {
+                             HERE("null here");
+                          }
+                          vt->emitted_key.view.size = (buf + red) - vt->emitted_key.view.data;
+                          vt_process_key(vt);
+                       }
+
                        _vt_transition(vt, VT_STATE_GROUND, '\0');
                     } else {
                        _vt_transition(vt, VT_STATE_GROUND, '\0');
