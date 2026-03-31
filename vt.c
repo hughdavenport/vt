@@ -600,14 +600,6 @@ int vt_fprint_key_modifier(vt *vt, FILE *stream, vt_key_modifier key)
    return ret + key_ret;
 }
 
-int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
-{
-   UNIMPL_RET(-1, "send mouse event in the preferred manner");
-   (void)stream;
-   (void)mouse;
-   (void)modifiers;
-}
-
 struct vt
 {
     vt_state state;
@@ -630,6 +622,32 @@ struct vt
     vt_mouse_mode mouse;
     vt_mouse_reporting_mode mouse_reporting;
 };
+
+int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
+{
+   switch (vt->mouse_reporting) {
+      case VT_MOUSE_REPORTING_MODE_DEFAULT:
+      {
+#define VT_ENCODE(num) (num) > 223 ? 0 : 32 + (uint8_t)(num)
+         int btn = (mouse.button & 0x3) | ((mouse.button & 0xC) << 4);
+         if (mouse.movement) btn += 32;
+         if (modifiers & VT_MODIFIER_SHIFT) btn += 4;
+         if (modifiers & VT_MODIFIER_ALT) btn += 8;
+         if (modifiers & VT_MODIFIER_CONTROL) btn += 16;
+         fprintf(stderr, "writing mouse event in default report: \\e[M%c%c%c\n", VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
+         return fprintf(stream, "\033[M%c%c%c", VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
+#undef VT_ENCODE
+      }; UNREACHABLE("case should return");
+
+      case VT_MOUSE_REPORTING_MODE_MULTIBYTE:
+   UNIMPL_RET(-1, "send mouse event in the preferred manner");
+      case VT_MOUSE_REPORTING_MODE_DIGITS:
+   UNIMPL_RET(-1, "send mouse event in the preferred manner");
+      case VT_MOUSE_REPORTING_MODE_URXVT:
+   UNIMPL_RET(-1, "send mouse event in the preferred manner");
+      default: UNREACHABLE("Unexpected mouse reporting mode %u", vt->mouse_reporting);
+   }
+}
 
 void vt_process(vt *vt, uint8_t input);
 
@@ -1428,11 +1446,20 @@ void _vt_mouse_check_button(vt *vt)
       }
 
       static_assert(VT_NUM_MOUSE_BUTTONS <= 0x40);
-      static_assert(VT_NUM_MOUSE_BUTTONS > 4);
+      static_assert(VT_NUM_MOUSE_BUTTONS >= 4);
       if (vt->emitted_key.key.mouse.button & 0x40) {
          vt->emitted_key.key.mouse.movement = true;
          vt->emitted_key.key.mouse.button &= ~0x40;
          vt->emitted_key.key.mouse.button += 4;
+         continue;
+      }
+
+      static_assert(VT_NUM_MOUSE_BUTTONS <= 0x80);
+      static_assert(VT_NUM_MOUSE_BUTTONS >= 8);
+      if (vt->emitted_key.key.mouse.button & 0x80) {
+         vt->emitted_key.key.mouse.movement = true;
+         vt->emitted_key.key.mouse.button &= ~0x80;
+         vt->emitted_key.key.mouse.button += 8;
          continue;
       }
 
@@ -2721,16 +2748,21 @@ void vt_process_key(vt *vt)
             switch (vt->mouse) {
                case VT_MOUSE_MODE_NONE:
                   fprintf(stderr, "ignoring mouse event as client hasn't asked for it\n");
-                  return;
+                  break;
 
                case VT_MOUSE_MODE_CLICK_TRACKING:
                   if (vt->emitted_key.key.mouse.movement) {
                      fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
-                     return;
+                     break;
                   }
                   if (vt->emitted_key.key.mouse.release) {
                      fprintf(stderr, "ignoring mouse release as client hasn't asked for it\n");
-                     return;
+                     break;
+                  }
+                  if (vt->emitted_key.key.mouse.button > VT_BUTTON_RIGHT) {
+                     fprintf(stderr, "ignoring mouse button %s as client hasn't asked for it\n",
+                           VT_MOUSE_BUTTON_STRING_LONG(vt->emitted_key.key.mouse.button));
+                     break;
                   }
 
                   vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, (vt_modifier){0});
@@ -2739,7 +2771,7 @@ void vt_process_key(vt *vt)
                case VT_MOUSE_MODE_PRESS_RELEASE:
                   if (vt->emitted_key.key.mouse.movement) {
                      fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
-                     return;
+                     break;
                   }
 
                   vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, vt->emitted_key.modifier);
@@ -2751,7 +2783,7 @@ void vt_process_key(vt *vt)
                case VT_MOUSE_MODE_PRESS_RELEASE_AND_DRAG:
                   if (vt->emitted_key.key.mouse.movement) {
                      HERE("need to work out if mouse button is down");
-                     return;
+                     break;
                   }
 
                   vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, vt->emitted_key.modifier);
