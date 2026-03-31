@@ -176,6 +176,7 @@ void vt_reset(vt *vt);
    C(0x37 /* 7 */) X(VT_ESCAPE_DECSC)   L("Save Cursor")              S(_vt_save_cursor(vt)) \
    C(0x3D /* = */) X(VT_ESCAPE_DECKPAM) L("Keypad Application Modes") S(UNIMPL("TODO DECKPAM, need to transform input done before write()")) \
    C(0x3E /* > */) X(VT_ESCAPE_DECKPNM) L("Keypad Numeric Modes")     S(UNIMPL("TODO DECKPNM, need to transform input done before write() (or toggle a flag back to not)")) \
+   C(0x4D /* M */) X(VT_ESCAPE_RI)      L("Reverse Line Feed")        S(_vt_reverse_line_feed(vt);) \
    C(0x4F /* O */) X(VT_ESCAPE_SS3)     L("Single Shift 3")           S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
    C(0x63 /* c */) X(VT_ESCAPE_RIS)     L("Reset to Initial State")   S(vt_free(vt); vt_resize_window(vt))
 
@@ -1246,6 +1247,18 @@ void _vt_backspace(vt *vt)
    }
 }
 
+void _vt_reverse_line_feed(vt *vt)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key.type == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   if (buffer->cursor.y == 1) _vt_scroll(vt, VT_SCROLL_DOWN);
+   buffer->cursor.y --;
+   buffer->dirty = true;
+}
+
 void _vt_line_feed(vt *vt)
 {
    if (!vt) return;
@@ -1783,7 +1796,7 @@ void _vt_escape_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_ESCAPE_FUNCTIONS == 6, "Not all functions handled");
+    static_assert(VT_NUM_ESCAPE_FUNCTIONS == 7, "Not all functions handled");
     switch (func) {
         VT_ESCAPE_FUNCTIONS_LIST
         case VT_NUM_ESCAPE_FUNCTIONS: break;
