@@ -2925,13 +2925,11 @@ int vt_main_loop(vt *vt)
                           vt->state = VT_STATE_GROUND;
                        }
 
-                       HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
-
-                       fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]);
+                       /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
                        vt_process(vt, buf[i]);
-                       fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state));
-                       fprintf(stderr, "cell now %ldx%ld\n", (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.x, (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.y);
-                       if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n");
+                       /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                       /* fprintf(stderr, "cell now %ldx%ld\n", (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.x, (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.y); */
+                       /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
 
                        if (vt->emitted_key.key.type == VT_KEY_MOUSE && vt->emitted_key.key.mouse.column + vt->emitted_key.key.mouse.row == 0) {
                           if (i + 3 >= (unsigned)red) UNREACHABLE("Expected 3 more characters to describe mouse");
@@ -2939,7 +2937,6 @@ int vt_main_loop(vt *vt)
                           if (!vt_default_mouse_report(vt, buf[i-2], buf[i-1], buf[i])) continue;
                        }
 
-                       HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
                        if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
                           if (!vt->emitted_key.view.data) {
                              HERE("null here");
@@ -2948,7 +2945,6 @@ int vt_main_loop(vt *vt)
                           vt_process_key(vt);
                        }
                     }
-                    HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
 
                     if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
                        switch (vt->state) {
@@ -2986,7 +2982,6 @@ int vt_main_loop(vt *vt)
                           default: UNREACHABLE("Unexpected read packet that didn't parse a key, state %s", VT_STATE_STRING(vt->state));
                        }
 
-                       HERE("here %s %p", VT_KEY_STRING(vt->emitted_key.key.type), (void*) vt->emitted_key.view.data);
                        if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
                           if (!vt->emitted_key.view.data) {
                              HERE("null here");
