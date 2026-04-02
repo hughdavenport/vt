@@ -229,18 +229,19 @@ void vt_reset(vt *vt);
       VT_CSI_PRIVATE_QUESTION_FUNCTION_CODE(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS)
 
 #define VT_CSI_FUNCTIONS_LIST \
-   C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                     S(UNREACHABLE("Unexpected CSI function")) \
-   C(0x41 /* A */) X(VT_CSI_CUU)           K(VT_KEY_UP)    L("Cursor Up")                S(_vt_move_cursor_offset(vt, 0, -VT_PARAM(vt, 0, 1))) \
-   C(0x42 /* B */) X(VT_CSI_CUD)           K(VT_KEY_DOWN)  L("Cursor Down")              S(_vt_move_cursor_offset(vt, 0, VT_PARAM(vt, 0, 1))) \
-   C(0x43 /* C */) X(VT_CSI_CUF)           K(VT_KEY_RIGHT) L("Cursor Forward")           S(_vt_move_cursor_offset(vt, VT_PARAM(vt, 0, 1), 0)) \
-   C(0x44 /* D */) X(VT_CSI_CUB)           K(VT_KEY_LEFT)  L("Cursor Backward")          S(_vt_move_cursor_offset(vt, -VT_PARAM(vt, 0, 1), 0)) \
-   C(0x48 /* H */) X(VT_CSI_CUP)           K(VT_KEY_NONE)  L("Cursor Position")          S(_vt_move_cursor(vt, VT_PARAM(vt, 1, 1), VT_PARAM(vt, 0, 1))) \
-   C(0x4A /* J */) X(VT_CSI_ED)            K(VT_KEY_NONE)  L("Erase In Page")            S(_vt_erase_in_page(vt, VT_PARAM(vt, 0, 0))) \
-   C(0x4B /* K */) X(VT_CSI_EL)            K(VT_KEY_NONE)  L("Erase In Line")            S(_vt_erase_in_line(vt, VT_PARAM(vt, 0, 0))) \
-   C(0x4D /* M */) X(VT_CSI_MOUSE)         K(VT_KEY_MOUSE) L("Delete Line")              S(_vt_delete_line(vt, VT_PARAM(vt, 0, 1))) \
-   C(0x6D /* m */) X(VT_CSI_SGR)           K(VT_KEY_NONE)  L("Select Graphic Rendition") S(_vt_select_graphic_rendition(vt)) \
+   C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                       S(UNREACHABLE("Unexpected CSI function")) \
+   C(0x41 /* A */) X(VT_CSI_CUU)           K(VT_KEY_UP)    L("Cursor Up")                  S(_vt_move_cursor_offset(vt, 0, -VT_PARAM(vt, 0, 1))) \
+   C(0x42 /* B */) X(VT_CSI_CUD)           K(VT_KEY_DOWN)  L("Cursor Down")                S(_vt_move_cursor_offset(vt, 0, VT_PARAM(vt, 0, 1))) \
+   C(0x43 /* C */) X(VT_CSI_CUF)           K(VT_KEY_RIGHT) L("Cursor Forward")             S(_vt_move_cursor_offset(vt, VT_PARAM(vt, 0, 1), 0)) \
+   C(0x44 /* D */) X(VT_CSI_CUB)           K(VT_KEY_LEFT)  L("Cursor Backward")            S(_vt_move_cursor_offset(vt, -VT_PARAM(vt, 0, 1), 0)) \
+   C(0x48 /* H */) X(VT_CSI_CUP)           K(VT_KEY_NONE)  L("Cursor Position")            S(_vt_move_cursor(vt, VT_PARAM(vt, 1, 1), VT_PARAM(vt, 0, 1))) \
+   C(0x4A /* J */) X(VT_CSI_ED)            K(VT_KEY_NONE)  L("Erase In Page")              S(_vt_erase_in_page(vt, VT_PARAM(vt, 0, 0))) \
+   C(0x4B /* K */) X(VT_CSI_EL)            K(VT_KEY_NONE)  L("Erase In Line")              S(_vt_erase_in_line(vt, VT_PARAM(vt, 0, 0))) \
+   C(0x4D /* M */) X(VT_CSI_DL)            K(VT_KEY_MOUSE) L("Delete Line")                S(_vt_delete_line(vt, VT_PARAM(vt, 0, 1))) \
+   C(0x50 /* P */) X(VT_CSI_DCH)           K(VT_KEY_NONE)  L("Delete Character")           S(_vt_delete_character(vt, VT_PARAM(vt, 0, 1))) \
+   C(0x6D /* m */) X(VT_CSI_SGR)           K(VT_KEY_NONE)  L("Select Graphic Rendition")   S(_vt_select_graphic_rendition(vt)) \
    C(0x72 /* r */) X(VT_CSI_DECSTBM)       K(VT_KEY_NONE)  L("Set Top and Bottom Margins") S(HERE("TODO DECSTBM set top and bot margins")) \
-   C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")        S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
+   C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")          S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_PRIVATE_LESS_THAN_NONE)          K(VT_KEY_NONE) L("NONE")   S(UNREACHABLE("Unexpected CSI private '<' function")) \
@@ -640,11 +641,11 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
       }; UNREACHABLE("case should return");
 
       case VT_MOUSE_REPORTING_MODE_MULTIBYTE:
-   UNIMPL_RET(-1, "send mouse event in the preferred manner");
+   UNIMPL_RET(-1, "send mouse event in the multibyte format");
       case VT_MOUSE_REPORTING_MODE_DIGITS:
-   UNIMPL_RET(-1, "send mouse event in the preferred manner");
+   UNIMPL_RET(-1, "send mouse event in the digit format");
       case VT_MOUSE_REPORTING_MODE_URXVT:
-   UNIMPL_RET(-1, "send mouse event in the preferred manner");
+   UNIMPL_RET(-1, "send mouse event in the urxvt format");
       default: UNREACHABLE("Unexpected mouse reporting mode %u", vt->mouse_reporting);
    }
 }
@@ -1495,13 +1496,20 @@ void _vt_csi_mouse_report(vt *vt, bool release)
    vt->emitted_key.key.mouse.row -= GUTTER_TOP;
 }
 
+void _vt_delete_character(vt *vt, uint16_t param)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key.type == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   UNIMPL("_vt_delete_character(%u)", param);
+}
+
 void _vt_delete_line(vt *vt, uint16_t param)
 {
    if (!vt) return;
-   if (vt->emitted_key.key.type == VT_KEY_REQUEST) {
-      vt->emitted_key.key.type = VT_KEY_MOUSE;
-      return;
-   }
+   if (vt->emitted_key.key.type == VT_KEY_REQUEST) return;
    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
    if (!buffer->cells) return;
 
@@ -2025,7 +2033,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_FUNCTIONS == 12, "Not all functions handled");
+    static_assert(VT_NUM_CSI_FUNCTIONS == 13, "Not all functions handled");
     switch (func) {
         VT_CSI_FUNCTIONS_LIST
         case VT_NUM_CSI_FUNCTIONS: break;
@@ -2795,6 +2803,7 @@ void vt_process_key(vt *vt)
 
                default: UNREACHABLE("unexpected mouse mode %d", vt->mouse);
             }
+            fflush(vt->child_tty);
             break;
 
          default:
