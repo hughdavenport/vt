@@ -626,15 +626,15 @@ struct vt
 
 int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
 {
+   int btn = (mouse.button & 0x3) | ((mouse.button & 0xC) << 4);
+   if (mouse.movement) btn += 32;
+   if (modifiers & VT_MODIFIER_SHIFT) btn += 4;
+   if (modifiers & VT_MODIFIER_ALT) btn += 8;
+   if (modifiers & VT_MODIFIER_CONTROL) btn += 16;
    switch (vt->mouse_reporting) {
       case VT_MOUSE_REPORTING_MODE_DEFAULT:
       {
 #define VT_ENCODE(num) (num) > 223 ? 0 : 32 + (uint8_t)(num)
-         int btn = (mouse.button & 0x3) | ((mouse.button & 0xC) << 4);
-         if (mouse.movement) btn += 32;
-         if (modifiers & VT_MODIFIER_SHIFT) btn += 4;
-         if (modifiers & VT_MODIFIER_ALT) btn += 8;
-         if (modifiers & VT_MODIFIER_CONTROL) btn += 16;
          fprintf(stderr, "writing mouse event in default report: \\e[M%c%c%c\n", VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
          return fprintf(stream, "\033[M%c%c%c", VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
 #undef VT_ENCODE
@@ -642,8 +642,13 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
 
       case VT_MOUSE_REPORTING_MODE_MULTIBYTE:
    UNIMPL_RET(-1, "send mouse event in the multibyte format");
+
       case VT_MOUSE_REPORTING_MODE_DIGITS:
-   UNIMPL_RET(-1, "send mouse event in the digit format");
+      {
+         fprintf(stderr, "writing mouse event in digit report: \\e[<%d;%ld;%ld%c\n", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
+         return fprintf(stream, "\033[<%d;%ld;%ld%c\n", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
+      }; UNREACHABLE("case should return");
+
       case VT_MOUSE_REPORTING_MODE_URXVT:
    UNIMPL_RET(-1, "send mouse event in the urxvt format");
       default: UNREACHABLE("Unexpected mouse reporting mode %u", vt->mouse_reporting);
