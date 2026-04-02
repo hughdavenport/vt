@@ -1,0 +1,19 @@
+Opening /dev/tty
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 65x30
+inner window size 62x27
+Parent 2368283
+Started child 2368284
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x03)
+emitted key C-c
+vt_write(10, {0x03}, 1)
+transition from state VT_STATE_GROUND to state VT_STATE_GROUND, input 0x00
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 7 (signal)
+signal 17 (Child exited)
+child was terminated by signal 2 (Interrupt)
+ret = 130

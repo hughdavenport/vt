@@ -1,0 +1,14 @@
+Reloading as newer source
+Opening /dev/tty
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 92x20
+inner window size 89x17
+Parent 2750681
+Started child 2750689
+select(sigfd, stdin, stdout, stderr, tty)
+selected fd 8 (child stderr)
+red 12 from fd 8 (child stderr): ('p', 'i', 'd', ' ', '2', '7', '5', '0', '6', '8', '9', '\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin, stdout, stderr, tty)
