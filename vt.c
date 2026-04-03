@@ -1508,7 +1508,28 @@ void _vt_delete_character(vt *vt, uint16_t param)
    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
    if (!buffer->cells) return;
 
-   UNIMPL("_vt_delete_character(%u)", param);
+   if (param > buffer->width) param = buffer->width;
+
+   for (size_t x = buffer->cursor.x; x < buffer->cursor.x + param; x ++) {
+      fprintf(stderr, "SET_FREE(%p)\n", (void*)&(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1].attributes));
+      SET_FREE(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1].attributes);
+      memset(&buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1], '\0', sizeof(*buffer->cells));
+   }
+
+   size_t to_move = buffer->width - param;
+   for (size_t i = 0; i < to_move; i ++) {
+      size_t dst_x = buffer->cursor.x + i;
+      size_t src_x = dst_x + param;
+      memcpy(&buffer->cells[(buffer->cursor.y - 1) * buffer->width + dst_x - 1],
+            &buffer->cells[(buffer->cursor.y - 1) * buffer->width + src_x - 1],
+            sizeof(*buffer->cells));
+   }
+
+   if (buffer->cursor.x < to_move) {
+      memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width + buffer->cursor.x + to_move - 1, '\0', sizeof(*buffer->cells) * param);
+   }
+
+   buffer->dirty = true;
 }
 
 void _vt_delete_line(vt *vt, uint16_t param)
