@@ -120,6 +120,7 @@ void vt_reset(vt *vt);
    C(0)  X(VT_ATTRIBUTE_NONE)                  L("Reset") \
    C(1)  X(VT_ATTRIBUTE_BOLD)                  L("Bold") \
    C(2)  X(VT_ATTRIBUTE_DIM)                   L("Dim") \
+   C(3)  X(VT_ATTRIBUTE_ITALIC)                L("Italic") \
    C(23) X(VT_ATTRIBUTE_NOT_ITALIC_OR_GOTHIC)  L("Not italic or gothic") \
    C(24) X(VT_ATTRIBUTE_NOT_UNDERLINED)        L("Not underlined") \
    C(30) X(VT_ATTRIBUTE_FG_0)                  L("Foreground Black") \
@@ -201,6 +202,7 @@ void vt_reset(vt *vt);
    C(0x1B) X(VT_CONTROL_ESC)   K(VT_KEY_ESCAPE)    L("Escape")                      S(UNIMPL("VT_CONTROL_ESC")) /* UNREACHABLE, mapped in "anywhere" transitions */ \
    C(0x1C) X(VT_CONTROL_GS)    K(VT_KEY_NONE)      L("Group Separator")             S(UNIMPL("VT_CONTROL_GS")) \
    C(0x7F) X(VT_CONTROL_DEL)   K(VT_KEY_BACKSPACE) L("Delete")                      S(UNIMPL("VT_CONTROL_DEL")) /* UNREACHABLE, used only in VT_ACTION_PRINT or VT_ACTION_IGNORE not VT_ACTION_EXECUTE */ \
+   C(0x80) X(VT_CONTROL_PAD)   K(VT_KEY_NONE)      L("Padding Character")           S(HERE("TODO VT_CONTROL_PAD")) \
    C(0x84) X(VT_CONTROL_IND)   K(VT_KEY_NONE)      L("Index")                       S(UNIMPL("VT_CONTROL_IND")) \
    C(0x85) X(VT_CONTROL_NEL)   K(VT_KEY_NONE)      L("Next Line")                   S(UNIMPL("VT_CONTROL_NEL")) \
    C(0x88) X(VT_CONTROL_HTS)   K(VT_KEY_NONE)      L("Horizontal Tab Set")          S(UNIMPL("VT_CONTROL_HTS")) \
@@ -230,6 +232,7 @@ void vt_reset(vt *vt);
 
 #define VT_CSI_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_NONE)          K(VT_KEY_NONE)  L("NONE")                       S(UNREACHABLE("Unexpected CSI function")) \
+   C(0x40 /* @ */) X(VT_CSI_ICH)           K(VT_KEY_NONE)  L("Insert Character")           S(_vt_insert_character(vt, VT_PARAM(vt, 0, 1))) \
    C(0x41 /* A */) X(VT_CSI_CUU)           K(VT_KEY_UP)    L("Cursor Up")                  S(_vt_move_cursor_offset(vt, 0, -VT_PARAM(vt, 0, 1))) \
    C(0x42 /* B */) X(VT_CSI_CUD)           K(VT_KEY_DOWN)  L("Cursor Down")                S(_vt_move_cursor_offset(vt, 0, VT_PARAM(vt, 0, 1))) \
    C(0x43 /* C */) X(VT_CSI_CUF)           K(VT_KEY_RIGHT) L("Cursor Forward")             S(_vt_move_cursor_offset(vt, VT_PARAM(vt, 0, 1), 0)) \
@@ -1501,6 +1504,37 @@ void _vt_csi_mouse_report(vt *vt, bool release)
    vt->emitted_key.key.mouse.row -= GUTTER_TOP;
 }
 
+void _vt_insert_character(vt *vt, uint16_t param)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key.type == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   size_t remaining = buffer->width - buffer->cursor.x;
+   if (param > remaining) param = remaining;
+
+   for (size_t x = buffer->width - param + 1; x < buffer->width; x ++) {
+      SET_FREE(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1].attributes);
+      memset(&buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1], '\0', sizeof(*buffer->cells));
+   }
+
+   size_t to_copy = remaining - param + 1;
+   for (size_t i = 0; i < to_copy; i ++) {
+      size_t src_x = buffer->cursor.x + to_copy - i - 1;
+      size_t dst_x = src_x + param;
+      memcpy(&buffer->cells[(buffer->cursor.y - 1) * buffer->width + dst_x - 1],
+            &buffer->cells[(buffer->cursor.y - 1) * buffer->width + src_x - 1],
+            sizeof(*buffer->cells));
+   }
+
+   if (param) {
+      memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width + buffer->cursor.x - 1, '\0', sizeof(*buffer->cells) * param);
+   }
+
+   buffer->dirty = true;
+}
+
 void _vt_delete_character(vt *vt, uint16_t param)
 {
    if (!vt) return;
@@ -1508,10 +1542,10 @@ void _vt_delete_character(vt *vt, uint16_t param)
    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
    if (!buffer->cells) return;
 
-   if (param > buffer->width) param = buffer->width;
+   size_t to_delete = buffer->width - buffer->cursor.x;
+   if (param > to_delete) param = to_delete;
 
    for (size_t x = buffer->cursor.x; x < buffer->cursor.x + param; x ++) {
-      fprintf(stderr, "SET_FREE(%p)\n", (void*)&(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1].attributes));
       SET_FREE(buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1].attributes);
       memset(&buffer->cells[(buffer->cursor.y - 1) * buffer->width + x - 1], '\0', sizeof(*buffer->cells));
    }
@@ -1525,7 +1559,7 @@ void _vt_delete_character(vt *vt, uint16_t param)
             sizeof(*buffer->cells));
    }
 
-   if (buffer->cursor.x < to_move) {
+   if (buffer->cursor.x - 1 < to_move) {
       memset(buffer->cells + (buffer->cursor.y - 1) * buffer->width + buffer->cursor.x + to_move - 1, '\0', sizeof(*buffer->cells) * param);
    }
 
@@ -1818,7 +1852,7 @@ void _vt_execute(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CONTROL_FUNCTIONS == 34, "Not all functions handled");
+    static_assert(VT_NUM_CONTROL_FUNCTIONS == 35, "Not all functions handled");
     switch (func) {
         VT_CONTROL_FUNCTIONS_LIST
         case VT_NUM_CONTROL_FUNCTIONS: break;
@@ -2059,7 +2093,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_FUNCTIONS == 13, "Not all functions handled");
+    static_assert(VT_NUM_CSI_FUNCTIONS == 14, "Not all functions handled");
     switch (func) {
         VT_CSI_FUNCTIONS_LIST
         case VT_NUM_CSI_FUNCTIONS: break;
