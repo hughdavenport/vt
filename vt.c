@@ -3277,6 +3277,169 @@ int vt_setup_child(vt *vt, char * const *argv)
    return 0;
 }
 
+uint32_t utf8_encode(uint32_t code)
+{
+   int u = code >> 20;
+   int v = (code >> 16) & 0xF;
+   int w = (code >> 12) & 0xF;
+   int x = (code >> 8) & 0xF;
+   int y = (code >> 4) & 0xF;
+   int z = code & 0xF;
+
+   /* fprintf(stderr, "encode(%08x)\n", code); */
+   /* fprintf(stderr, "u = %u\n", u); */
+   /* fprintf(stderr, "v = %u\n", v); */
+   /* fprintf(stderr, "w = %u\n", w); */
+   /* fprintf(stderr, "x = %u\n", x); */
+   /* fprintf(stderr, "y = %u\n", y); */
+   /* fprintf(stderr, "z = %u\n", z); */
+
+   if (code < 0x80) {
+      assert(!u && "UNREACHABLE");
+      assert(!v && "UNREACHABLE");
+      assert(!w && "UNREACHABLE");
+      assert(!x && "UNREACHABLE");
+      assert(!(y & 0x8) && "UNREACHABLE");
+      return 0 | ((y & 0x7) << 4) | z; // code
+   } else if (code < 0x800) {
+      assert(!u && "UNREACHABLE");
+      assert(!v && "UNREACHABLE");
+      assert(!w && "UNREACHABLE");
+      assert(!(x & 0x8) && "UNREACHABLE");
+      return ((0xC0 | ((x & 0x7) << 2) | (y >> 2)) << 8)
+         | (0x80 | ((y & 3) << 4) | z);
+      // (0xC0 | (code >> 6)) | ((0x80 | (code & 0x3f)) << 8);
+   } else if (code < 0x10000) {
+      assert(!u && "UNREACHABLE");
+      assert(!v && "UNREACHABLE");
+      return ((0xE0 | w) << 16)
+         | ((0x80 | (x << 2) | (y >> 2)) << 8)
+         | (0x80 | ((y & 0x3) << 4) | z);
+      // (0xE0 | (code >> 12)) | ((0x80 | ((code >> 6) & 0x3f)) << 8) | ((0x80 | (code & 0x3f)) << 16);
+   } else if (code < 0x110000) {
+      assert(!(u & 0xE) && "UNREACHABLE");
+      return ((0xF0 | ((u & 0x1) << 2) | (v >> 2)) << 24)
+         | ((0x80 | ((v & 0x3) << 4) | w) << 16)
+         | ((0x80 | (x << 2) | (y >> 2)) << 8)
+         | (0x80 | ((y & 0x3) << 4) | z);
+      // (0xF0 | (code >> 18)) | ((0x80 | ((code >> 12) & 0x3f)) << 8) | ((0x80 | ((code >> 6) & 0x3f)) << 16) | ((0x80 | (code & 0x3f)) << 24);
+   } else {
+      assert(false && "Invalid utf8 codepoint");
+   }
+}
+
+uint32_t utf8_decode(uint32_t utf8)
+{
+   uint8_t u = 0;
+   uint8_t v = 0;
+   uint8_t w = 0;
+   uint8_t x = 0;
+   uint8_t y = 0;
+   uint8_t z = 0;
+
+   /* fprintf(stderr, "decode(%08x)\n", utf8); */
+
+   if (!(utf8 & 0x80)) {
+      y = utf8 >> 4;
+      z = utf8 & 0xF;
+   } else if ((utf8 & 0xC0) == 0x80) {
+      y = (utf8 >> 4) & 0x3;
+      z = utf8 & 0xF;
+      utf8 >>= 8;
+      y |= ((utf8 & 0x3) << 2);
+      x = (utf8 >> 2) & 0x7;
+      if ((utf8 & 0xC0) == 0x80) {
+         x |= ((utf8 >> 2) & 0x8);
+         utf8 >>= 8;
+         w = utf8 & 0xF;
+         if ((utf8 & 0xC0) == 0x80) {
+            v = (utf8 >> 4) & 0x3;
+            utf8 >>= 8;
+            v |= ((utf8 & 0x3) << 2);
+            u = (utf8 >> 2) & 0x1;
+            assert((utf8 & 0xF8) == 0xF0 && "invalid byte as first byte of 4 byte utf8");
+            assert((utf8 & 0xC0) != 0x80 && "continuation byte can't be first byte");
+         } else {
+            assert((utf8 & 0xF0) == 0xE0 && "invalid byte as first byte of 3 byte utf8");
+         }
+      } else {
+         assert((utf8 & 0xE0) == 0xC0 && "invalid byte as first byte of 2 byte utf8");
+      }
+   } else {
+      assert(false && "invalid byte of utf8");
+   }
+
+   assert(!(u & 0xF0) && "UNREACHABLE");
+   assert(!(v & 0xF0) && "UNREACHABLE");
+   assert(!(w & 0xF0) && "UNREACHABLE");
+   assert(!(x & 0xF0) && "UNREACHABLE");
+   assert(!(y & 0xF0) && "UNREACHABLE");
+   assert(!(z & 0xF0) && "UNREACHABLE");
+
+   /* fprintf(stderr, "u = %u\n", u); */
+   /* fprintf(stderr, "v = %u\n", v); */
+   /* fprintf(stderr, "w = %u\n", w); */
+   /* fprintf(stderr, "x = %u\n", x); */
+   /* fprintf(stderr, "y = %u\n", y); */
+   /* fprintf(stderr, "z = %u\n", z); */
+   /* fprintf(stderr, "return %08x\n", (u << 20) | (v << 16) | (w << 12) | (x << 8) | (y << 4) | z); */
+
+   return (u << 20) | (v << 16) | (w << 12) | (x << 8) | (y << 4) | z;
+}
+
+#define printutf8_codepoint(...) fprintutf8_codepoint(stdout, __VA_ARGS__)
+int fprintutf8_codepoint(FILE *stream, int code)
+{
+   uint32_t utf8 = utf8_encode(code);
+   int ret = 0;
+   if (utf8 & 0x80000000) {
+      int put = fputc(utf8 >> 24, stream);
+      if (put == EOF) return -1;
+      ret += 1;
+   }
+   if (utf8 & 0x800000) {
+      int put = fputc((utf8 >> 16) & 0xFF, stream);
+      if (put == EOF) return -1;
+      ret += 1;
+   }
+   if (utf8 & 0x8000) {
+      int put = fputc((utf8 >> 8) & 0xFF, stream);
+      if (put == EOF) return -1;
+      ret += 1;
+   }
+   int put = fputc(utf8 & 0xFF, stream);
+   if (put == EOF) return -1;
+   ret += 1;
+   return ret;
+}
+
+void utf8_test(uint32_t code)
+{
+   printf("\\%c%0*x: ", code >= 0x10000 ? 'U' : 'u', code >= 0x10000 ? 6 : 4, code);
+   printutf8_codepoint(code);
+   uint32_t rev = utf8_decode(utf8_encode(code));
+   printf(" => \\%c%0*x\n", rev >= 0x10000 ? 'U' : 'u', rev >= 0x10000 ? 6 : 4, rev);
+   assert(rev == code);
+}
+
+int main2(int argc, char **argv)
+{
+   if (argc == 2) {
+      char *end;
+      long num = strtoul(argv[1], &end, 0);
+      if (!*end && num >= 0 && num < 0x110000) {
+         utf8_test(num);
+      } else {
+         fprintf(stderr, "Invalid code \\%c%0*lx\n", num >= 0x10000 ? 'U' : 'u', num >= 0x10000 ? 6 : 4, num);
+      }
+      return 1;
+   }
+   for (uint32_t code = 0; code < 0x110000; ++code) {
+      utf8_test(code);
+   }
+   return 0;
+}
+
 int main(int argc, char * const *argv)
 {
     vt_rebuild_if_source_newer(*argv, argv);
