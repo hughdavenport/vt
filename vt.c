@@ -259,16 +259,19 @@ void vt_reset(vt *vt);
    C(4)    X(VT_CSI_PRIVATE_TILDE_END)    K(VT_KEY_END)    L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END"))
 
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                          L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private '?' function")) \
-   C(1)    X(VT_CSI_PRIVATE_QUESTION_DECCKM)                        L("Cursor Keys Mode")                                                                      S(HERE("TODO DECCKM, need to transform input done before write()")) \
-   C(9)    X(VT_CSI_PRIVATE_QUESTION_MOUSE_CLICK_TRACKING)          L("Mouse Reporting with click only tracking")                                              S(vt->mouse = VT_MOUSE_MODE_CLICK_TRACKING) \
-   C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                       L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
-   C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                        L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
-   C(1049) X(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)             L("Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit") S(_vt_alternate_buffer(vt, input)) \
-   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)           L("Mouse Reporting with Press and Release")                                                S(vt->mouse = VT_MOUSE_MODE_PRESS_RELEASE) \
-   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG)  L("Mouse Reporting with Press, Release, and Drag")                                         S(vt->mouse = VT_MOUSE_MODE_PRESS_RELEASE_AND_DRAG) \
-   C(1003) X(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT)                L("Mouse Reporting with Movement")                                                         S(vt->mouse = VT_MOUSE_MODE_MOVEMENT) \
-   C(1006) X(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS) L("Mouse Reporting Format Digits")                                                         S(vt->mouse_reporting = VT_MOUSE_REPORTING_MODE_DIGITS)
+   C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                             L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private '?' function")) \
+   C(1)    X(VT_CSI_PRIVATE_QUESTION_DECCKM)                           L("Cursor Keys Mode")                                                                      S(HERE("TODO DECCKM, need to transform input done before write()")) \
+   C(9)    X(VT_CSI_PRIVATE_QUESTION_MOUSE_CLICK_TRACKING)             L("Mouse Reporting with click only tracking")                                              S(_vt_set_mouse_mode(vt, VT_MOUSE_MODE_CLICK_TRACKING, input)) \
+   C(25)   X(VT_CSI_PRIVATE_QUESTION_DECTCEM)                          L("Show Cursor")                                                                           S(fprintf(vt->tty, "\033[?25%c", input); fflush(vt->tty)) \
+   C(47)   X(VT_CSI_PRIVATE_QUESTION_ALTBUF)                           L("Alternative Screen Buffer")                                                             S(_vt_alternate_buffer(vt, input)) \
+   C(1049) X(VT_CSI_PRIVATE_QUESTION_ALTBUF_SAVE_CLEAR)                L("Alternative Screen Buffer with Save Cursor and Clear on Entry, Restore Cursor on Exit") S(_vt_alternate_buffer(vt, input)) \
+   C(1000) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE)              L("Mouse Reporting with Press and Release")                                                S(_vt_set_mouse_mode(vt, VT_MOUSE_MODE_PRESS_RELEASE, input)) \
+   C(1002) X(VT_CSI_PRIVATE_QUESTION_MOUSE_PRESS_RELEASE_AND_DRAG)     L("Mouse Reporting with Press, Release, and Drag")                                         S(_vt_set_mouse_mode(vt, VT_MOUSE_MODE_PRESS_RELEASE_AND_DRAG, input)) \
+   C(1003) X(VT_CSI_PRIVATE_QUESTION_MOUSE_MOVEMENT)                   L("Mouse Reporting with Movement")                                                         S(_vt_set_mouse_mode(vt, VT_MOUSE_MODE_MOVEMENT, input)) \
+   C(1005) X(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_MULTIBYTE) L("Mouse Reporting Format Multibyte")                                                      S(_vt_set_mouse_reporting(vt, VT_MOUSE_REPORTING_MODE_MULTIBYTE, input)) \
+   C(1006) X(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_DIGITS)    L("Mouse Reporting Format Digits")                                                         S(_vt_set_mouse_reporting(vt, VT_MOUSE_REPORTING_MODE_DIGITS, input)) \
+   C(1015) X(VT_CSI_PRIVATE_QUESTION_MOUSE_REPORTING_FORMAT_URXVT)     L("Mouse Reporting Format urxvt")                                                          S(_vt_set_mouse_reporting(vt, VT_MOUSE_REPORTING_MODE_URXVT, input))
+
 #define S(code)
 #define L(code)
 #define K(code)
@@ -501,6 +504,7 @@ typedef struct {
    size_t row;
    bool movement;
    bool release;
+   bool was_down;
 } vt_mouse;
 
 typedef struct
@@ -567,11 +571,15 @@ int vt_fprint_key(vt *vt, FILE *stream, vt_key_value *key)
 
       case VT_KEY_MOUSE:
          if (key->mouse.movement) {
-            print("Mouse movement at %lux%lu", key->mouse.column, key->mouse.row);
-            if (key->mouse.button != VT_BUTTON_NONE) {
-               print(" with %s held down", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            if (key->mouse.button <= VT_BUTTON_NONE) {
+               print("Mouse movement at %lux%lu", key->mouse.column, key->mouse.row);
+               if (key->mouse.button != VT_BUTTON_NONE) {
+                  print(" with %s held down", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+               }
+               print(" (%s)", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
+            } else {
+               print("Mouse %s%s at %lux%lu", key->mouse.release ? "release " : "", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button), key->mouse.column, key->mouse.row);
             }
-            print(" (%s)", VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
          } else {
             if (key->mouse.release) {
                print("Mouse Release at %lux%lu of %s", key->mouse.column, key->mouse.row, VT_MOUSE_BUTTON_STRING_LONG(key->mouse.button));
@@ -627,9 +635,46 @@ struct vt
     vt_mouse_reporting_mode mouse_reporting;
 };
 
+void _vt_set_mouse_mode(vt *vt, vt_mouse_mode mode, uint8_t input)
+{
+   if (!vt) return;
+   switch (input) {
+      case 'h':
+         fprintf(stderr, "Child requesting mouse mode %s\n", VT_MOUSE_MODE_STRING(mode));
+         vt->mouse = mode;
+         break;
+
+      case 'l':
+         fprintf(stderr, "Child disabling mouse mode %s\n", VT_MOUSE_MODE_STRING(mode));
+         vt->mouse = VT_MOUSE_MODE_NONE;
+         break;
+
+      default: UNREACHABLE("Unexpected CSI terminator for mouse mode %s", VT_MOUSE_MODE_STRING(mode));
+   }
+}
+
+void _vt_set_mouse_reporting(vt *vt, vt_mouse_reporting_mode mode, uint8_t input)
+{
+   if (!vt) return;
+   switch (input) {
+      case 'h':
+         fprintf(stderr, "Child requesting mouse reporting mode %s\n", VT_MOUSE_REPORTING_MODE_STRING(mode));
+         vt->mouse_reporting = mode;
+         break;
+
+      case 'l':
+         fprintf(stderr, "Child disabling mouse reporting mode %s\n", VT_MOUSE_REPORTING_MODE_STRING(mode));
+         vt->mouse_reporting = VT_MOUSE_REPORTING_MODE_DEFAULT;
+         break;
+
+      default: UNREACHABLE("Unexpected CSI terminator for mouse reporting mode %s", VT_MOUSE_REPORTING_MODE_STRING(mode));
+   }
+}
+
 int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
 {
-   int btn = (mouse.button & 0x3) | ((mouse.button & 0xC) << 4);
+   int btn = (vt->mouse_reporting == VT_MOUSE_REPORTING_MODE_DEFAULT && mouse.release) ?
+      VT_BUTTON_NONE : ((mouse.button & 0x3) | ((mouse.button & 0xC) << 4));
    if (mouse.movement) btn += 32;
    if (modifiers & VT_MODIFIER_SHIFT) btn += 4;
    if (modifiers & VT_MODIFIER_ALT) btn += 8;
@@ -638,7 +683,7 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
       case VT_MOUSE_REPORTING_MODE_DEFAULT:
       {
 #define VT_ENCODE(num) (num) > 223 ? 0 : 32 + (uint8_t)(num)
-         fprintf(stderr, "writing mouse event in default report: \\e[M%c%c%c\n", VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
+         fprintf(stderr, "writing mouse event in default report for %ldx%ld: \\e[M%c%c%c\n", mouse.column > 223 ? 0 : mouse.column, mouse.row > 223 ? 0 : mouse.row, VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
          return fprintf(stream, "\033[M%c%c%c", VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
 #undef VT_ENCODE
       }; UNREACHABLE("case should return");
@@ -649,11 +694,17 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
       case VT_MOUSE_REPORTING_MODE_DIGITS:
       {
          fprintf(stderr, "writing mouse event in digit report: \\e[<%d;%ld;%ld%c\n", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
-         return fprintf(stream, "\033[<%d;%ld;%ld%c\n", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
+         return fprintf(stream, "\033[<%d;%ld;%ld%c", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
       }; UNREACHABLE("case should return");
 
       case VT_MOUSE_REPORTING_MODE_URXVT:
-   UNIMPL_RET(-1, "send mouse event in the urxvt format");
+      {
+         if (mouse.release) btn = 3; // You lose _which_ button is released
+         btn += 32;
+         fprintf(stderr, "writing mouse event in urxvt report: \\e[%d;%ld;%ldM\n", btn, mouse.column, mouse.row);
+         return fprintf(stream, "\033[%d;%ld;%ldM", btn, mouse.column, mouse.row);
+      }; UNREACHABLE("case should return");
+
       default: UNREACHABLE("Unexpected mouse reporting mode %u", vt->mouse_reporting);
    }
 }
@@ -1479,7 +1530,7 @@ void _vt_mouse_check_button(vt *vt)
 void _vt_csi_mouse_report(vt *vt, bool release)
 {
    if (!vt) return;
-   if (vt->emitted_key.key.type != VT_KEY_REQUEST) UNREACHABLE("Unsure what to do on receipt of \\e[<...M/m");
+   /* if (vt->emitted_key.key.type != VT_KEY_REQUEST) UNREACHABLE("Unsure what to do on receipt of \\e[<...M/m"); */
 
    if (vt->sequence_state.num_params != 3) UNREACHABLE("Expected 3 more characters to describe mouse");
 
@@ -2813,6 +2864,16 @@ void vt_process_key(vt *vt)
 
       switch (vt->emitted_key.key.type) {
          case VT_KEY_MOUSE:
+            if (!vt->child_tty) {
+               vt_mouse mouse = vt->emitted_key.key.mouse;
+               if (mouse.movement || mouse.release || mouse.button != VT_BUTTON_LEFT) {
+                  fprintf(stderr, "ignoring mouse event\n");
+                  break;
+               }
+               fprintf(stderr, "moving cursor on mouse press\n");
+               _vt_move_cursor(vt, mouse.column, mouse.row);
+               break;
+            }
             switch (vt->mouse) {
                case VT_MOUSE_MODE_NONE:
                   fprintf(stderr, "ignoring mouse event as client hasn't asked for it\n");
@@ -2820,14 +2881,18 @@ void vt_process_key(vt *vt)
 
                case VT_MOUSE_MODE_CLICK_TRACKING:
                   if (vt->emitted_key.key.mouse.movement) {
-                     fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
-                     break;
+                     if (vt->emitted_key.key.mouse.button <= VT_BUTTON_NONE) {
+                        fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
+                        break;
+                     }
+                     fprintf(stderr, "transforming to implicit mouse wheel scroll with no movement tag\n");
+                     vt->emitted_key.key.mouse.movement = false;
                   }
                   if (vt->emitted_key.key.mouse.release) {
                      fprintf(stderr, "ignoring mouse release as client hasn't asked for it\n");
                      break;
                   }
-                  if (vt->emitted_key.key.mouse.button > VT_BUTTON_RIGHT) {
+                  if (vt->emitted_key.key.mouse.button > VT_NUM_MOUSE_BUTTONS) {
                      fprintf(stderr, "ignoring mouse button %s as client hasn't asked for it\n",
                            VT_MOUSE_BUTTON_STRING_LONG(vt->emitted_key.key.mouse.button));
                      break;
@@ -2838,8 +2903,12 @@ void vt_process_key(vt *vt)
 
                case VT_MOUSE_MODE_PRESS_RELEASE:
                   if (vt->emitted_key.key.mouse.movement) {
-                     fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
-                     break;
+                     if (vt->emitted_key.key.mouse.button <= VT_BUTTON_NONE) {
+                        fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
+                        break;
+                     }
+                     fprintf(stderr, "transforming to implicit mouse wheel scroll with no movement tag\n");
+                     vt->emitted_key.key.mouse.movement = false;
                   }
 
                   vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, vt->emitted_key.modifier);
@@ -2850,8 +2919,13 @@ void vt_process_key(vt *vt)
 
                case VT_MOUSE_MODE_PRESS_RELEASE_AND_DRAG:
                   if (vt->emitted_key.key.mouse.movement) {
-                     HERE("need to work out if mouse button is down");
-                     break;
+                     if (!vt->emitted_key.key.mouse.was_down) {
+                        if (vt->emitted_key.key.mouse.button == VT_BUTTON_NONE) {
+                           fprintf(stderr, "ignoring mouse movement as client has only asked for drag\n");
+                           break;
+                        }
+                        fprintf(stderr, "sending child implicit mouse drag movement\n");
+                     }
                   }
 
                   vt_fprint_mouse(vt, vt->child_tty, vt->emitted_key.key.mouse, vt->emitted_key.modifier);
@@ -2867,13 +2941,23 @@ void vt_process_key(vt *vt)
             break;
 
          default:
+            if (!vt->emitted_key.view.data) {
+               UNIMPL("null here");
+            }
             if (vt_write(vt, vt->child_tty_fd, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
                return;
             }
       }
    }
 
+   /* FIXME other term emulators can handle multi button drags, then partial releases, then still track as drag */
+   /* this kinda does capture that, but loses the first drag after release. after that, because of the use of DIGITS format, you get button information on release */
+   bool was_down = vt->emitted_key.key.mouse.was_down;
+   if (vt->emitted_key.key.type == VT_KEY_MOUSE) {
+      was_down = !(vt->emitted_key.key.mouse.release || vt->emitted_key.key.mouse.button >= VT_BUTTON_NONE);
+   }
    memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+   if (was_down) vt->emitted_key.key.mouse.was_down = true;
 }
 
 int vt_main_loop(vt *vt)
@@ -3095,6 +3179,10 @@ int vt_main_loop(vt *vt)
                  for (size_t i = 0; i < (unsigned)red; i ++) {
                     /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
                     vt_process(vt, buf[i]);
+                    if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
+                       vt_process_key(vt);
+                       memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
+                    }
                     /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
                     /* vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer; */
                     /* fprintf(stderr, "cell now %ldx%ld\n", buffer->cursor.x, buffer->cursor.y); */
