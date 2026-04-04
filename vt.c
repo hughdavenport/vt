@@ -96,7 +96,21 @@ void vt_reset(vt *vt);
    X(VT_KEY_UP) \
    X(VT_KEY_RIGHT) \
    X(VT_KEY_DOWN) \
-   X(VT_KEY_LEFT)
+   X(VT_KEY_LEFT) \
+   X(VT_KEY_NUMPAD_ENTER) \
+   X(VT_KEY_NUMPAD_COMMA) \
+   X(VT_KEY_NUMPAD_MINUS) \
+   X(VT_KEY_NUMPAD_PERIOD) \
+   X(VT_KEY_NUMPAD_0) \
+   X(VT_KEY_NUMPAD_1) \
+   X(VT_KEY_NUMPAD_2) \
+   X(VT_KEY_NUMPAD_3) \
+   X(VT_KEY_NUMPAD_4) \
+   X(VT_KEY_NUMPAD_5) \
+   X(VT_KEY_NUMPAD_6) \
+   X(VT_KEY_NUMPAD_7) \
+   X(VT_KEY_NUMPAD_8) \
+   X(VT_KEY_NUMPAD_9)
 
 #define VT_CURSOR_STYLES_LIST \
    X(VT_CURSOR_STYLE_NONE)                  L("Blinking Block") \
@@ -201,8 +215,8 @@ void vt_reset(vt *vt);
 #define VT_ESCAPE_FUNCTIONS_LIST \
    C(0x00)         X(VT_ESCAPE_NONE)    L("NONE")                     S(UNREACHABLE("Unexpected Escape function")) \
    C(0x37 /* 7 */) X(VT_ESCAPE_DECSC)   L("Save Cursor")              S(_vt_save_cursor(vt)) \
-   C(0x3D /* = */) X(VT_ESCAPE_DECKPAM) L("Keypad Application Modes") S(UNIMPL("TODO DECKPAM, need to transform input done before write()")) \
-   C(0x3E /* > */) X(VT_ESCAPE_DECKPNM) L("Keypad Numeric Modes")     S(UNIMPL("TODO DECKPNM, need to transform input done before write() (or toggle a flag back to not)")) \
+   C(0x3D /* = */) X(VT_ESCAPE_DECKPAM) L("Keypad Application Modes") S(vt->keypad_mode = VT_KEYPAD_APPLICATION) \
+   C(0x3E /* > */) X(VT_ESCAPE_DECKPNM) L("Keypad Numeric Modes")     S(vt->keypad_mode = VT_KEYPAD_NUMERIC) \
    C(0x4D /* M */) X(VT_ESCAPE_RI)      L("Reverse Line Feed")        S(_vt_reverse_line_feed(vt);) \
    C(0x4F /* O */) X(VT_ESCAPE_SS3)     L("Single Shift 3")           S(vt->sequence_state.shift = 3; vt->sequence_state.shift_lock = false) \
    C(0x63 /* c */) X(VT_ESCAPE_RIS)     L("Reset to Initial State")   S(vt_free(vt); vt_resize_window(vt))
@@ -655,6 +669,8 @@ int vt_fprint_key_modifier(vt *vt, FILE *stream, vt_key_modifier key)
    return ret + key_ret;
 }
 
+typedef enum { VT_KEYPAD_NUMERIC, VT_KEYPAD_APPLICATION } vt_keypad_mode;
+
 struct vt
 {
     vt_state state;
@@ -667,6 +683,7 @@ struct vt
     vt_buffer primary_buffer;
     vt_buffer *alternate_buffer;
     vt_cursor_style cursor_style;
+    vt_keypad_mode keypad_mode;
     vt_sequence_state sequence_state;
     vt_attribute_set current_attributes;
     pid_t child_pid;
@@ -2974,6 +2991,7 @@ void vt_process_key(vt *vt)
 
       switch (vt->emitted_key.key.type) {
          case VT_KEY_MOUSE:
+         {
             if (!vt->child_tty) {
                vt_mouse mouse = vt->emitted_key.key.mouse;
                if (mouse.movement || mouse.release || mouse.button != VT_BUTTON_LEFT) {
@@ -3048,7 +3066,61 @@ void vt_process_key(vt *vt)
                default: UNREACHABLE("unexpected mouse mode %d", vt->mouse);
             }
             fflush(vt->child_tty);
-            break;
+         }; break;
+
+
+         /* FIXME nothing actually emits these codes yet */
+         case VT_KEY_NUMPAD_ENTER:
+         case VT_KEY_NUMPAD_COMMA:
+         case VT_KEY_NUMPAD_MINUS:
+         case VT_KEY_NUMPAD_PERIOD:
+         case VT_KEY_NUMPAD_0:
+         case VT_KEY_NUMPAD_1:
+         case VT_KEY_NUMPAD_2:
+         case VT_KEY_NUMPAD_3:
+         case VT_KEY_NUMPAD_4:
+         case VT_KEY_NUMPAD_5:
+         case VT_KEY_NUMPAD_6:
+         case VT_KEY_NUMPAD_7:
+         case VT_KEY_NUMPAD_8:
+         case VT_KEY_NUMPAD_9:
+         {
+            switch (vt->keypad_mode) {
+                case VT_KEYPAD_NUMERIC:
+                    switch (vt->emitted_key.key.type) {
+                        case VT_KEY_NUMPAD_ENTER:
+                            fputc('\r', vt->child_tty);
+                            break;
+
+                        case VT_KEY_NUMPAD_COMMA:
+                            fputc(',', vt->child_tty);
+                            break;
+
+                        case VT_KEY_NUMPAD_MINUS:
+                            fputc('-', vt->child_tty);
+                            break;
+
+                        case VT_KEY_NUMPAD_PERIOD:
+                            fputc('.', vt->child_tty);
+                            break;
+
+                        default:
+                            fputc('0' + (vt->emitted_key.key.type - VT_KEY_NUMPAD_0), vt->child_tty);
+                    }
+                    break;
+
+                case VT_KEYPAD_APPLICATION:
+                    if (vt->emitted_key.key.type == VT_KEY_NUMPAD_ENTER) {
+                        fprintf(vt->child_tty, "\033OM");
+                    } else {
+                        fprintf(vt->child_tty, "\033O%c", 'l' + (vt->emitted_key.key.type - VT_KEY_NUMPAD_COMMA));
+                    }
+                    break;
+
+                default: UNREACHABLE("Unexpected keypad mode %d", vt->keypad_mode);
+            }
+            fflush(vt->child_tty);
+         }; break;
 
          default:
             if (!vt->emitted_key.view.data) {
@@ -3263,9 +3335,6 @@ int vt_main_loop(vt *vt)
                     size_t written = 0;
                     while (written != (unsigned)red) {
 
-                       // FIXME need a way to determine if DECKPAM or DECCKM is set, then can't write
-                       // perhaps after getting each key, the key also has a string view of the buffer
-                       // then write just the amount for the key (may be from this buf, or a static string)
                        ssize_t writ = write(STDERR_FILENO, buf + written, red - written);
                        if (writ == -1) {
                           perror("write(stderr)");
