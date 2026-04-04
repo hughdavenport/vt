@@ -269,6 +269,7 @@ void vt_reset(vt *vt);
    C(0x4D /* M */) X(VT_CSI_DL)            K(VT_KEY_MOUSE) L("Delete Line")                S(_vt_delete_line(vt, VT_PARAM(vt, 0, 1))) \
    C(0x50 /* P */) X(VT_CSI_DCH)           K(VT_KEY_NONE)  L("Delete Character")           S(_vt_delete_character(vt, VT_PARAM(vt, 0, 1))) \
    C(0x6D /* m */) X(VT_CSI_SGR)           K(VT_KEY_NONE)  L("Select Graphic Rendition")   S(_vt_select_graphic_rendition(vt)) \
+   C(0x6E /* n */) X(VT_CSI_CPR)           K(VT_KEY_NONE)  L("Cursor Position Report")     S(_vt_cursor_position_report(vt)) \
    C(0x72 /* r */) X(VT_CSI_DECSTBM)       K(VT_KEY_NONE)  L("Set Top and Bottom Margins") S(HERE("TODO DECSTBM set top and bot margins")) \
    C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")          S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
@@ -1890,6 +1891,18 @@ void _vt_param(vt *vt, uint8_t input)
 #undef K
 #undef L
 
+void _vt_cursor_position_report(vt *vt)
+{
+    if (!vt) return;
+    if (!vt->child_tty) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
+
+    fprintf(stderr, "Sending cursor position report for %lux%lu\n", buffer->cursor.x, buffer->cursor.y);
+    fprintf(vt->child_tty, "\033[%lu;%luR", buffer->cursor.y, buffer->cursor.x);
+    fflush(vt->child_tty);
+}
+
 void _vt_select_graphic_rendition(vt *vt)
 {
     if (!vt) return;
@@ -2239,7 +2252,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_FUNCTIONS == 14, "Not all functions handled");
+    static_assert(VT_NUM_CSI_FUNCTIONS == 15, "Not all functions handled");
     switch (func) {
         VT_CSI_FUNCTIONS_LIST
         case VT_NUM_CSI_FUNCTIONS: break;
