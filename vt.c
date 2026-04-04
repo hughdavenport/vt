@@ -208,9 +208,9 @@ void vt_reset(vt *vt);
     X(VT_ACTION_HOOK)         S(UNIMPL("VT_ACTION_HOOK")) \
     X(VT_ACTION_PUT)          S(UNIMPL("VT_ACTION_PUT")) \
     X(VT_ACTION_UNHOOK)       S(UNIMPL("VT_ACTION_UNHOOK")) \
-    X(VT_ACTION_OSC_START)    S(UNIMPL("VT_ACTION_OSC_START")) \
-    X(VT_ACTION_OSC_PUT)      S(UNIMPL("VT_ACTION_OSC_PUT")) \
-    X(VT_ACTION_OSC_END)      S(UNIMPL("VT_ACTION_OSC_END"))
+    X(VT_ACTION_OSC_START)    S(HERE("TODO VT_ACTION_OSC_START 0x%02x", input)) \
+    X(VT_ACTION_OSC_PUT)      S(HERE("TODO VT_ACTION_OSC_PUT 0x%02x", input)) \
+    X(VT_ACTION_OSC_END)      S(HERE("TODO VT_ACTION_OSC_END 0x%02x", input))
 
 #define VT_ESCAPE_FUNCTIONS_LIST \
    C(0x00)         X(VT_ESCAPE_NONE)    L("NONE")                     S(UNREACHABLE("Unexpected Escape function")) \
