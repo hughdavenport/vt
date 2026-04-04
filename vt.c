@@ -2054,44 +2054,42 @@ void _vt_csi_private_less_than_dispatch(vt *vt, uint8_t input)
 #undef K
 }
 
-void _vt_csi_private_question_dispatch(vt *vt, uint16_t param, uint8_t input)
+void _vt_csi_private_question_dispatch(vt *vt, uint8_t input)
 {
     if (!vt) return;
 
+    if (input != 'h' && input != 'l') UNREACHABLE("Invalid CSI terminator for private '?' sequence");
+
+    for (size_t idx = 0; idx < vt->sequence_state.num_params; idx++) {
+       if (vt->sequence_state.params[idx].non_default) {
+          uint16_t param = VT_PARAM(vt, idx, 0);
 #define S(code)
 #define C(code) case code:
 #define X(name) func = name; break;
-    vt_csi_private_question_function func = -1;
-    switch (param) { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST }
-    if ((signed)func == -1) UNIMPL("Unknown csi private question function param %d", param);
+          vt_csi_private_question_function func = -1;
+          switch (param) { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST }
+          if ((signed)func == -1) UNIMPL("Unknown csi private question function param %d", param);
 #undef C
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi private '?' %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
-    for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
-       if (vt->sequence_state.params[param].non_default) {
-          if (param) fputc(',', stderr);
-          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
-       }
-    }
-    fprintf(stderr, "\n");
-
-    if (input != 'h' && input != 'l') UNREACHABLE("Invalid CSI terminator for private '?' sequence");
+          fprintf(stderr, "state %s, csi private '?' %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
 
 #define C(name)
 #define X(name) case name:
-#define S(code) code; return;
-    /* all cases must return */
-    static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 10, "Not all functions handled");
-    switch (func) {
-       VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
-       case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
-    }
-    UNREACHABLE("Unexpected csi private '?' func %d", func);
+#define S(code) code; continue;
+       /* all cases must return */
+       static_assert(VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS == 12, "Not all functions handled");
+       switch (func) {
+          VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST
+          case VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS: break;
+       }
+       UNREACHABLE("Unexpected csi private '?' func %d", func);
 #undef X
 #undef S
 #undef C
+       }
+    }
 }
 
 void _vt_csi_dispatch(vt *vt, uint8_t input)
@@ -2101,7 +2099,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
     if (vt->sequence_state.num_collected) {
        if (vt->sequence_state.num_collected == 1) {
           switch (vt->sequence_state.collected[0]) {
-             case '?': _vt_csi_private_question_dispatch(vt, VT_PARAM(vt, 0, 0), input); break;
+             case '?': _vt_csi_private_question_dispatch(vt, input); break;
              case '<': _vt_csi_private_less_than_dispatch(vt, input); break;
              default: UNIMPL("CSI unknown collected string char %c", vt->sequence_state.collected[0]);
           }
