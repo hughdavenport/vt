@@ -283,11 +283,13 @@ void vt_reset(vt *vt);
    C(0x6D /* m */) X(VT_CSI_PRIVATE_LESS_THAN_MOUSE_RELEASE) K(VT_KEY_NONE) L("Mouse Release Report")  S(_vt_csi_mouse_report(vt, true))
 
 #define VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   K(VT_KEY_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private '~' function")) \
-   C(1)    X(VT_CSI_PRIVATE_TILDE_HOME)   K(VT_KEY_HOME)   L("Home")   S(UNIMPL("VT_CSI_PRIVATE_TILDE_HOME")) \
-   C(2)    X(VT_CSI_PRIVATE_TILDE_INSERT) K(VT_KEY_INSERT) L("Insert") S(UNIMPL("VT_CSI_PRIVATE_TILDE_INSERT")) \
-   C(3)    X(VT_CSI_PRIVATE_TILDE_DELETE) K(VT_KEY_DELETE) L("Delete") S(UNIMPL("VT_CSI_PRIVATE_TILDE_DELETE")) \
-   C(4)    X(VT_CSI_PRIVATE_TILDE_END)    K(VT_KEY_END)    L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END"))
+   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)      K(VT_KEY_NONE)      L("NONE")      S(UNREACHABLE("Unexpected CSI private '~' function")) \
+   C(1)    X(VT_CSI_PRIVATE_TILDE_HOME)      K(VT_KEY_HOME)      L("Home")      S(UNIMPL("VT_CSI_PRIVATE_TILDE_HOME")) \
+   C(2)    X(VT_CSI_PRIVATE_TILDE_INSERT)    K(VT_KEY_INSERT)    L("Insert")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_INSERT")) \
+   C(3)    X(VT_CSI_PRIVATE_TILDE_DELETE)    K(VT_KEY_DELETE)    L("Delete")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_DELETE")) \
+   C(4)    X(VT_CSI_PRIVATE_TILDE_END)       K(VT_KEY_END)       L("End")       S(UNIMPL("VT_CSI_PRIVATE_TILDE_END")) \
+   C(5)    X(VT_CSI_PRIVATE_TILDE_PAGE_UP)   K(VT_KEY_PAGE_UP)   L("Page Up")   S(UNIMPL("VT_CSI_PRIVATE_TILDE_PAGE_UP")) \
+   C(6)    X(VT_CSI_PRIVATE_TILDE_PAGE_DOWN) K(VT_KEY_PAGE_DOWN) L("Page Down") S(UNIMPL("VT_CSI_PRIVATE_TILDE_PAGE_DOWN"))
 
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
    C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                             L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private '?' function")) \
@@ -2064,7 +2066,7 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS == 5, "Not all functions handled");
+    static_assert(VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS == 7, "Not all functions handled");
     switch (func) {
        VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS: break;
