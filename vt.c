@@ -126,28 +126,45 @@ void vt_reset(vt *vt);
    X(VT_MODIFIER_SUPER)   E(1 << 3) /* Only used for certain special chars */
 
 #define VT_ATTRIBUTES_LIST \
-   C(0)  X(VT_ATTRIBUTE_NONE)                  L("Reset") \
-   C(1)  X(VT_ATTRIBUTE_BOLD)                  L("Bold") \
-   C(2)  X(VT_ATTRIBUTE_DIM)                   L("Dim") \
-   C(3)  X(VT_ATTRIBUTE_ITALIC)                L("Italic") \
-   C(23) X(VT_ATTRIBUTE_NOT_ITALIC_OR_GOTHIC)  L("Not italic or gothic") \
-   C(24) X(VT_ATTRIBUTE_NOT_UNDERLINED)        L("Not underlined") \
-   C(30) X(VT_ATTRIBUTE_FG_0)                  L("Foreground Black") \
-   C(31) X(VT_ATTRIBUTE_FG_1)                  L("Foreground Red") \
-   C(32) X(VT_ATTRIBUTE_FG_2)                  L("Foreground Green") \
-   C(33) X(VT_ATTRIBUTE_FG_3)                  L("Foreground Yellow") \
-   C(34) X(VT_ATTRIBUTE_FG_4)                  L("Foreground Blue") \
-   C(35) X(VT_ATTRIBUTE_FG_5)                  L("Foreground Magenta") \
-   C(36) X(VT_ATTRIBUTE_FG_6)                  L("Foreground Cyan") \
-   C(37) X(VT_ATTRIBUTE_FG_7)                  L("Foreground White") \
-   C(40) X(VT_ATTRIBUTE_BG_0)                  L("Background Black") \
-   C(41) X(VT_ATTRIBUTE_BG_1)                  L("Background Red") \
-   C(42) X(VT_ATTRIBUTE_BG_2)                  L("Background Green") \
-   C(43) X(VT_ATTRIBUTE_BG_3)                  L("Background Yellow") \
-   C(44) X(VT_ATTRIBUTE_BG_4)                  L("Background Blue") \
-   C(45) X(VT_ATTRIBUTE_BG_5)                  L("Background Magenta") \
-   C(46) X(VT_ATTRIBUTE_BG_6)                  L("Background Cyan") \
-   C(47) X(VT_ATTRIBUTE_BG_7)                  L("Background White")
+   C(0)   X(VT_ATTRIBUTE_NONE)                  L("Reset") \
+   C(1)   X(VT_ATTRIBUTE_BOLD)                  L("Bold") \
+   C(2)   X(VT_ATTRIBUTE_DIM)                   L("Dim") \
+   C(3)   X(VT_ATTRIBUTE_ITALIC)                L("Italic") \
+   C(4)   X(VT_ATTRIBUTE_UNDERLINE)             L("Underline") \
+   C(23)  X(VT_ATTRIBUTE_NOT_ITALIC_OR_GOTHIC)  L("Not italic or gothic") \
+   C(24)  X(VT_ATTRIBUTE_NOT_UNDERLINED)        L("Not underlined") \
+   C(30)  X(VT_ATTRIBUTE_FG_BLACK)              L("Foreground Black") \
+   C(31)  X(VT_ATTRIBUTE_FG_RED)                L("Foreground Red") \
+   C(32)  X(VT_ATTRIBUTE_FG_GREEN)              L("Foreground Green") \
+   C(33)  X(VT_ATTRIBUTE_FG_YELLOW)             L("Foreground Yellow") \
+   C(34)  X(VT_ATTRIBUTE_FG_BLUE)               L("Foreground Blue") \
+   C(35)  X(VT_ATTRIBUTE_FG_MAGENTA)            L("Foreground Magenta") \
+   C(36)  X(VT_ATTRIBUTE_FG_CYAN)               L("Foreground Cyan") \
+   C(37)  X(VT_ATTRIBUTE_FG_WHITE)              L("Foreground White") \
+   C(40)  X(VT_ATTRIBUTE_BG_BLACK)              L("Background Black") \
+   C(41)  X(VT_ATTRIBUTE_BG_RED)                L("Background Red") \
+   C(42)  X(VT_ATTRIBUTE_BG_GREEN)              L("Background Green") \
+   C(43)  X(VT_ATTRIBUTE_BG_YELLOW)             L("Background Yellow") \
+   C(44)  X(VT_ATTRIBUTE_BG_BLUE)               L("Background Blue") \
+   C(45)  X(VT_ATTRIBUTE_BG_MAGENTA)            L("Background Magenta") \
+   C(46)  X(VT_ATTRIBUTE_BG_CYAN)               L("Background Cyan") \
+   C(47)  X(VT_ATTRIBUTE_BG_WHITE)              L("Background White") \
+   C(90)  X(VT_ATTRIBUTE_FG_BRIGHT_BLACK)       L("Foreground Bright Black") \
+   C(91)  X(VT_ATTRIBUTE_FG_BRIGHT_RED)         L("Foreground Bright Red") \
+   C(92)  X(VT_ATTRIBUTE_FG_BRIGHT_GREEN)       L("Foreground Bright Green") \
+   C(93)  X(VT_ATTRIBUTE_FG_BRIGHT_YELLOW)      L("Foreground Bright Yellow") \
+   C(94)  X(VT_ATTRIBUTE_FG_BRIGHT_BLUE)        L("Foreground Bright Blue") \
+   C(95)  X(VT_ATTRIBUTE_FG_BRIGHT_MAGENTA)     L("Foreground Bright Magenta") \
+   C(96)  X(VT_ATTRIBUTE_FG_BRIGHT_CYAN)        L("Foreground Bright Cyan") \
+   C(97)  X(VT_ATTRIBUTE_FG_BRIGHT_WHITE)       L("Foreground Bright White") \
+   C(100) X(VT_ATTRIBUTE_BG_BRIGHT_BLACK)       L("Background Bright Black") \
+   C(101) X(VT_ATTRIBUTE_BG_BRIGHT_RED)         L("Background Bright Red") \
+   C(102) X(VT_ATTRIBUTE_BG_BRIGHT_GREEN)       L("Background Bright Green") \
+   C(103) X(VT_ATTRIBUTE_BG_BRIGHT_YELLOW)      L("Background Bright Yellow") \
+   C(104) X(VT_ATTRIBUTE_BG_BRIGHT_BLUE)        L("Background Bright Blue") \
+   C(105) X(VT_ATTRIBUTE_BG_BRIGHT_MAGENTA)     L("Background Bright Magenta") \
+   C(106) X(VT_ATTRIBUTE_BG_BRIGHT_CYAN)        L("Background Bright Cyan") \
+   C(107) X(VT_ATTRIBUTE_BG_BRIGHT_WHITE)       L("Background Bright White")
 
 #define VT_STATES_LIST \
     X(VT_STATE_GROUND) \
@@ -910,8 +927,10 @@ void vt_draw_gutters(vt *vt)
     }
 
     vt_attribute colors[] = {
-        VT_ATTRIBUTE_FG_0, VT_ATTRIBUTE_FG_1, VT_ATTRIBUTE_FG_2, VT_ATTRIBUTE_FG_3, VT_ATTRIBUTE_FG_4, VT_ATTRIBUTE_FG_5, VT_ATTRIBUTE_FG_6, VT_ATTRIBUTE_FG_7,
-        VT_ATTRIBUTE_BG_0, VT_ATTRIBUTE_BG_1, VT_ATTRIBUTE_BG_2, VT_ATTRIBUTE_BG_3, VT_ATTRIBUTE_BG_4, VT_ATTRIBUTE_BG_5, VT_ATTRIBUTE_BG_6, VT_ATTRIBUTE_BG_7,
+       VT_ATTRIBUTE_FG_BLACK, VT_ATTRIBUTE_FG_RED, VT_ATTRIBUTE_FG_GREEN, VT_ATTRIBUTE_FG_YELLOW, VT_ATTRIBUTE_FG_BLUE, VT_ATTRIBUTE_FG_MAGENTA, VT_ATTRIBUTE_FG_CYAN, VT_ATTRIBUTE_FG_WHITE,
+       VT_ATTRIBUTE_BG_BLACK, VT_ATTRIBUTE_BG_RED, VT_ATTRIBUTE_BG_GREEN, VT_ATTRIBUTE_BG_YELLOW, VT_ATTRIBUTE_BG_BLUE, VT_ATTRIBUTE_BG_MAGENTA, VT_ATTRIBUTE_BG_CYAN, VT_ATTRIBUTE_BG_WHITE,
+       VT_ATTRIBUTE_FG_BRIGHT_BLACK, VT_ATTRIBUTE_FG_BRIGHT_RED, VT_ATTRIBUTE_FG_BRIGHT_GREEN, VT_ATTRIBUTE_FG_BRIGHT_YELLOW, VT_ATTRIBUTE_FG_BRIGHT_BLUE, VT_ATTRIBUTE_FG_BRIGHT_MAGENTA, VT_ATTRIBUTE_FG_BRIGHT_CYAN, VT_ATTRIBUTE_FG_BRIGHT_WHITE,
+       VT_ATTRIBUTE_BG_BRIGHT_BLACK, VT_ATTRIBUTE_BG_BRIGHT_RED, VT_ATTRIBUTE_BG_BRIGHT_GREEN, VT_ATTRIBUTE_BG_BRIGHT_YELLOW, VT_ATTRIBUTE_BG_BRIGHT_BLUE, VT_ATTRIBUTE_BG_BRIGHT_MAGENTA, VT_ATTRIBUTE_BG_BRIGHT_CYAN, VT_ATTRIBUTE_BG_BRIGHT_WHITE,
     };
     vt_attribute_set cursor_colors = {0};
     for (size_t i = 0; i < C_ARRAY_LEN(colors); i ++) {
