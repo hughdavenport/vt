@@ -98,6 +98,15 @@ void vt_reset(vt *vt);
    X(VT_KEY_DOWN) \
    X(VT_KEY_LEFT)
 
+#define VT_CURSOR_STYLES_LIST \
+   X(VT_CURSOR_STYLE_NONE)                  L("Blinking Block") \
+   X(VT_CURSOR_STYLE_BLINK_BLOCK)           L("Blinking Block") \
+   X(VT_CURSOR_STYLE_BLOCK)                 L("Solid Block") \
+   X(VT_CURSOR_STYLE_BLINK_UNDERLINE)       L("Blinking Underline") \
+   X(VT_CURSOR_STYLE_UNDERLINE)             L("Underline") \
+   X(VT_CURSOR_STYLE_BLINKING_VERTICAL_BAR) L("Blinking Vertical Bar") \
+   X(VT_CURSOR_STYLE_VERTICAL_BAR)          L("Vertical Bar")
+
 #define VT_MOUSE_BUTTONS_LIST \
    X(VT_BUTTON_LEFT) L("Left Button") \
    X(VT_BUTTON_MIDDLE) L("Middle Button") \
@@ -246,6 +255,10 @@ void vt_reset(vt *vt);
    C(0x72 /* r */) X(VT_CSI_DECSTBM)       K(VT_KEY_NONE)  L("Set Top and Bottom Margins") S(HERE("TODO DECSTBM set top and bot margins")) \
    C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")          S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
 
+#define VT_CSI_SPACE_FUNCTIONS_LIST \
+   C(0x00)         X(VT_CSI_SPACE_NONE)          L("NONE")                       S(UNREACHABLE("Unexpected CSI space function")) \
+   C(0x71 /* q */) X(VT_CSI_SPACE_DECSCUSR)      L("Set Cursor Style")           S(_vt_set_cursor_style(vt, VT_PARAM(vt, 0, 1)))
+
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_PRIVATE_LESS_THAN_NONE)          K(VT_KEY_NONE) L("NONE")   S(UNREACHABLE("Unexpected CSI private '<' function")) \
    C(0x4D /* M */) X(VT_CSI_PRIVATE_LESS_THAN_MOUSE)         K(VT_KEY_NONE) L("Mouse Report")  S(_vt_csi_mouse_report(vt, false)) \
@@ -297,6 +310,7 @@ typedef enum { VT_MODIFIERS_LIST } vt_modifier;
 #undef X
 #define E(code)
 #define X(name) name,
+typedef enum { VT_CURSOR_STYLES_LIST VT_NUM_CURSOR_STYLES } vt_cursor_style;
 typedef enum { VT_MOUSE_BUTTONS_LIST VT_NUM_MOUSE_BUTTONS } vt_mouse_button;
 typedef enum { VT_ATTRIBUTES_LIST VT_NUM_ATTRIBUTES } vt_attribute;
 typedef enum { VT_KEYS_LIST VT_NUM_KEYS } vt_key;
@@ -307,6 +321,7 @@ typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
 typedef enum { VT_ESCAPE_FUNCTIONS_LIST VT_NUM_ESCAPE_FUNCTIONS } vt_escape_function;
 typedef enum { VT_CONTROL_FUNCTIONS_LIST VT_NUM_CONTROL_FUNCTIONS } vt_control_function;
 typedef enum { VT_CSI_FUNCTIONS_LIST VT_NUM_CSI_FUNCTIONS } vt_csi_function;
+typedef enum { VT_CSI_SPACE_FUNCTIONS_LIST VT_NUM_CSI_SPACE_FUNCTIONS } vt_csi_space_function;
 typedef enum { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS } vt_csi_private_question_function;
 typedef enum { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS } vt_csi_private_less_than_function;
 typedef enum { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS } vt_csi_private_tilde_function;
@@ -317,10 +332,12 @@ static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
 static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
+static const char *vt_csi_space_function_strings[] = { VT_CSI_SPACE_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
 static const char *vt_csi_private_less_than_function_strings[] = { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 __attribute__((unused)) static const char *vt_mouse_button_strings[] = { VT_MOUSE_BUTTONS_LIST };
+__attribute__((unused)) static const char *vt_cursor_style_strings[] = { VT_CURSOR_STYLES_LIST };
 __attribute__((unused)) static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
@@ -328,12 +345,14 @@ __attribute__((unused)) static const char *vt_mouse_mode_strings[] = { VT_MOUSE_
 __attribute__((unused)) static const char *vt_mouse_reporting_mode_strings[] = { VT_MOUSE_REPORTING_MODES_LIST };
 
 #define VT_MOUSE_BUTTON_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings[(btn)] : "(mouse_button out of bounds)")
+#define VT_cursor_style_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_CURSOR_STYLES) ? vt_cursor_style_strings[(btn)] : "(cursor_style out of bounds)")
 #define VT_ATTRIBUTE_STRING(attr) (((attr) >= 0 && (attr) < VT_NUM_ATTRIBUTES) ? vt_attribute_strings[(attr)] : "(attribute out of bounds)")
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
 #define VT_ESCAPE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings[(func)] : "(escape_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings[(func)] : "(control_function out of bounds)")
 #define VT_CSI_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings[(func)] : "(csi_function out of bounds)")
+#define VT_CSI_SPACE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_SPACE_FUNCTIONS) ? vt_csi_space_function_strings[(func)] : "(csi_space_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings[(func)] : "(csi_private_question_function out of bounds)")
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_strings[(func)] : "(csi_private_less_than_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings[(func)] : "(csi_private_tilde_function out of bounds)")
@@ -346,7 +365,9 @@ __attribute__((unused)) static const char *vt_mouse_reporting_mode_strings[] = {
 #undef L
 #define L(name) name, 
 static const char *vt_mouse_button_strings_long[] = { VT_MOUSE_BUTTONS_LIST };
+static const char *vt_cursor_style_strings_long[] = { VT_CURSOR_STYLES_LIST };
 static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
+static const char *vt_csi_space_function_strings_long[] = { VT_CSI_SPACE_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings_long[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
 static const char *vt_csi_private_less_than_function_strings_long[] = { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings_long[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
@@ -354,7 +375,9 @@ static const char *vt_escape_function_strings_long[] = { VT_ESCAPE_FUNCTIONS_LIS
 static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
 
 #define VT_MOUSE_BUTTON_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings_long[(btn)] : "(mouse_button out of bounds)")
+#define VT_CURSOR_STYLE_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_CURSOR_STYLES) ? vt_cursor_style_strings_long[(btn)] : "(cursor_style out of bounds)")
 #define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
+#define VT_CSI_SPACE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_SPACE_FUNCTIONS) ? vt_csi_space_function_strings_long[(func)] : "(csi_space_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings_long[(func)] : "(csi_private_question_function out of bounds)")
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_strings_long[(func)] : "(csi_private_less_than_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings_long[(func)] : "(csi_private_tilde_function out of bounds)")
@@ -623,6 +646,7 @@ struct vt
     struct winsize outer_window;
     vt_buffer primary_buffer;
     vt_buffer *alternate_buffer;
+    vt_cursor_style cursor_style;
     vt_sequence_state sequence_state;
     vt_attribute_set current_attributes;
     pid_t child_pid;
@@ -1527,6 +1551,21 @@ void _vt_mouse_check_button(vt *vt)
    }
 }
 
+void _vt_set_cursor_style(vt *vt, uint16_t param)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key.type == VT_KEY_REQUEST) return;
+
+   if (!param) param = 1; // weirdly two defaults
+   if (param >= VT_NUM_CURSOR_STYLES) {
+      UNREACHABLE("Unknown cursor style %d", param);
+   }
+   vt->cursor_style = param;
+   fprintf(stderr, "Setting cursor style to %s\n", VT_CURSOR_STYLE_STRING_LONG(vt->cursor_style));
+   fprintf(vt->tty, "\033[%u q", vt->cursor_style);
+   fflush(vt->tty);
+}
+
 void _vt_csi_mouse_report(vt *vt, bool release)
 {
    if (!vt) return;
@@ -2092,6 +2131,44 @@ void _vt_csi_private_question_dispatch(vt *vt, uint8_t input)
     }
 }
 
+void _vt_csi_space_dispatch(vt *vt, uint8_t input)
+{
+    if (!vt) return;
+
+#define S(code)
+#define C(code) case code:
+#define X(name) func = name; break;
+    vt_csi_space_function func = -1;
+    switch (input) { VT_CSI_SPACE_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown csi space function input 0x%02X '%c'", input, input);
+#undef S
+#undef C
+#undef X
+
+    fprintf(stderr, "state %s, csi space function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_SPACE_FUNCTION_STRING(func), VT_CSI_SPACE_FUNCTION_STRING_LONG(func));
+    for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
+       if (vt->sequence_state.params[param].non_default) {
+          if (param) fputc(',', stderr);
+          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+       }
+    }
+    fprintf(stderr, "\n");
+
+#define S(code) code; return;
+#define C(code)
+#define X(name) case name:
+    /* all cases must return */
+    static_assert(VT_NUM_CSI_SPACE_FUNCTIONS == 2, "Not all functions handled");
+    switch (func) {
+        VT_CSI_SPACE_FUNCTIONS_LIST
+        case VT_NUM_CSI_SPACE_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected func %d", func);
+#undef S
+#undef C
+#undef X
+}
+
 void _vt_csi_dispatch(vt *vt, uint8_t input)
 {
     if (!vt) return;
@@ -2101,7 +2178,8 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
           switch (vt->sequence_state.collected[0]) {
              case '?': _vt_csi_private_question_dispatch(vt, input); break;
              case '<': _vt_csi_private_less_than_dispatch(vt, input); break;
-             default: UNIMPL("CSI unknown collected string char %c", vt->sequence_state.collected[0]);
+             case ' ': _vt_csi_space_dispatch(vt, input); break;
+             default: UNIMPL("CSI unknown collected string char '%c'", vt->sequence_state.collected[0]);
           }
           return;
        } else {
