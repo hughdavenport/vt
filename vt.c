@@ -753,7 +753,7 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
 
       case VT_MOUSE_REPORTING_MODE_DIGITS:
       {
-         fprintf(stderr, "writing mouse event in digit report: \\e[<%d;%ld;%ld%c\n", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
+         fprintf(stderr, "writing mouse event in digit report for %ldx%ld:: \\e[<%d;%ld;%ld%c\n", mouse.column, mouse.row, btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
          return fprintf(stream, "\033[<%d;%ld;%ld%c", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
       }; UNREACHABLE("case should return");
 
@@ -761,7 +761,7 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
       {
          if (mouse.release) btn = 3; // You lose _which_ button is released
          btn += 32;
-         fprintf(stderr, "writing mouse event in urxvt report: \\e[%d;%ld;%ldM\n", btn, mouse.column, mouse.row);
+         fprintf(stderr, "writing mouse event in urxvt report for %ldx%ld:: \\e[%d;%ld;%ldM\n", mouse.column, mouse.row, btn, mouse.column, mouse.row);
          return fprintf(stream, "\033[%d;%ld;%ldM", btn, mouse.column, mouse.row);
       }; UNREACHABLE("case should return");
 
