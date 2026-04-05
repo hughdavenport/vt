@@ -3614,6 +3614,7 @@ int fprintutf8_codepoint(FILE *stream, int code)
 void utf8_test(uint32_t code)
 {
    printf("\\%c%0*x: ", code >= 0x10000 ? 'U' : 'u', code >= 0x10000 ? 6 : 4, code);
+   // open_memstream() to fprintutf8_codepoint to, then decode from that buffer
    printutf8_codepoint(code);
    uint32_t rev = utf8_decode(utf8_encode(code));
    printf(" => \\%c%0*x\n", rev >= 0x10000 ? 'U' : 'u', rev >= 0x10000 ? 6 : 4, rev);
