@@ -18,12 +18,15 @@
 #include <termios.h>
 #include <unistd.h>
 
+#define VT_OPTIONS_LIST \
+   X(VT_OPTION_LOG_FILE) L("--log-file") A("filename") D("sets log file to pathname provided") S(arg = NEXT_ARG; vt->log_file = fopen(arg, "w"); if (!vt->log_file) { fprintf(stderr, "Could not open log file '%s' for writing\n", arg); return 1; })
+
 typedef struct vt vt;
 void vt_reset(vt *vt);
-#define HERE(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mHERE\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); } while (false)
-#define UNIMPL(fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (true) { vt_reset(vt); exit(1); } else return; } while (false)
-#define UNIMPL_RET(retval, fmt, ...) do { fprintf(stderr, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); if (true) { vt_reset(vt); exit(1); } else return (retval); } while (false)
-#define UNREACHABLE(fmt, ...) do { fprintf(stderr, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); vt_reset(vt); exit(1); } while (false)
+#define HERE(fmt, ...) do { fprintf(vt->log_file, "%s:%d: \033[31mHERE\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(vt->log_file); } while (false)
+#define UNIMPL(fmt, ...) do { fprintf(vt->log_file, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(vt->log_file); if (true) { vt_reset(vt); exit(1); } else return; } while (false)
+#define UNIMPL_RET(retval, fmt, ...) do { fprintf(vt->log_file, "%s:%d: \033[31mUNIMPLEMENTED\033[m: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(vt->log_file); if (true) { vt_reset(vt); exit(1); } else return (retval); } while (false)
+#define UNREACHABLE(fmt, ...) do { fprintf(vt->log_file, "%s:%d: UNREACHABLE: " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); fflush(vt->log_file); vt_reset(vt); exit(1); } while (false)
 
 #define C_ARRAY_LEN(arr) (sizeof((arr))/sizeof(*(arr)))
 
@@ -324,6 +327,22 @@ void vt_reset(vt *vt);
 #define L(code)
 #define K(code)
 #define X(name)
+#define D(name)
+
+#define A(name) name, 
+static const char *vt_option_arguments[] = { VT_OPTIONS_LIST };
+#define VT_OPTION_ARGUMENT(opt) (((opt) >= 0 && (opt) < VT_NUM_OPTIONS) ? vt_option_arguments[(opt)] : "(option out of bounds)")
+#undef A
+
+#define A(name)
+
+#undef D
+#define D(desc) desc, 
+static const char *vt_option_descriptions[] = { VT_OPTIONS_LIST };
+#define VT_OPTION_DESCRIPTION(opt) (((opt) >= 0 && (opt) < VT_NUM_OPTIONS) ? vt_option_descriptions[(opt)] : "(option out of bounds)")
+#undef D
+
+#define D(desc)
 
 #define C(code) code, 
 static const char vt_attribute_codes[] = { VT_ATTRIBUTES_LIST };
@@ -345,6 +364,7 @@ typedef enum { VT_MODIFIERS_LIST } vt_modifier;
 #undef X
 #define E(code)
 #define X(name) name,
+typedef enum { VT_OPTIONS_LIST VT_NUM_OPTIONS } vt_option;
 typedef enum { VT_CURSOR_STYLES_LIST VT_NUM_CURSOR_STYLES } vt_cursor_style;
 typedef enum { VT_MOUSE_BUTTONS_LIST VT_NUM_MOUSE_BUTTONS } vt_mouse_button;
 typedef enum { VT_ATTRIBUTES_LIST VT_NUM_ATTRIBUTES } vt_attribute;
@@ -373,6 +393,7 @@ static const char *vt_csi_private_less_than_function_strings[] = { VT_CSI_PRIVAT
 static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 __attribute__((unused)) static const char *vt_mouse_button_strings[] = { VT_MOUSE_BUTTONS_LIST };
 __attribute__((unused)) static const char *vt_cursor_style_strings[] = { VT_CURSOR_STYLES_LIST };
+__attribute__((unused)) static const char *vt_option_strings[] = { VT_OPTIONS_LIST };
 __attribute__((unused)) static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
@@ -380,7 +401,8 @@ __attribute__((unused)) static const char *vt_mouse_mode_strings[] = { VT_MOUSE_
 __attribute__((unused)) static const char *vt_mouse_reporting_mode_strings[] = { VT_MOUSE_REPORTING_MODES_LIST };
 
 #define VT_MOUSE_BUTTON_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings[(btn)] : "(mouse_button out of bounds)")
-#define VT_cursor_style_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_CURSOR_STYLES) ? vt_cursor_style_strings[(btn)] : "(cursor_style out of bounds)")
+#define VT_OPTION_STRING(opt) (((opt) >= 0 && (opt) < VT_NUM_OPTIONS) ? vt_option_strings[(opt)] : "(option out of bounds)")
+#define VT_CURSOR_STYLE_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_CURSOR_STYLES) ? vt_cursor_style_strings[(btn)] : "(cursor_style out of bounds)")
 #define VT_ATTRIBUTE_STRING(attr) (((attr) >= 0 && (attr) < VT_NUM_ATTRIBUTES) ? vt_attribute_strings[(attr)] : "(attribute out of bounds)")
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
@@ -401,6 +423,7 @@ __attribute__((unused)) static const char *vt_mouse_reporting_mode_strings[] = {
 #define L(name) name, 
 static const char *vt_mouse_button_strings_long[] = { VT_MOUSE_BUTTONS_LIST };
 static const char *vt_cursor_style_strings_long[] = { VT_CURSOR_STYLES_LIST };
+static const char *vt_option_strings_long[] = { VT_OPTIONS_LIST };
 static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
 static const char *vt_csi_space_function_strings_long[] = { VT_CSI_SPACE_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings_long[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
@@ -411,6 +434,7 @@ static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_L
 
 #define VT_MOUSE_BUTTON_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings_long[(btn)] : "(mouse_button out of bounds)")
 #define VT_CURSOR_STYLE_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_CURSOR_STYLES) ? vt_cursor_style_strings_long[(btn)] : "(cursor_style out of bounds)")
+#define VT_OPTION_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_OPTIONS) ? vt_option_strings_long[(btn)] : "(option out of bounds)")
 #define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
 #define VT_CSI_SPACE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_SPACE_FUNCTIONS) ? vt_csi_space_function_strings_long[(func)] : "(csi_space_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings_long[(func)] : "(csi_private_question_function out of bounds)")
@@ -594,6 +618,32 @@ int vt_fprint_modifier(__attribute__((unused)) vt *vt, FILE *stream, vt_modifier
 #undef print
 }
 
+typedef enum { VT_KEYPAD_NUMERIC, VT_KEYPAD_APPLICATION } vt_keypad_mode;
+
+struct vt
+{
+    vt_state state;
+    struct termios original_ios;
+    struct termios child_ios;
+    bool raw;
+    bool nonblocking;
+    FILE *tty;
+    FILE *log_file;
+    struct winsize outer_window;
+    vt_buffer primary_buffer;
+    vt_buffer *alternate_buffer;
+    vt_cursor_style cursor_style;
+    vt_keypad_mode keypad_mode;
+    vt_sequence_state sequence_state;
+    vt_attribute_set current_attributes;
+    pid_t child_pid;
+    int child_tty_fd;
+    FILE *child_tty;
+    vt_key_modifier emitted_key;
+    vt_mouse_mode mouse;
+    vt_mouse_reporting_mode mouse_reporting;
+};
+
 int vt_fprint_key(vt *vt, FILE *stream, vt_key_value *key)
 {
 #define print(fmt, ...) do { int _r = fprintf(stream, fmt, ##__VA_ARGS__); if (_r == -1) return -1; ret += _r; } while (false)
@@ -670,42 +720,17 @@ int vt_fprint_key_modifier(vt *vt, FILE *stream, vt_key_modifier key)
    return ret + key_ret;
 }
 
-typedef enum { VT_KEYPAD_NUMERIC, VT_KEYPAD_APPLICATION } vt_keypad_mode;
-
-struct vt
-{
-    vt_state state;
-    struct termios original_ios;
-    struct termios child_ios;
-    bool raw;
-    bool nonblocking;
-    FILE *tty;
-    struct winsize outer_window;
-    vt_buffer primary_buffer;
-    vt_buffer *alternate_buffer;
-    vt_cursor_style cursor_style;
-    vt_keypad_mode keypad_mode;
-    vt_sequence_state sequence_state;
-    vt_attribute_set current_attributes;
-    pid_t child_pid;
-    int child_tty_fd;
-    FILE *child_tty;
-    vt_key_modifier emitted_key;
-    vt_mouse_mode mouse;
-    vt_mouse_reporting_mode mouse_reporting;
-};
-
 void _vt_set_mouse_mode(vt *vt, vt_mouse_mode mode, uint8_t input)
 {
    if (!vt) return;
    switch (input) {
       case 'h':
-         fprintf(stderr, "Child requesting mouse mode %s\n", VT_MOUSE_MODE_STRING(mode));
+         fprintf(vt->log_file, "Child requesting mouse mode %s\n", VT_MOUSE_MODE_STRING(mode));
          vt->mouse = mode;
          break;
 
       case 'l':
-         fprintf(stderr, "Child disabling mouse mode %s\n", VT_MOUSE_MODE_STRING(mode));
+         fprintf(vt->log_file, "Child disabling mouse mode %s\n", VT_MOUSE_MODE_STRING(mode));
          vt->mouse = VT_MOUSE_MODE_NONE;
          break;
 
@@ -718,12 +743,12 @@ void _vt_set_mouse_reporting(vt *vt, vt_mouse_reporting_mode mode, uint8_t input
    if (!vt) return;
    switch (input) {
       case 'h':
-         fprintf(stderr, "Child requesting mouse reporting mode %s\n", VT_MOUSE_REPORTING_MODE_STRING(mode));
+         fprintf(vt->log_file, "Child requesting mouse reporting mode %s\n", VT_MOUSE_REPORTING_MODE_STRING(mode));
          vt->mouse_reporting = mode;
          break;
 
       case 'l':
-         fprintf(stderr, "Child disabling mouse reporting mode %s\n", VT_MOUSE_REPORTING_MODE_STRING(mode));
+         fprintf(vt->log_file, "Child disabling mouse reporting mode %s\n", VT_MOUSE_REPORTING_MODE_STRING(mode));
          vt->mouse_reporting = VT_MOUSE_REPORTING_MODE_DEFAULT;
          break;
 
@@ -743,7 +768,7 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
       case VT_MOUSE_REPORTING_MODE_DEFAULT:
       {
 #define VT_ENCODE(num) (num) > 223 ? 0 : 32 + (uint8_t)(num)
-         fprintf(stderr, "writing mouse event in default report for %ldx%ld: \\e[M%c%c%c\n", mouse.column > 223 ? 0 : mouse.column, mouse.row > 223 ? 0 : mouse.row, VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
+         fprintf(vt->log_file, "writing mouse event in default report for %ldx%ld: \\e[M%c%c%c\n", mouse.column > 223 ? 0 : mouse.column, mouse.row > 223 ? 0 : mouse.row, VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
          return fprintf(stream, "\033[M%c%c%c", VT_ENCODE(btn), VT_ENCODE(mouse.column), VT_ENCODE(mouse.row));
 #undef VT_ENCODE
       }; UNREACHABLE("case should return");
@@ -753,7 +778,7 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
 
       case VT_MOUSE_REPORTING_MODE_DIGITS:
       {
-         fprintf(stderr, "writing mouse event in digit report for %ldx%ld:: \\e[<%d;%ld;%ld%c\n", mouse.column, mouse.row, btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
+         fprintf(vt->log_file, "writing mouse event in digit report for %ldx%ld:: \\e[<%d;%ld;%ld%c\n", mouse.column, mouse.row, btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
          return fprintf(stream, "\033[<%d;%ld;%ld%c", btn, mouse.column, mouse.row, mouse.release ? 'm' : 'M');
       }; UNREACHABLE("case should return");
 
@@ -761,7 +786,7 @@ int vt_fprint_mouse(vt *vt, FILE *stream, vt_mouse mouse, vt_modifier modifiers)
       {
          if (mouse.release) btn = 3; // You lose _which_ button is released
          btn += 32;
-         fprintf(stderr, "writing mouse event in urxvt report for %ldx%ld:: \\e[%d;%ld;%ldM\n", mouse.column, mouse.row, btn, mouse.column, mouse.row);
+         fprintf(vt->log_file, "writing mouse event in urxvt report for %ldx%ld:: \\e[%d;%ld;%ldM\n", mouse.column, mouse.row, btn, mouse.column, mouse.row);
          return fprintf(stream, "\033[%d;%ld;%ldM", btn, mouse.column, mouse.row);
       }; UNREACHABLE("case should return");
 
@@ -817,6 +842,11 @@ void vt_restore_io(vt *vt)
 {
     if (!vt) return;
 
+    if (vt->log_file && vt->log_file != stderr) {
+        fclose(vt->log_file);
+        vt->log_file = NULL;
+    }
+
     if (vt->tty && vt->tty != stdout && vt->tty != stderr) {
         fclose(vt->tty);
         vt->tty = NULL;
@@ -854,7 +884,7 @@ void vt_reset(vt *vt)
        if (waited == -1) {
           perror("waitpid(child)");
        } else if (waited != vt->child_pid) {
-          fprintf(stderr, "killing child %u\n", vt->child_pid);
+          fprintf(vt->log_file, "killing child %u\n", vt->child_pid);
           kill(vt->child_pid, SIGKILL);
        }
        vt->child_pid = 0;
@@ -918,10 +948,10 @@ void _vt_scroll(vt *vt, vt_scroll scroll)
 
 #define GUTTER_LEFT 3
 #define GUTTER_TOP 3
-#define GOTO(x, y) do { if (fprintf(vt->tty, VT_CUP, (int)(y), (int)(x)) < 6) { perror("fprintf(GOTO)"); fprintf(stderr, "Could not write GOTO fully\n"); } } while (false)
-#define CLEAR_SCREEN do { if (fprintf(vt->tty, VT_ED, 2) < 4) { perror("fprintf(CLEAR_SCREEN)"); fprintf(stderr, "Could not write CLEAR_SCREEN fully\n"); } } while (false)
-#define RESET_GRAPHICS do { if (fprintf(vt->tty, VT_SGR, 0) < 4) { perror("fprintf(RESET_GRAPHICS)"); fprintf(stderr, "Could not write RESET_GRAPHICS fully\n"); } } while (false)
-#define SELECT_GRAPHICS(n) do { if (fprintf(vt->tty, VT_SGR, VT_ATTRIBUTE_CODE(n)) < 4) { perror("fprintf(SELECT_GRAPHICS)"); fprintf(stderr, "Could not write SELECT_GRAPHICS fully\n"); } } while (false)
+#define GOTO(x, y) do { if (fprintf(vt->tty, VT_CUP, (int)(y), (int)(x)) < 6) { perror("fprintf(GOTO)"); fprintf(vt->log_file, "Could not write GOTO fully\n"); } } while (false)
+#define CLEAR_SCREEN do { if (fprintf(vt->tty, VT_ED, 2) < 4) { perror("fprintf(CLEAR_SCREEN)"); fprintf(vt->log_file, "Could not write CLEAR_SCREEN fully\n"); } } while (false)
+#define RESET_GRAPHICS do { if (fprintf(vt->tty, VT_SGR, 0) < 4) { perror("fprintf(RESET_GRAPHICS)"); fprintf(vt->log_file, "Could not write RESET_GRAPHICS fully\n"); } } while (false)
+#define SELECT_GRAPHICS(n) do { if (fprintf(vt->tty, VT_SGR, VT_ATTRIBUTE_CODE(n)) < 4) { perror("fprintf(SELECT_GRAPHICS)"); fprintf(vt->log_file, "Could not write SELECT_GRAPHICS fully\n"); } } while (false)
 
 void vt_draw_gutters(vt *vt)
 {
@@ -975,7 +1005,7 @@ void vt_draw_gutters(vt *vt)
         }
         if (fputc("0123456789"[(x / 10) % 10], vt->tty) == EOF) {
             perror("fputc()");
-            fprintf(stderr, "Couldn't write char for top gutter row 1\n");
+            fprintf(vt->log_file, "Couldn't write char for top gutter row 1\n");
         }
         /* fprintf(vt->tty, "%d", (x / 10) % 10); */
     }
@@ -1000,7 +1030,7 @@ void vt_draw_gutters(vt *vt)
         }
         if (fputc("0123456789"[x % 10], vt->tty) == EOF) {
             perror("fputc()");
-            fprintf(stderr, "Couldn't write char for top gutter row 2\n");
+            fprintf(vt->log_file, "Couldn't write char for top gutter row 2\n");
         }
         /* fprintf(vt->tty, "%d", y % 10); */
     }
@@ -1008,7 +1038,7 @@ void vt_draw_gutters(vt *vt)
     GOTO(GUTTER_LEFT, GUTTER_TOP);
     if (fputc('+', vt->tty) == EOF) {
         perror("fputc()");
-        fprintf(stderr, "Couldn't write char for gutter corner\n");
+        fprintf(vt->log_file, "Couldn't write char for gutter corner\n");
     }
     /* fprintf(vt->tty, "+"); */
 
@@ -1031,7 +1061,7 @@ void vt_draw_gutters(vt *vt)
         }
         if (fputc('-', vt->tty) == EOF) {
             perror("fputc()");
-            fprintf(stderr, "Couldn't write char for top gutter border\n");
+            fprintf(vt->log_file, "Couldn't write char for top gutter border\n");
         }
         /* fprintf(vt->tty, "-"); */
     }
@@ -1059,7 +1089,7 @@ void vt_draw_gutters(vt *vt)
             int writ = fprintf(vt->tty, " %d|", mod);
             if (writ != 3) {
                 perror("fprintf()");
-                fprintf(stderr, "Could not write single digit left gutter\n");
+                fprintf(vt->log_file, "Could not write single digit left gutter\n");
             }
         } else {
             int writ;
@@ -1075,7 +1105,7 @@ void vt_draw_gutters(vt *vt)
             }
             if (writ != 3) {
                 perror("fprintf()");
-                fprintf(stderr, "Could not write double digit left gutter\n");
+                fprintf(vt->log_file, "Could not write double digit left gutter\n");
             }
         }
     }
@@ -1091,7 +1121,7 @@ void vt_draw_window(vt *vt)
     if (!buffer->cells) return;
 
     if (!buffer->dirty) return;
-    /* fprintf(stderr, "redraw\n"); */
+    /* fprintf(vt->log_file, "redraw\n"); */
 
     vt_draw_gutters(vt);
     RESET_GRAPHICS;
@@ -1118,11 +1148,11 @@ void vt_draw_window(vt *vt)
                 }
                 if (x == 1 || !buffer->cells[(y - 1) * buffer->width + x - 2].used) {
                     GOTO(x + GUTTER_LEFT, y + GUTTER_TOP);
-                    /* fprintf(stderr, "cell '%c'\n", cell->c); */
+                    /* fprintf(vt->log_file, "cell '%c'\n", cell->c); */
                 }
                 if (fputc(cell->c, vt->tty) == EOF) {
                     perror("fputc()");
-                    fprintf(stderr, "Could not write char in grid\n");
+                    fprintf(vt->log_file, "Could not write char in grid\n");
                 }
                 /* fprintf(vt->tty, "%c", cell->c); */
             }
@@ -1149,11 +1179,11 @@ int vt_fprintc(vt *vt, FILE *stream, char input)
 {
     switch (input) {
        case '"': return fprintf(stream, "'\\\"'");
-       case '\\': return fprintf(stream, "'\\\\");
-       case '\a': return fprintf(stream, "'\\a");
+       case '\\': return fprintf(stream, "'\\\\'");
+       case '\a': return fprintf(stream, "'\\a'");
        case '\033': return fprintf(stream, "'\\e'");
-       case '\b': return fprintf(stream, "'\\b");
-       case '\f': return fprintf(stream, "'\\f");
+       case '\b': return fprintf(stream, "'\\b'");
+       case '\f': return fprintf(stream, "'\\f'");
        case '\n': return fprintf(stream, "'\\n'");
        case '\r': return fprintf(stream, "'\\r'");
        case '\t': return fprintf(stream, "'\\t'");
@@ -1176,11 +1206,11 @@ void vt_resize_window(vt *vt)
    // perhaps try to replay semantics by reusing _vt_print _vt_execute etc
     if (!vt) return;
     vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
-    fprintf(stderr, "outer window size was %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
+    fprintf(vt->log_file, "outer window size was %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
 
     vt_cell *original = buffer->cells;
-    fprintf(stderr, "outer window size was %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
-    fprintf(stderr, "inner window size was %lux%lu\r\n", buffer->width, buffer->height);
+    fprintf(vt->log_file, "outer window size was %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
+    fprintf(vt->log_file, "inner window size was %lux%lu\r\n", buffer->width, buffer->height);
     struct winsize original_size = {.ws_col = buffer->width, .ws_row = buffer->height};
     size_t orig_size = buffer->width * buffer->height;
 
@@ -1192,7 +1222,7 @@ void vt_resize_window(vt *vt)
         vt->outer_window = (struct winsize){0};
     }
 
-    fprintf(stderr, "outer window size %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
+    fprintf(vt->log_file, "outer window size %ux%u\r\n", vt->outer_window.ws_col, vt->outer_window.ws_row);
 
     if (vt->outer_window.ws_col > GUTTER_LEFT && vt->outer_window.ws_row > GUTTER_TOP) {
         buffer->width = vt->outer_window.ws_col - GUTTER_LEFT;
@@ -1202,7 +1232,7 @@ void vt_resize_window(vt *vt)
         buffer->height = 24;
     }
 
-    fprintf(stderr, "inner window size %lux%lu\r\n", buffer->width, buffer->height);
+    fprintf(vt->log_file, "inner window size %lux%lu\r\n", buffer->width, buffer->height);
 
     size_t new_size = buffer->width * buffer->height;
     if (new_size == orig_size) return;
@@ -1235,12 +1265,12 @@ void vt_resize_window(vt *vt)
        for (size_t src_row = 0; src_row < original_size.ws_row; src_row ++) {
           for (size_t src_col = 0; src_col < original_size.ws_col; src_col ++) {
              if (dst_col == buffer->width) {
-                /* fprintf(stderr, "line wrap\n"); */
+                /* fprintf(vt->log_file, "line wrap\n"); */
                 dst_col = 0;
                 dst_row ++;
              }
              if (dst_row == buffer->height) {
-                /* fprintf(stderr, "screen wrap, data lost\n"); */
+                /* fprintf(vt->log_file, "screen wrap, data lost\n"); */
                 vt_cell *src_cell = &original[src_row * original_size.ws_col + src_col];
                 vt_cell *dst_cell = &buffer->cells[dst_row * buffer->width + dst_col];
 
@@ -1272,28 +1302,28 @@ void vt_resize_window(vt *vt)
              if (src_cell == src_cursor) dst_cursor = dst_cell;
 
              if (src_cell->used) {
-                /* fprintf(stderr, "copying from %ldx%ld to %ldx%ld: ", src_col + 1, src_row + 1, dst_col + 1, dst_row + 1); */
-                /* vt_fprintc(vt, stderr, src_cell->c); */
-                /* fprintf(stderr, "\n"); */
+                /* fprintf(vt->log_file, "copying from %ldx%ld to %ldx%ld: ", src_col + 1, src_row + 1, dst_col + 1, dst_row + 1); */
+                /* vt_fprintc(vt, vt->log_file, src_cell->c); */
+                /* fprintf(vt->log_file, "\n"); */
                 memcpy(dst_cell, src_cell, sizeof(*dst_cell));
 
                 if (src_cell->cr) {
-                   /* fprintf(stderr, "CR\n"); */
+                   /* fprintf(vt->log_file, "CR\n"); */
                    dst_col = 0;
                 } else if (src_cell->lf) {
                    for (size_t off = 1; src_col + off < original_size.ws_col; off ++) {
                       if (src_cell + off == src_cursor) dst_cursor = dst_cell + off;
                       if ((src_cell + off)->used) {
-                         fprintf(stderr, "copying stuff after \\n from %ldx%ld to %ldx%ld: ",
+                         fprintf(vt->log_file, "copying stuff after \\n from %ldx%ld to %ldx%ld: ",
                                src_col + off + 1, src_row + 1,
                                (dst_col + off) % buffer->width + 1,
                                (dst_col + off) / buffer->width + dst_row + 1);
-                         vt_fprintc(vt, stderr, (src_cell + off)->c);
-                         fprintf(stderr, "\n");
+                         vt_fprintc(vt, vt->log_file, (src_cell + off)->c);
+                         fprintf(vt->log_file, "\n");
                          memcpy(dst_cell + off, src_cell + off, sizeof(*dst_cell));
                       }
                    }
-                   /* fprintf(stderr, "LF\n"); */
+                   /* fprintf(vt->log_file, "LF\n"); */
                    dst_row ++;
                    if (true /* FIXME add option for \n -> \r\n semantics */) {
                       dst_col = 0;
@@ -1313,12 +1343,12 @@ void vt_resize_window(vt *vt)
 
         /* size_t cursor = (vt->cursor.y - 1) * original_size.ws_col + vt->cursor.x - 1; */
         size_t cursor = dst_cursor ? dst_cursor - buffer->cells : 0;
-        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n",
+        fprintf(vt->log_file, "moving cursor from %ldx%ld to %ldx%ld\n",
               buffer->cursor.x, buffer->cursor.y,
               cursor % buffer->width + 1, cursor / buffer->width + 1);
         if (cursor >= new_size) cursor = new_size - 1;
 
-        fprintf(stderr, "moving cursor from %ldx%ld to %ldx%ld\n",
+        fprintf(vt->log_file, "moving cursor from %ldx%ld to %ldx%ld\n",
               buffer->cursor.x, buffer->cursor.y,
               cursor % buffer->width + 1, cursor / buffer->width + 1);
         buffer->cursor.x = cursor % buffer->width + 1;
@@ -1327,11 +1357,11 @@ void vt_resize_window(vt *vt)
         if (buffer->cursor.wrap_pending) {
             if (buffer->cursor.x != buffer->width) {
                 buffer->cursor.x ++;
-              fprintf(stderr, "moving cursor to %ldx%ld as was marked as wrap pending\n", buffer->cursor.x, buffer->cursor.y);
+              fprintf(vt->log_file, "moving cursor to %ldx%ld as was marked as wrap pending\n", buffer->cursor.x, buffer->cursor.y);
             }
         }
         buffer->cursor.wrap_pending = buffer->cursor.x == buffer->width;
-        if (buffer->cursor.wrap_pending) fprintf(stderr, "wrap pending\n");
+        if (buffer->cursor.wrap_pending) fprintf(vt->log_file, "wrap pending\n");
     }
 
     if (!(buffer->cursor.x && buffer->cursor.y)) {
@@ -1620,7 +1650,7 @@ void _vt_set_cursor_style(vt *vt, uint16_t param)
       UNREACHABLE("Unknown cursor style %d", param);
    }
    vt->cursor_style = param;
-   fprintf(stderr, "Setting cursor style to %s\n", VT_CURSOR_STYLE_STRING_LONG(vt->cursor_style));
+   fprintf(vt->log_file, "Setting cursor style to %s\n", VT_CURSOR_STYLE_STRING_LONG(vt->cursor_style));
    fprintf(vt->tty, "\033[%u q", vt->cursor_style);
    fflush(vt->tty);
 }
@@ -1846,10 +1876,10 @@ void _vt_print(vt *vt, char input)
 
     if (buffer->cursor.wrap_pending) {
         if (buffer->cursor.y == buffer->height) {
-           fprintf(stderr, "screen wrap\n");
+           fprintf(vt->log_file, "screen wrap\n");
             _vt_scroll(vt, VT_SCROLL_UP);
         } else {
-           fprintf(stderr, "line wrap\n");
+           fprintf(vt->log_file, "line wrap\n");
         }
         buffer->cursor.y ++;
         buffer->cursor.x = 1;
@@ -1869,7 +1899,7 @@ void _vt_print(vt *vt, char input)
     SET_COPY(cell->attributes, vt->current_attributes);
 
     if (buffer->cursor.x == buffer->width) {
-       fprintf(stderr, "line wrap pending\n");
+       fprintf(vt->log_file, "line wrap pending\n");
         buffer->cursor.wrap_pending = true;
     } else {
         buffer->cursor.x ++;
@@ -1920,9 +1950,9 @@ void _vt_param(vt *vt, uint8_t input)
    }
 
    if (param) {
-      /* fprintf(stderr, "in _vt_param, input %02X (%c), num params %zu, param so far %d (default=%d)\n", input, input, vt->sequence_state.num_params, param->value, !param->non_default); */
+      /* fprintf(vt->log_file, "in _vt_param, input %02X (%c), num params %zu, param so far %d (default=%d)\n", input, input, vt->sequence_state.num_params, param->value, !param->non_default); */
    } else {
-      /* fprintf(stderr, "in _vt_param, input %02X (%c), num params %zu, ignoring more\n", input, input, vt->sequence_state.num_params); */
+      /* fprintf(vt->log_file, "in _vt_param, input %02X (%c), num params %zu, ignoring more\n", input, input, vt->sequence_state.num_params); */
    }
 }
 
@@ -1937,7 +1967,7 @@ void _vt_cursor_position_report(vt *vt)
     vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
     if (!buffer->cells) return;
 
-    fprintf(stderr, "Sending cursor position report for %lux%lu\n", buffer->cursor.x, buffer->cursor.y);
+    fprintf(vt->log_file, "Sending cursor position report for %lux%lu\n", buffer->cursor.x, buffer->cursor.y);
     fprintf(vt->child_tty, "\033[%lu;%luR", buffer->cursor.y, buffer->cursor.x);
     fflush(vt->child_tty);
 }
@@ -2007,7 +2037,7 @@ void _vt_execute(vt *vt, uint8_t input)
 #undef C
 #undef X
 
-    fprintf(stderr, "state %s, execute %s (%s)\n", VT_STATE_STRING(vt->state), VT_CONTROL_FUNCTION_STRING(func), VT_CONTROL_FUNCTION_STRING_LONG(func));
+    fprintf(vt->log_file, "state %s, execute %s (%s)\n", VT_STATE_STRING(vt->state), VT_CONTROL_FUNCTION_STRING(func), VT_CONTROL_FUNCTION_STRING_LONG(func));
 
 #define C(code)
 #define X(name) case name:
@@ -2046,7 +2076,7 @@ void _vt_escape_dispatch(vt *vt, uint8_t input)
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, escape function %s (%s)\n", VT_STATE_STRING(vt->state), VT_ESCAPE_FUNCTION_STRING(func), VT_ESCAPE_FUNCTION_STRING_LONG(func));
+    fprintf(vt->log_file, "state %s, escape function %s (%s)\n", VT_STATE_STRING(vt->state), VT_ESCAPE_FUNCTION_STRING(func), VT_ESCAPE_FUNCTION_STRING_LONG(func));
 
 #define C(name)
 #define X(name) case name:
@@ -2090,14 +2120,14 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi private '~' %s (%s)\n", VT_STATE_STRING(vt->state),VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func), VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func));
+    fprintf(vt->log_file, "state %s, csi private '~' %s (%s)\n", VT_STATE_STRING(vt->state),VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func), VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
-          if (param) fputc(',', stderr);
-          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+          if (param) fputc(',', vt->log_file);
+          fprintf(vt->log_file, " %u", VT_PARAM(vt, param, 0));
        }
     }
-    fprintf(stderr, "\n");
+    fprintf(vt->log_file, "\n");
 
 #define C(name)
 #define X(name) case name:
@@ -2139,14 +2169,14 @@ void _vt_csi_private_less_than_dispatch(vt *vt, uint8_t input)
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi '<' function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING(func), VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING_LONG(func));
+    fprintf(vt->log_file, "state %s, csi '<' function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING(func), VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
-          if (param) fputc(',', stderr);
-          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+          if (param) fputc(',', vt->log_file);
+          fprintf(vt->log_file, " %u", VT_PARAM(vt, param, 0));
        }
     }
-    fprintf(stderr, "\n");
+    fprintf(vt->log_file, "\n");
 
 #define C(name)
 #define X(name) case name:
@@ -2183,7 +2213,7 @@ void _vt_csi_private_question_dispatch(vt *vt, uint8_t input)
 #undef S
 #undef X
 
-          fprintf(stderr, "state %s, csi private '?' %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
+          fprintf(vt->log_file, "state %s, csi private '?' %s %s (%s)\n", VT_STATE_STRING(vt->state), input == 'h' ? "enable" : (input == 'l' ? "disable" : "unknown"), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func), VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func));
 
 #define C(name)
 #define X(name) case name:
@@ -2216,14 +2246,14 @@ void _vt_csi_space_dispatch(vt *vt, uint8_t input)
 #undef C
 #undef X
 
-    fprintf(stderr, "state %s, csi space function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_SPACE_FUNCTION_STRING(func), VT_CSI_SPACE_FUNCTION_STRING_LONG(func));
+    fprintf(vt->log_file, "state %s, csi space function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_SPACE_FUNCTION_STRING(func), VT_CSI_SPACE_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
-          if (param) fputc(',', stderr);
-          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+          if (param) fputc(',', vt->log_file);
+          fprintf(vt->log_file, " %u", VT_PARAM(vt, param, 0));
        }
     }
-    fprintf(stderr, "\n");
+    fprintf(vt->log_file, "\n");
 
 #define S(code) code; return;
 #define C(code)
@@ -2278,14 +2308,14 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #undef S
 #undef X
 
-    fprintf(stderr, "state %s, csi function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_FUNCTION_STRING(func), VT_CSI_FUNCTION_STRING_LONG(func));
+    fprintf(vt->log_file, "state %s, csi function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_FUNCTION_STRING(func), VT_CSI_FUNCTION_STRING_LONG(func));
     for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
        if (vt->sequence_state.params[param].non_default) {
-          if (param) fputc(',', stderr);
-          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+          if (param) fputc(',', vt->log_file);
+          fprintf(vt->log_file, " %u", VT_PARAM(vt, param, 0));
        }
     }
-    fprintf(stderr, "\n");
+    fprintf(vt->log_file, "\n");
 
 #define C(name)
 #define X(name) case name:
@@ -2309,11 +2339,11 @@ void _vt_action(vt *vt, vt_action action, uint8_t input)
     vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
     if (!buffer->cells) return;
 
-    /* fprintf(stderr, "state %s, action %s, input ", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action)); */
-    /* vt_fprintc(vt, stderr, input); */
-    /* fprintf(stderr, ", cell %lux%lu", buffer->cursor.x, buffer->cursor.y); */
-    /* if (buffer == vt->alternate_buffer) fprintf(stderr, " on alternate buffer"); */
-    /* fprintf(stderr, "\n"); */
+    /* fprintf(vt->log_file, "state %s, action %s, input ", VT_STATE_STRING(vt->state), VT_ACTION_STRING(action)); */
+    /* vt_fprintc(vt, vt->log_file, input); */
+    /* fprintf(vt->log_file, ", cell %lux%lu", buffer->cursor.x, buffer->cursor.y); */
+    /* if (buffer == vt->alternate_buffer) fprintf(vt->log_file, " on alternate buffer"); */
+    /* fprintf(vt->log_file, "\n"); */
 
 #define C(name)
 #define X(name) case name:
@@ -2334,9 +2364,9 @@ void _vt_transition(vt *vt, vt_state to, uint8_t input)
 {
     if (!vt) return;
 
-    fprintf(stderr, "transition from state %s to state %s, input ", VT_STATE_STRING(vt->state), VT_STATE_STRING(to));
-    vt_fprintc(vt, stderr, input);
-    fprintf(stderr, "\n");
+    fprintf(vt->log_file, "transition from state %s to state %s, input ", VT_STATE_STRING(vt->state), VT_STATE_STRING(to));
+    vt_fprintc(vt, vt->log_file, input);
+    fprintf(vt->log_file, "\n");
 
     /* exit event */
     static_assert(VT_NUM_STATES == 14, "Not all states handled");
@@ -2782,15 +2812,31 @@ int vt_setup_io(vt *vt)
 {
     if (!vt) return -1;
 
+    if (!vt->log_file) {
+       if (isatty(STDERR_FILENO)) {
+           vt->log_file = fopen("/dev/null", "wb");
+           if (!vt->log_file) {
+               fprintf(stderr, "could not open /dev/null\n");
+               return -1;
+           }
+       } else {
+           vt->log_file = stderr;
+       }
+    }
+
     if (isatty(STDOUT_FILENO)) {
-        fprintf(stderr, "tty is stdout\n");
+        fprintf(vt->log_file, "tty is stdout\n");
         vt->tty = stdout;
     } else if (isatty(STDERR_FILENO)) {
-        fprintf(stderr, "tty is stderr\n");
+        fprintf(vt->log_file, "tty is stderr\n");
         vt->tty = stderr;
     } else {
-        fprintf(stderr, "Opening /dev/tty\n");
+        fprintf(vt->log_file, "Opening /dev/tty\n");
         vt->tty = fopen("/dev/tty", "wb");
+        if (!vt->tty) {
+            fprintf(vt->log_file, "could not open /dev/tty\n");
+            return -1;
+        }
     }
     setbuf(vt->tty, NULL);
 
@@ -2868,7 +2914,7 @@ int __select(size_t n, int *fds)
 
 int handle_signal(vt *vt, int signo)
 {
-    fprintf(stderr, "signal %d (%s)\n", signo, strsignal(signo));
+    fprintf(vt->log_file, "signal %d (%s)\n", signo, strsignal(signo));
     switch (signo) {
         case SIGWINCH:
             vt_resize_window(vt);
@@ -2912,10 +2958,10 @@ int handle_signal(vt *vt, int signo)
                int ret;
                if (WIFEXITED(wstatus)) {
                   ret = WEXITSTATUS(wstatus);
-                  fprintf(stderr, "child exited with code %d\n", ret);
+                  fprintf(vt->log_file, "child exited with code %d\n", ret);
                } else if (WIFSIGNALED(wstatus)) {
                   int sig = WTERMSIG(wstatus);
-                  fprintf(stderr, "child was terminated by signal %d (%s)\n", sig, strsignal(sig));
+                  fprintf(vt->log_file, "child was terminated by signal %d (%s)\n", sig, strsignal(sig));
                   ret = 128 + sig;
                }
                vt->child_pid = 0;
@@ -2931,7 +2977,7 @@ bool vt_default_mouse_report(vt *vt, uint8_t a, uint8_t b, uint8_t c)
 {
     vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
 
-    fprintf(stderr, "got mouse %02x %02x %02x\n", a, b, c);
+    fprintf(vt->log_file, "got mouse %02x %02x %02x\n", a, b, c);
 
     if (a < 0x20) {
         UNREACHABLE("Expected value of 0x20-0xff to describe mouse button");
@@ -2972,21 +3018,21 @@ bool vt_default_mouse_report(vt *vt, uint8_t a, uint8_t b, uint8_t c)
 
 ssize_t vt_write(vt *vt, int fd, const uint8_t *buffer, size_t count)
 {
-   fprintf(stderr, "vt_write(%d, ", fd);
+   fprintf(vt->log_file, "vt_write(%d, ", fd);
    if (buffer) {
-      fprintf(stderr, "{");
+      fprintf(vt->log_file, "{");
       for (size_t i = 0; i < count; i ++) {
-         if (i) fprintf(stderr, ", ");
-         vt_fprintc(vt, stderr, buffer[i]);
+         if (i) fprintf(vt->log_file, ", ");
+         vt_fprintc(vt, vt->log_file, buffer[i]);
       }
-      fprintf(stderr, "}");
+      fprintf(vt->log_file, "}");
    } else {
-      fprintf(stderr, "(null)");
+      fprintf(vt->log_file, "(null)");
    }
    if (count > 100) {
-      fprintf(stderr, ", %d)\n", (signed)count);
+      fprintf(vt->log_file, ", %d)\n", (signed)count);
    } else {
-      fprintf(stderr, ", %lu)\n", count);
+      fprintf(vt->log_file, ", %lu)\n", count);
    }
 
    size_t written = 0;
@@ -3005,9 +3051,9 @@ ssize_t vt_write(vt *vt, int fd, const uint8_t *buffer, size_t count)
 void vt_process_key(vt *vt)
 {
    if (vt->emitted_key.key.type != VT_KEY_NONE) {
-      fprintf(stderr, "emitted key ");
-      vt_fprint_key_modifier(vt, stderr, vt->emitted_key);
-      fprintf(stderr, "\n");
+      fprintf(vt->log_file, "emitted key ");
+      vt_fprint_key_modifier(vt, vt->log_file, vt->emitted_key);
+      fprintf(vt->log_file, "\n");
 
       switch (vt->emitted_key.key.type) {
          case VT_KEY_MOUSE:
@@ -3015,33 +3061,33 @@ void vt_process_key(vt *vt)
             if (!vt->child_tty) {
                vt_mouse mouse = vt->emitted_key.key.mouse;
                if (mouse.movement || mouse.release || mouse.button != VT_BUTTON_LEFT) {
-                  fprintf(stderr, "ignoring mouse event\n");
+                  fprintf(vt->log_file, "ignoring mouse event\n");
                   break;
                }
-               fprintf(stderr, "moving cursor on mouse press\n");
+               fprintf(vt->log_file, "moving cursor on mouse press\n");
                _vt_move_cursor(vt, mouse.column, mouse.row);
                break;
             }
             switch (vt->mouse) {
                case VT_MOUSE_MODE_NONE:
-                  fprintf(stderr, "ignoring mouse event as client hasn't asked for it\n");
+                  fprintf(vt->log_file, "ignoring mouse event as client hasn't asked for it\n");
                   break;
 
                case VT_MOUSE_MODE_CLICK_TRACKING:
                   if (vt->emitted_key.key.mouse.movement) {
                      if (vt->emitted_key.key.mouse.button <= VT_BUTTON_NONE) {
-                        fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
+                        fprintf(vt->log_file, "ignoring mouse movement as client hasn't asked for it\n");
                         break;
                      }
-                     fprintf(stderr, "transforming to implicit mouse wheel scroll with no movement tag\n");
+                     fprintf(vt->log_file, "transforming to implicit mouse wheel scroll with no movement tag\n");
                      vt->emitted_key.key.mouse.movement = false;
                   }
                   if (vt->emitted_key.key.mouse.release) {
-                     fprintf(stderr, "ignoring mouse release as client hasn't asked for it\n");
+                     fprintf(vt->log_file, "ignoring mouse release as client hasn't asked for it\n");
                      break;
                   }
                   if (vt->emitted_key.key.mouse.button > VT_NUM_MOUSE_BUTTONS) {
-                     fprintf(stderr, "ignoring mouse button %s as client hasn't asked for it\n",
+                     fprintf(vt->log_file, "ignoring mouse button %s as client hasn't asked for it\n",
                            VT_MOUSE_BUTTON_STRING_LONG(vt->emitted_key.key.mouse.button));
                      break;
                   }
@@ -3052,10 +3098,10 @@ void vt_process_key(vt *vt)
                case VT_MOUSE_MODE_PRESS_RELEASE:
                   if (vt->emitted_key.key.mouse.movement) {
                      if (vt->emitted_key.key.mouse.button <= VT_BUTTON_NONE) {
-                        fprintf(stderr, "ignoring mouse movement as client hasn't asked for it\n");
+                        fprintf(vt->log_file, "ignoring mouse movement as client hasn't asked for it\n");
                         break;
                      }
-                     fprintf(stderr, "transforming to implicit mouse wheel scroll with no movement tag\n");
+                     fprintf(vt->log_file, "transforming to implicit mouse wheel scroll with no movement tag\n");
                      vt->emitted_key.key.mouse.movement = false;
                   }
 
@@ -3069,10 +3115,10 @@ void vt_process_key(vt *vt)
                   if (vt->emitted_key.key.mouse.movement) {
                      if (!vt->emitted_key.key.mouse.was_down) {
                         if (vt->emitted_key.key.mouse.button == VT_BUTTON_NONE) {
-                           fprintf(stderr, "ignoring mouse movement as client has only asked for drag\n");
+                           fprintf(vt->log_file, "ignoring mouse movement as client has only asked for drag\n");
                            break;
                         }
-                        fprintf(stderr, "sending child implicit mouse drag movement\n");
+                        fprintf(vt->log_file, "sending child implicit mouse drag movement\n");
                      }
                   }
 
@@ -3177,21 +3223,21 @@ int vt_main_loop(vt *vt)
 
           if (stdin_eof && child_tty_eof) break;
 
-          fprintf(stderr, "select(sigfd, stdin, child_tty)\n");
+          fprintf(vt->log_file, "select(sigfd, stdin, child_tty)\n");
           fd = _select(sigfd, STDIN_FILENO, vt->child_tty_fd);
        } else {
           if (stdin_eof) break;
 
-          fprintf(stderr, "select(sigfd, stdin)\n");
+          fprintf(vt->log_file, "select(sigfd, stdin)\n");
           fd = _select(sigfd, STDIN_FILENO);
        }
-       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown"))));
+       fprintf(vt->log_file, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown"))));
        if (fd == sigfd) {
           struct signalfd_siginfo siginfo;
           ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
           if (red == -1 && errno == EAGAIN) continue;
           if (red != sizeof(siginfo)) {
-             if (red == -1) fprintf(stderr, "read(sigfd) = %ld\n", red);
+             if (red == -1) fprintf(vt->log_file, "read(sigfd) = %ld\n", red);
              else perror("read(sigfd)");
              return 1;
           }
@@ -3216,19 +3262,19 @@ int vt_main_loop(vt *vt)
                  return 1;
 
               } else if (red == 0) {
-                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown")));
+                 fprintf(vt->log_file, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown")));
                  close(fd);
                  if (fd == STDIN_FILENO) {
                     stdin_eof = true;
                  } else if (fd == vt->child_tty_fd) {
                     child_tty_eof = true;
                  } else {
-                    fprintf(stderr, "Unexpected fd\n");
+                    fprintf(vt->log_file, "Unexpected fd\n");
                  }
                  break;
               }
 
-              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown")));
+              fprintf(vt->log_file, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown")));
               bool allgraph = true;
               for (ssize_t i = 0; i < red; i ++) {
                   if (!isgraph(buf[i])) {
@@ -3237,28 +3283,28 @@ int vt_main_loop(vt *vt)
                   }
               }
               if (allgraph) {
-                 fprintf(stderr, " |%.*s|\n", (int)red, buf);
+                 fprintf(vt->log_file, " |%.*s|\n", (int)red, buf);
               } else {
-                 fprintf(stderr, " (");
+                 fprintf(vt->log_file, " (");
                  size_t count = 0;
                  for (ssize_t i = 0; i < red; i ++) {
                     if (count) {
                        if (buf[i-1] == buf[i]) {
                           count ++;
                        } else {
-                          fprintf(stderr, "*%lu, ", count);
-                          vt_fprintc(vt, stderr, buf[i]);
+                          fprintf(vt->log_file, "*%lu, ", count);
+                          vt_fprintc(vt, vt->log_file, buf[i]);
                           count = 0;
                        }
                     } else if (i && buf[i] == buf[i - 1]) {
                        count = 2;
                     } else {
-                       if (i) fprintf(stderr, ", ");
-                       vt_fprintc(vt, stderr, buf[i]);
+                       if (i) fprintf(vt->log_file, ", ");
+                       vt_fprintc(vt, vt->log_file, buf[i]);
                     }
                  }
-                 if (count) fprintf(stderr, "*%lu", count);
-                 fprintf(stderr, ")\n");
+                 if (count) fprintf(vt->log_file, "*%lu", count);
+                 fprintf(vt->log_file, ")\n");
               }
 
               if (vt->child_tty_fd > 0) {
@@ -3270,11 +3316,11 @@ int vt_main_loop(vt *vt)
                           vt->state = VT_STATE_GROUND;
                        }
 
-                       /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
+                       /* fprintf(vt->log_file, "vt_process(.., 0x%02X)\n", buf[i]); */
                        vt_process(vt, buf[i]);
-                       /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
-                       /* fprintf(stderr, "cell now %ldx%ld\n", (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.x, (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.y); */
-                       /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
+                       /* fprintf(vt->log_file, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                       /* fprintf(vt->log_file, "cell now %ldx%ld\n", (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.x, (vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer)->cursor.y); */
+                       /* if (vt->alternate_buffer) fprintf(vt->log_file, "using alternate buffer\n"); */
 
                        if (vt->emitted_key.key.type == VT_KEY_MOUSE && vt->emitted_key.key.mouse.column + vt->emitted_key.key.mouse.row == 0) {
                           if (i + 3 >= (unsigned)red) UNREACHABLE("Expected 3 more characters to describe mouse");
@@ -3343,26 +3389,26 @@ int vt_main_loop(vt *vt)
                     vt_draw_window(vt);
                  } else {
                     for (size_t i = 0; i < (unsigned)red; i ++) {
-                       /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
+                       /* fprintf(vt->log_file, "vt_process(.., 0x%02X)\n", buf[i]); */
                        vt_process(vt, buf[i]);
-                       /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
-                       /* fprintf(stderr, "cell now %ldx%ld\n", vt->cursor.x, vt->cursor.y); */
-                       /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
+                       /* fprintf(vt->log_file, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                       /* fprintf(vt->log_file, "cell now %ldx%ld\n", vt->cursor.x, vt->cursor.y); */
+                       /* if (vt->alternate_buffer) fprintf(vt->log_file, "using alternate buffer\n"); */
                     }
                     vt_draw_window(vt);
                  }
               } else {
                  for (size_t i = 0; i < (unsigned)red; i ++) {
-                    /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
+                    /* fprintf(vt->log_file, "vt_process(.., 0x%02X)\n", buf[i]); */
                     vt_process(vt, buf[i]);
                     if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
                        vt_process_key(vt);
                        memset(&vt->emitted_key, '\0', sizeof(vt->emitted_key));
                     }
-                    /* fprintf(stderr, "state now %s\n", VT_STATE_STRING(vt->state)); */
+                    /* fprintf(vt->log_file, "state now %s\n", VT_STATE_STRING(vt->state)); */
                     /* vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer; */
-                    /* fprintf(stderr, "cell now %ldx%ld\n", buffer->cursor.x, buffer->cursor.y); */
-                    /* if (vt->alternate_buffer) fprintf(stderr, "using alternate buffer\n"); */
+                    /* fprintf(vt->log_file, "cell now %ldx%ld\n", buffer->cursor.x, buffer->cursor.y); */
+                    /* if (vt->alternate_buffer) fprintf(vt->log_file, "using alternate buffer\n"); */
                  }
                  vt_draw_window(vt);
               }
@@ -3371,7 +3417,7 @@ int vt_main_loop(vt *vt)
        }
     }
 
-    fprintf(stderr, "EOF\n");
+    fprintf(vt->log_file, "EOF\n");
     return 0;
 }
 
@@ -3423,8 +3469,8 @@ int vt_setup_child(vt *vt, char * const *argv)
 
    vt->child_tty = fdopen(vt->child_tty_fd, "w");
 
-   fprintf(stderr, "Parent %d\n", getpid());
-   fprintf(stderr, "Started child %d\n", vt->child_pid);
+   fprintf(vt->log_file, "Parent %d\n", getpid());
+   fprintf(vt->log_file, "Started child %d\n", vt->child_pid);
 
    return 0;
 }
@@ -3592,15 +3638,69 @@ int main2(int argc, char **argv)
    return 0;
 }
 
+void usage(FILE *stream, const char *program)
+{
+   fprintf(stream, "Usage: %s", program);
+   for (int i = 0; i < VT_NUM_OPTIONS; i ++) {
+      fprintf(stream, " [%s", VT_OPTION_STRING_LONG(i));
+      const char *arg = VT_OPTION_ARGUMENT(i);
+      if (arg) fprintf(stream, " %s", arg);
+      fprintf(stream, "]");
+   }
+   fprintf(stream, "\n");
+   if (VT_NUM_OPTIONS) {
+      for (int i = 0; i < VT_NUM_OPTIONS; i ++) {
+         fprintf(stream, "\n  %s: %s", VT_OPTION_STRING_LONG(i), VT_OPTION_DESCRIPTION(i));
+      }
+      fprintf(stream, "\n");
+   }
+}
+
+bool vt_process_args(vt *vt, int *argc, char * const **argv)
+{
+#define NEXT_ARG (*(*argv)++) + 0 * ((*argc)--)
+    const char *program = NEXT_ARG;
+
+    while (*argc) {
+        const char *arg = NEXT_ARG;
+        vt_option opt;
+        for (opt = 0; opt < VT_NUM_OPTIONS; opt ++) {
+            if (strcmp(arg, VT_OPTION_STRING_LONG(opt)) == 0) {
+               break;
+            }
+        }
+
+        if (opt == VT_NUM_OPTIONS) {
+           if (strncmp(arg, "--", 2) == 0) {
+              fprintf(stderr, "Invalid argument: %s\n", arg);
+              usage(stderr, program);
+              return false;
+           }
+           (*argv) --;
+           (*argc) ++;
+           break;
+        }
+
+#define X(opt) case opt: 
+#define S(code) { code; break; }
+        switch (opt) {
+           VT_OPTIONS_LIST
+           default: UNREACHABLE("Unexpected option %d", opt);
+        };
+#undef X
+#undef S
+    }
+
+    return true;
+}
+
 int main(int argc, char * const *argv)
 {
     vt_rebuild_if_source_newer(*argv, argv);
 
-#define NEXT_ARG (*(argv++)) + 0 * (argc--)
-    __attribute__((unused)) const char *program = NEXT_ARG;
     vt vt = {0};
 
-    /* FIXME process args */
+    if (!vt_process_args(&vt, &argc, &argv)) return 1;
 
     vt_setup_io(&vt);
     vt_resize_window(&vt);
@@ -3612,7 +3712,7 @@ int main(int argc, char * const *argv)
     }
 
     ret = vt_main_loop(&vt);
-    fprintf(stderr, "ret = %d\n", ret);
+    fprintf(vt.log_file, "ret = %d\n", ret);
 
     vt_reset(&vt);
     return ret;
