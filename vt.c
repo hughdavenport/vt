@@ -19,7 +19,8 @@
 #include <unistd.h>
 
 #define VT_OPTIONS_LIST \
-   X(VT_OPTION_LOG_FILE) L("--log-file") A("filename") D("sets log file to pathname provided") S(arg = NEXT_ARG; vt->log_file = fopen(arg, "w"); if (!vt->log_file) { fprintf(stderr, "Could not open log file '%s' for writing\n", arg); return 1; })
+   X(VT_OPTION_HELP) L("--help") A(NULL) D("Show usage information") S(usage(stderr, program); return false; ) \
+   X(VT_OPTION_LOG_FILE) L("--log-file") A("filename") D("sets log file to pathname provided") S(arg = NEXT_ARG; vt->log_file = fopen(arg, "w"); if (!vt->log_file) { fprintf(stderr, "Could not open log file '%s' for writing\n", arg); return false; })
 
 typedef struct vt vt;
 void vt_reset(vt *vt);
