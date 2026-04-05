@@ -1956,14 +1956,14 @@ void _vt_select_graphic_rendition(vt *vt)
        uint16_t param = VT_PARAM(vt, p, 0);
 #define C(code) case code:
 
-/* #define X(code) */
-/* #define L(name) HERE("Got SGR param %u code %s", VT_PARAM(vt, p, 0), name); break; */
-/*        switch (param) { */
-/*           VT_ATTRIBUTES_LIST */
-/*           default: UNIMPL("Unimplemented param for SGR, param %u", param); */
-/*        } */
-/* #undef L */
-/* #undef X */
+#define X(code)
+#define L(name) HERE("Got SGR param %u code %s", VT_PARAM(vt, p, 0), name); break;
+       switch (param) {
+          VT_ATTRIBUTES_LIST
+          default: UNIMPL("Unimplemented param for SGR, param %u", param);
+       }
+#undef L
+#undef X
 
 #define L(typ)
 #define X(typ) if (typ != VT_ATTRIBUTE_NONE) SET_ADD(vt->current_attributes, typ); else SET_CLEAR(vt->current_attributes); break;
@@ -1975,8 +1975,8 @@ void _vt_select_graphic_rendition(vt *vt)
 #undef C
     }
 
-    /* if (vt->current_attributes.size == 0) HERE("no attributes"); */
-    /* SET_FOREACH(vt->current_attributes, HERE("attr %zu: %s", idx, VT_ATTRIBUTE_STRING(element))); */
+    if (vt->current_attributes.size == 0) HERE("no attributes");
+    SET_FOREACH(vt->current_attributes, HERE("attr %zu: %s", idx, VT_ATTRIBUTE_STRING(element)));
 
     buffer->dirty = true;
 }
