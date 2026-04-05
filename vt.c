@@ -98,6 +98,15 @@ void vt_reset(vt *vt);
    X(VT_KEY_DOWN) \
    X(VT_KEY_LEFT)
 
+#define VT_CURSOR_STYLES_LIST \
+   X(VT_CURSOR_STYLE_NONE)                  L("Blinking Block") \
+   X(VT_CURSOR_STYLE_BLINK_BLOCK)           L("Blinking Block") \
+   X(VT_CURSOR_STYLE_BLOCK)                 L("Solid Block") \
+   X(VT_CURSOR_STYLE_BLINK_UNDERLINE)       L("Blinking Underline") \
+   X(VT_CURSOR_STYLE_UNDERLINE)             L("Underline") \
+   X(VT_CURSOR_STYLE_BLINKING_VERTICAL_BAR) L("Blinking Vertical Bar") \
+   X(VT_CURSOR_STYLE_VERTICAL_BAR)          L("Vertical Bar")
+
 #define VT_MOUSE_BUTTONS_LIST \
    X(VT_BUTTON_LEFT) L("Left Button") \
    X(VT_BUTTON_MIDDLE) L("Middle Button") \
@@ -117,28 +126,45 @@ void vt_reset(vt *vt);
    X(VT_MODIFIER_SUPER)   E(1 << 3) /* Only used for certain special chars */
 
 #define VT_ATTRIBUTES_LIST \
-   C(0)  X(VT_ATTRIBUTE_NONE)                  L("Reset") \
-   C(1)  X(VT_ATTRIBUTE_BOLD)                  L("Bold") \
-   C(2)  X(VT_ATTRIBUTE_DIM)                   L("Dim") \
-   C(3)  X(VT_ATTRIBUTE_ITALIC)                L("Italic") \
-   C(23) X(VT_ATTRIBUTE_NOT_ITALIC_OR_GOTHIC)  L("Not italic or gothic") \
-   C(24) X(VT_ATTRIBUTE_NOT_UNDERLINED)        L("Not underlined") \
-   C(30) X(VT_ATTRIBUTE_FG_0)                  L("Foreground Black") \
-   C(31) X(VT_ATTRIBUTE_FG_1)                  L("Foreground Red") \
-   C(32) X(VT_ATTRIBUTE_FG_2)                  L("Foreground Green") \
-   C(33) X(VT_ATTRIBUTE_FG_3)                  L("Foreground Yellow") \
-   C(34) X(VT_ATTRIBUTE_FG_4)                  L("Foreground Blue") \
-   C(35) X(VT_ATTRIBUTE_FG_5)                  L("Foreground Magenta") \
-   C(36) X(VT_ATTRIBUTE_FG_6)                  L("Foreground Cyan") \
-   C(37) X(VT_ATTRIBUTE_FG_7)                  L("Foreground White") \
-   C(40) X(VT_ATTRIBUTE_BG_0)                  L("Background Black") \
-   C(41) X(VT_ATTRIBUTE_BG_1)                  L("Background Red") \
-   C(42) X(VT_ATTRIBUTE_BG_2)                  L("Background Green") \
-   C(43) X(VT_ATTRIBUTE_BG_3)                  L("Background Yellow") \
-   C(44) X(VT_ATTRIBUTE_BG_4)                  L("Background Blue") \
-   C(45) X(VT_ATTRIBUTE_BG_5)                  L("Background Magenta") \
-   C(46) X(VT_ATTRIBUTE_BG_6)                  L("Background Cyan") \
-   C(47) X(VT_ATTRIBUTE_BG_7)                  L("Background White")
+   C(0)   X(VT_ATTRIBUTE_NONE)                  L("Reset") \
+   C(1)   X(VT_ATTRIBUTE_BOLD)                  L("Bold") \
+   C(2)   X(VT_ATTRIBUTE_DIM)                   L("Dim") \
+   C(3)   X(VT_ATTRIBUTE_ITALIC)                L("Italic") \
+   C(4)   X(VT_ATTRIBUTE_UNDERLINE)             L("Underline") \
+   C(23)  X(VT_ATTRIBUTE_NOT_ITALIC_OR_GOTHIC)  L("Not italic or gothic") \
+   C(24)  X(VT_ATTRIBUTE_NOT_UNDERLINED)        L("Not underlined") \
+   C(30)  X(VT_ATTRIBUTE_FG_BLACK)              L("Foreground Black") \
+   C(31)  X(VT_ATTRIBUTE_FG_RED)                L("Foreground Red") \
+   C(32)  X(VT_ATTRIBUTE_FG_GREEN)              L("Foreground Green") \
+   C(33)  X(VT_ATTRIBUTE_FG_YELLOW)             L("Foreground Yellow") \
+   C(34)  X(VT_ATTRIBUTE_FG_BLUE)               L("Foreground Blue") \
+   C(35)  X(VT_ATTRIBUTE_FG_MAGENTA)            L("Foreground Magenta") \
+   C(36)  X(VT_ATTRIBUTE_FG_CYAN)               L("Foreground Cyan") \
+   C(37)  X(VT_ATTRIBUTE_FG_WHITE)              L("Foreground White") \
+   C(40)  X(VT_ATTRIBUTE_BG_BLACK)              L("Background Black") \
+   C(41)  X(VT_ATTRIBUTE_BG_RED)                L("Background Red") \
+   C(42)  X(VT_ATTRIBUTE_BG_GREEN)              L("Background Green") \
+   C(43)  X(VT_ATTRIBUTE_BG_YELLOW)             L("Background Yellow") \
+   C(44)  X(VT_ATTRIBUTE_BG_BLUE)               L("Background Blue") \
+   C(45)  X(VT_ATTRIBUTE_BG_MAGENTA)            L("Background Magenta") \
+   C(46)  X(VT_ATTRIBUTE_BG_CYAN)               L("Background Cyan") \
+   C(47)  X(VT_ATTRIBUTE_BG_WHITE)              L("Background White") \
+   C(90)  X(VT_ATTRIBUTE_FG_BRIGHT_BLACK)       L("Foreground Bright Black") \
+   C(91)  X(VT_ATTRIBUTE_FG_BRIGHT_RED)         L("Foreground Bright Red") \
+   C(92)  X(VT_ATTRIBUTE_FG_BRIGHT_GREEN)       L("Foreground Bright Green") \
+   C(93)  X(VT_ATTRIBUTE_FG_BRIGHT_YELLOW)      L("Foreground Bright Yellow") \
+   C(94)  X(VT_ATTRIBUTE_FG_BRIGHT_BLUE)        L("Foreground Bright Blue") \
+   C(95)  X(VT_ATTRIBUTE_FG_BRIGHT_MAGENTA)     L("Foreground Bright Magenta") \
+   C(96)  X(VT_ATTRIBUTE_FG_BRIGHT_CYAN)        L("Foreground Bright Cyan") \
+   C(97)  X(VT_ATTRIBUTE_FG_BRIGHT_WHITE)       L("Foreground Bright White") \
+   C(100) X(VT_ATTRIBUTE_BG_BRIGHT_BLACK)       L("Background Bright Black") \
+   C(101) X(VT_ATTRIBUTE_BG_BRIGHT_RED)         L("Background Bright Red") \
+   C(102) X(VT_ATTRIBUTE_BG_BRIGHT_GREEN)       L("Background Bright Green") \
+   C(103) X(VT_ATTRIBUTE_BG_BRIGHT_YELLOW)      L("Background Bright Yellow") \
+   C(104) X(VT_ATTRIBUTE_BG_BRIGHT_BLUE)        L("Background Bright Blue") \
+   C(105) X(VT_ATTRIBUTE_BG_BRIGHT_MAGENTA)     L("Background Bright Magenta") \
+   C(106) X(VT_ATTRIBUTE_BG_BRIGHT_CYAN)        L("Background Bright Cyan") \
+   C(107) X(VT_ATTRIBUTE_BG_BRIGHT_WHITE)       L("Background Bright White")
 
 #define VT_STATES_LIST \
     X(VT_STATE_GROUND) \
@@ -168,9 +194,9 @@ void vt_reset(vt *vt);
     X(VT_ACTION_HOOK)         S(UNIMPL("VT_ACTION_HOOK")) \
     X(VT_ACTION_PUT)          S(UNIMPL("VT_ACTION_PUT")) \
     X(VT_ACTION_UNHOOK)       S(UNIMPL("VT_ACTION_UNHOOK")) \
-    X(VT_ACTION_OSC_START)    S(UNIMPL("VT_ACTION_OSC_START")) \
-    X(VT_ACTION_OSC_PUT)      S(UNIMPL("VT_ACTION_OSC_PUT")) \
-    X(VT_ACTION_OSC_END)      S(UNIMPL("VT_ACTION_OSC_END"))
+    X(VT_ACTION_OSC_START)    S(HERE("VT_ACTION_OSC_START 0x%02x", input)) \
+    X(VT_ACTION_OSC_PUT)      S(HERE("VT_ACTION_OSC_PUT 0x%02x", input)) \
+    X(VT_ACTION_OSC_END)      S(HERE("VT_ACTION_OSC_END 0x%02x", input))
 
 #define VT_ESCAPE_FUNCTIONS_LIST \
    C(0x00)         X(VT_ESCAPE_NONE)    L("NONE")                     S(UNREACHABLE("Unexpected Escape function")) \
@@ -243,8 +269,13 @@ void vt_reset(vt *vt);
    C(0x4D /* M */) X(VT_CSI_DL)            K(VT_KEY_MOUSE) L("Delete Line")                S(_vt_delete_line(vt, VT_PARAM(vt, 0, 1))) \
    C(0x50 /* P */) X(VT_CSI_DCH)           K(VT_KEY_NONE)  L("Delete Character")           S(_vt_delete_character(vt, VT_PARAM(vt, 0, 1))) \
    C(0x6D /* m */) X(VT_CSI_SGR)           K(VT_KEY_NONE)  L("Select Graphic Rendition")   S(_vt_select_graphic_rendition(vt)) \
+   C(0x6E /* n */) X(VT_CSI_CPR)           K(VT_KEY_NONE)  L("Cursor Position Report")     S(_vt_cursor_position_report(vt)) \
    C(0x72 /* r */) X(VT_CSI_DECSTBM)       K(VT_KEY_NONE)  L("Set Top and Bottom Margins") S(HERE("TODO DECSTBM set top and bot margins")) \
    C(0x7E /* ~ */) X(VT_CSI_PRIVATE_TILDE) K(VT_KEY_NONE)  L("CSI Private Tilde")          S(_vt_csi_private_tilde_dispatch(vt, VT_PARAM(vt, 0, 0)))
+
+#define VT_CSI_SPACE_FUNCTIONS_LIST \
+   C(0x00)         X(VT_CSI_SPACE_NONE)          L("NONE")                       S(UNREACHABLE("Unexpected CSI space function")) \
+   C(0x71 /* q */) X(VT_CSI_SPACE_DECSCUSR)      L("Set Cursor Style")           S(_vt_set_cursor_style(vt, VT_PARAM(vt, 0, 1)))
 
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST \
    C(0x00)         X(VT_CSI_PRIVATE_LESS_THAN_NONE)          K(VT_KEY_NONE) L("NONE")   S(UNREACHABLE("Unexpected CSI private '<' function")) \
@@ -252,11 +283,13 @@ void vt_reset(vt *vt);
    C(0x6D /* m */) X(VT_CSI_PRIVATE_LESS_THAN_MOUSE_RELEASE) K(VT_KEY_NONE) L("Mouse Release Report")  S(_vt_csi_mouse_report(vt, true))
 
 #define VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST \
-   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)   K(VT_KEY_NONE)   L("NONE")   S(UNREACHABLE("Unexpected CSI private '~' function")) \
-   C(1)    X(VT_CSI_PRIVATE_TILDE_HOME)   K(VT_KEY_HOME)   L("Home")   S(UNIMPL("VT_CSI_PRIVATE_TILDE_HOME")) \
-   C(2)    X(VT_CSI_PRIVATE_TILDE_INSERT) K(VT_KEY_INSERT) L("Insert") S(UNIMPL("VT_CSI_PRIVATE_TILDE_INSERT")) \
-   C(3)    X(VT_CSI_PRIVATE_TILDE_DELETE) K(VT_KEY_DELETE) L("Delete") S(UNIMPL("VT_CSI_PRIVATE_TILDE_DELETE")) \
-   C(4)    X(VT_CSI_PRIVATE_TILDE_END)    K(VT_KEY_END)    L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END"))
+   C(0x00) X(VT_CSI_PRIVATE_TILDE_NONE)      K(VT_KEY_NONE)      L("NONE")   S(UNREACHABLE("Unexpected CSI private '~' function")) \
+   C(1)    X(VT_CSI_PRIVATE_TILDE_HOME)      K(VT_KEY_HOME)      L("Home")   S(UNIMPL("VT_CSI_PRIVATE_TILDE_HOME")) \
+   C(2)    X(VT_CSI_PRIVATE_TILDE_INSERT)    K(VT_KEY_INSERT)    L("Insert") S(UNIMPL("VT_CSI_PRIVATE_TILDE_INSERT")) \
+   C(3)    X(VT_CSI_PRIVATE_TILDE_DELETE)    K(VT_KEY_DELETE)    L("Delete") S(UNIMPL("VT_CSI_PRIVATE_TILDE_DELETE")) \
+   C(4)    X(VT_CSI_PRIVATE_TILDE_END)       K(VT_KEY_END)       L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_END")) \
+   C(5)    X(VT_CSI_PRIVATE_TILDE_PAGE_UP)   K(VT_KEY_PAGE_UP)   L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_PAGE_UP")) \
+   C(6)    X(VT_CSI_PRIVATE_TILDE_PAGE_DOWN) K(VT_KEY_PAGE_DOWN) L("End")    S(UNIMPL("VT_CSI_PRIVATE_TILDE_PAGE_DOWN"))
 
 #define VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST \
    C(0x00) X(VT_CSI_PRIVATE_QUESTION_NONE)                             L("NONE")                                                                                  S(UNREACHABLE("Unexpected CSI private '?' function")) \
@@ -297,6 +330,7 @@ typedef enum { VT_MODIFIERS_LIST } vt_modifier;
 #undef X
 #define E(code)
 #define X(name) name,
+typedef enum { VT_CURSOR_STYLES_LIST VT_NUM_CURSOR_STYLES } vt_cursor_style;
 typedef enum { VT_MOUSE_BUTTONS_LIST VT_NUM_MOUSE_BUTTONS } vt_mouse_button;
 typedef enum { VT_ATTRIBUTES_LIST VT_NUM_ATTRIBUTES } vt_attribute;
 typedef enum { VT_KEYS_LIST VT_NUM_KEYS } vt_key;
@@ -307,6 +341,7 @@ typedef enum { VT_ACTIONS_LIST VT_NUM_ACTIONS } vt_action;
 typedef enum { VT_ESCAPE_FUNCTIONS_LIST VT_NUM_ESCAPE_FUNCTIONS } vt_escape_function;
 typedef enum { VT_CONTROL_FUNCTIONS_LIST VT_NUM_CONTROL_FUNCTIONS } vt_control_function;
 typedef enum { VT_CSI_FUNCTIONS_LIST VT_NUM_CSI_FUNCTIONS } vt_csi_function;
+typedef enum { VT_CSI_SPACE_FUNCTIONS_LIST VT_NUM_CSI_SPACE_FUNCTIONS } vt_csi_space_function;
 typedef enum { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS } vt_csi_private_question_function;
 typedef enum { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS } vt_csi_private_less_than_function;
 typedef enum { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS } vt_csi_private_tilde_function;
@@ -317,10 +352,12 @@ static const char *vt_state_strings[] = { VT_STATES_LIST };
 static const char *vt_escape_function_strings[] = { VT_ESCAPE_FUNCTIONS_LIST };
 static const char *vt_control_function_strings[] = { VT_CONTROL_FUNCTIONS_LIST };
 static const char *vt_csi_function_strings[] = { VT_CSI_FUNCTIONS_LIST };
+static const char *vt_csi_space_function_strings[] = { VT_CSI_SPACE_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
 static const char *vt_csi_private_less_than_function_strings[] = { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
 __attribute__((unused)) static const char *vt_mouse_button_strings[] = { VT_MOUSE_BUTTONS_LIST };
+__attribute__((unused)) static const char *vt_cursor_style_strings[] = { VT_CURSOR_STYLES_LIST };
 __attribute__((unused)) static const char *vt_attribute_strings[] = { VT_ATTRIBUTES_LIST };
 __attribute__((unused)) static const char *vt_action_strings[] = { VT_ACTIONS_LIST };
 __attribute__((unused)) static const char *vt_key_strings[] = { VT_KEYS_LIST };
@@ -328,12 +365,14 @@ __attribute__((unused)) static const char *vt_mouse_mode_strings[] = { VT_MOUSE_
 __attribute__((unused)) static const char *vt_mouse_reporting_mode_strings[] = { VT_MOUSE_REPORTING_MODES_LIST };
 
 #define VT_MOUSE_BUTTON_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings[(btn)] : "(mouse_button out of bounds)")
+#define VT_cursor_style_STRING(btn) (((btn) >= 0 && (btn) < VT_NUM_CURSOR_STYLES) ? vt_cursor_style_strings[(btn)] : "(cursor_style out of bounds)")
 #define VT_ATTRIBUTE_STRING(attr) (((attr) >= 0 && (attr) < VT_NUM_ATTRIBUTES) ? vt_attribute_strings[(attr)] : "(attribute out of bounds)")
 #define VT_STATE_STRING(stat) (((stat) >= 0 && (stat) < VT_NUM_STATES) ? vt_state_strings[(stat)] : "(state out of bounds)")
 #define VT_ACTION_STRING(act) (((act) >= 0 && (act) < VT_NUM_ACTIONS) ? vt_action_strings[(act)] : "(action out of bounds)")
 #define VT_ESCAPE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_ESCAPE_FUNCTIONS) ? vt_escape_function_strings[(func)] : "(escape_function out of bounds)")
 #define VT_CONTROL_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CONTROL_FUNCTIONS) ? vt_control_function_strings[(func)] : "(control_function out of bounds)")
 #define VT_CSI_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings[(func)] : "(csi_function out of bounds)")
+#define VT_CSI_SPACE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_SPACE_FUNCTIONS) ? vt_csi_space_function_strings[(func)] : "(csi_space_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings[(func)] : "(csi_private_question_function out of bounds)")
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_strings[(func)] : "(csi_private_less_than_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings[(func)] : "(csi_private_tilde_function out of bounds)")
@@ -346,7 +385,9 @@ __attribute__((unused)) static const char *vt_mouse_reporting_mode_strings[] = {
 #undef L
 #define L(name) name, 
 static const char *vt_mouse_button_strings_long[] = { VT_MOUSE_BUTTONS_LIST };
+static const char *vt_cursor_style_strings_long[] = { VT_CURSOR_STYLES_LIST };
 static const char *vt_csi_function_strings_long[] = { VT_CSI_FUNCTIONS_LIST };
+static const char *vt_csi_space_function_strings_long[] = { VT_CSI_SPACE_FUNCTIONS_LIST };
 static const char *vt_csi_private_question_function_strings_long[] = { VT_CSI_PRIVATE_QUESTION_FUNCTIONS_LIST };
 static const char *vt_csi_private_less_than_function_strings_long[] = { VT_CSI_PRIVATE_LESS_THAN_FUNCTIONS_LIST };
 static const char *vt_csi_private_tilde_function_strings_long[] = { VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST };
@@ -354,7 +395,9 @@ static const char *vt_escape_function_strings_long[] = { VT_ESCAPE_FUNCTIONS_LIS
 static const char *vt_control_function_strings_long[] = { VT_CONTROL_FUNCTIONS_LIST };
 
 #define VT_MOUSE_BUTTON_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_MOUSE_BUTTONS) ? vt_mouse_button_strings_long[(btn)] : "(mouse_button out of bounds)")
+#define VT_CURSOR_STYLE_STRING_LONG(btn) (((btn) >= 0 && (btn) < VT_NUM_CURSOR_STYLES) ? vt_cursor_style_strings_long[(btn)] : "(cursor_style out of bounds)")
 #define VT_CSI_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_FUNCTIONS) ? vt_csi_function_strings_long[(func)] : "(csi_function out of bounds)")
+#define VT_CSI_SPACE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_SPACE_FUNCTIONS) ? vt_csi_space_function_strings_long[(func)] : "(csi_space_function out of bounds)")
 #define VT_CSI_PRIVATE_QUESTION_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_QUESTION_FUNCTIONS) ? vt_csi_private_question_function_strings_long[(func)] : "(csi_private_question_function out of bounds)")
 #define VT_CSI_PRIVATE_LESS_THAN_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_LESS_THAN_FUNCTIONS) ? vt_csi_private_less_than_function_strings_long[(func)] : "(csi_private_less_than_function out of bounds)")
 #define VT_CSI_PRIVATE_TILDE_FUNCTION_STRING_LONG(func) (((func) >= 0 && (func) < VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS) ? vt_csi_private_tilde_function_strings_long[(func)] : "(csi_private_tilde_function out of bounds)")
@@ -616,20 +659,20 @@ struct vt
 {
     vt_state state;
     struct termios original_ios;
-    struct termios child_ios;
     bool raw;
     bool nonblocking;
     FILE *tty;
     struct winsize outer_window;
     vt_buffer primary_buffer;
     vt_buffer *alternate_buffer;
+    vt_cursor_style cursor_style;
     vt_sequence_state sequence_state;
     vt_attribute_set current_attributes;
     pid_t child_pid;
-    int stdout[2];
-    int stderr[2];
-    int child_tty_fd;
-    FILE *child_tty;
+    int child_stdin_fd;   /* PTY master — write keystrokes here */
+    int child_stdout_fd;  /* PTY master — read child stdout here */
+    int child_stderr_fd;  /* PTY master — read child stderr here */
+    FILE *child_tty;      /* fdopen'd view of child_stdin_fd for fprintf helpers */
     vt_key_modifier emitted_key;
     vt_mouse_mode mouse;
     vt_mouse_reporting_mode mouse_reporting;
@@ -789,8 +832,10 @@ void vt_reset(vt *vt)
     VT_CSI_PRIVATE_QUESTION_DISABLE(VT_CSI_QUESTION_SETUP);
 
     if (vt->child_pid) {
-       if (vt->stdout[1] > 0) close(vt->stdout[0]);
-       if (vt->stderr[1] > 0) close(vt->stderr[0]);
+       if (vt->child_tty) { fclose(vt->child_tty); vt->child_tty = NULL; }
+       else if (vt->child_stdin_fd > 0) { close(vt->child_stdin_fd); vt->child_stdin_fd = -1; }
+       if (vt->child_stdout_fd > 0) { close(vt->child_stdout_fd); vt->child_stdout_fd = -1; }
+       if (vt->child_stderr_fd > 0) { close(vt->child_stderr_fd); vt->child_stderr_fd = -1; }
        int wstatus;
        int waited = waitpid(vt->child_pid, &wstatus, WNOHANG);
        if (waited == -1) {
@@ -886,8 +931,10 @@ void vt_draw_gutters(vt *vt)
     }
 
     vt_attribute colors[] = {
-        VT_ATTRIBUTE_FG_0, VT_ATTRIBUTE_FG_1, VT_ATTRIBUTE_FG_2, VT_ATTRIBUTE_FG_3, VT_ATTRIBUTE_FG_4, VT_ATTRIBUTE_FG_5, VT_ATTRIBUTE_FG_6, VT_ATTRIBUTE_FG_7,
-        VT_ATTRIBUTE_BG_0, VT_ATTRIBUTE_BG_1, VT_ATTRIBUTE_BG_2, VT_ATTRIBUTE_BG_3, VT_ATTRIBUTE_BG_4, VT_ATTRIBUTE_BG_5, VT_ATTRIBUTE_BG_6, VT_ATTRIBUTE_BG_7,
+       VT_ATTRIBUTE_FG_BLACK, VT_ATTRIBUTE_FG_RED, VT_ATTRIBUTE_FG_GREEN, VT_ATTRIBUTE_FG_YELLOW, VT_ATTRIBUTE_FG_BLUE, VT_ATTRIBUTE_FG_MAGENTA, VT_ATTRIBUTE_FG_CYAN, VT_ATTRIBUTE_FG_WHITE,
+       VT_ATTRIBUTE_BG_BLACK, VT_ATTRIBUTE_BG_RED, VT_ATTRIBUTE_BG_GREEN, VT_ATTRIBUTE_BG_YELLOW, VT_ATTRIBUTE_BG_BLUE, VT_ATTRIBUTE_BG_MAGENTA, VT_ATTRIBUTE_BG_CYAN, VT_ATTRIBUTE_BG_WHITE,
+       VT_ATTRIBUTE_FG_BRIGHT_BLACK, VT_ATTRIBUTE_FG_BRIGHT_RED, VT_ATTRIBUTE_FG_BRIGHT_GREEN, VT_ATTRIBUTE_FG_BRIGHT_YELLOW, VT_ATTRIBUTE_FG_BRIGHT_BLUE, VT_ATTRIBUTE_FG_BRIGHT_MAGENTA, VT_ATTRIBUTE_FG_BRIGHT_CYAN, VT_ATTRIBUTE_FG_BRIGHT_WHITE,
+       VT_ATTRIBUTE_BG_BRIGHT_BLACK, VT_ATTRIBUTE_BG_BRIGHT_RED, VT_ATTRIBUTE_BG_BRIGHT_GREEN, VT_ATTRIBUTE_BG_BRIGHT_YELLOW, VT_ATTRIBUTE_BG_BRIGHT_BLUE, VT_ATTRIBUTE_BG_BRIGHT_MAGENTA, VT_ATTRIBUTE_BG_BRIGHT_CYAN, VT_ATTRIBUTE_BG_BRIGHT_WHITE,
     };
     vt_attribute_set cursor_colors = {0};
     for (size_t i = 0; i < C_ARRAY_LEN(colors); i ++) {
@@ -1527,6 +1574,21 @@ void _vt_mouse_check_button(vt *vt)
    }
 }
 
+void _vt_set_cursor_style(vt *vt, uint16_t param)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key.type == VT_KEY_REQUEST) return;
+
+   if (!param) param = 1; // weirdly two defaults
+   if (param >= VT_NUM_CURSOR_STYLES) {
+      UNREACHABLE("Unknown cursor style %d", param);
+   }
+   vt->cursor_style = param;
+   fprintf(stderr, "Setting cursor style to %s\n", VT_CURSOR_STYLE_STRING_LONG(vt->cursor_style));
+   fprintf(vt->tty, "\033[%u q", vt->cursor_style);
+   fflush(vt->tty);
+}
+
 void _vt_csi_mouse_report(vt *vt, bool release)
 {
    if (!vt) return;
@@ -1832,6 +1894,18 @@ void _vt_param(vt *vt, uint8_t input)
 #undef K
 #undef L
 
+void _vt_cursor_position_report(vt *vt)
+{
+    if (!vt) return;
+    if (!vt->child_tty) return;
+    vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+    if (!buffer->cells) return;
+
+    fprintf(stderr, "Sending cursor position report for %lux%lu\n", buffer->cursor.x, buffer->cursor.y);
+    fprintf(vt->child_tty, "\033[%lu;%luR", buffer->cursor.y, buffer->cursor.x);
+    fflush(vt->child_tty);
+}
+
 void _vt_select_graphic_rendition(vt *vt)
 {
     if (!vt) return;
@@ -1993,7 +2067,7 @@ void _vt_csi_private_tilde_dispatch(vt *vt, uint16_t param)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS == 5, "Not all functions handled");
+    static_assert(VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS == 7, "Not all functions handled");
     switch (func) {
        VT_CSI_PRIVATE_TILDE_FUNCTIONS_LIST
        case VT_NUM_CSI_PRIVATE_TILDE_FUNCTIONS: break;
@@ -2092,6 +2166,44 @@ void _vt_csi_private_question_dispatch(vt *vt, uint8_t input)
     }
 }
 
+void _vt_csi_space_dispatch(vt *vt, uint8_t input)
+{
+    if (!vt) return;
+
+#define S(code)
+#define C(code) case code:
+#define X(name) func = name; break;
+    vt_csi_space_function func = -1;
+    switch (input) { VT_CSI_SPACE_FUNCTIONS_LIST }
+    if ((signed)func == -1) UNIMPL("Unknown csi space function input 0x%02X '%c'", input, input);
+#undef S
+#undef C
+#undef X
+
+    fprintf(stderr, "state %s, csi space function %s (%s), args:", VT_STATE_STRING(vt->state), VT_CSI_SPACE_FUNCTION_STRING(func), VT_CSI_SPACE_FUNCTION_STRING_LONG(func));
+    for (size_t param = 0; param < vt->sequence_state.num_params; param++) {
+       if (vt->sequence_state.params[param].non_default) {
+          if (param) fputc(',', stderr);
+          fprintf(stderr, " %u", VT_PARAM(vt, param, 0));
+       }
+    }
+    fprintf(stderr, "\n");
+
+#define S(code) code; return;
+#define C(code)
+#define X(name) case name:
+    /* all cases must return */
+    static_assert(VT_NUM_CSI_SPACE_FUNCTIONS == 2, "Not all functions handled");
+    switch (func) {
+        VT_CSI_SPACE_FUNCTIONS_LIST
+        case VT_NUM_CSI_SPACE_FUNCTIONS: break;
+    }
+    UNREACHABLE("Unexpected func %d", func);
+#undef S
+#undef C
+#undef X
+}
+
 void _vt_csi_dispatch(vt *vt, uint8_t input)
 {
     if (!vt) return;
@@ -2101,7 +2213,8 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
           switch (vt->sequence_state.collected[0]) {
              case '?': _vt_csi_private_question_dispatch(vt, input); break;
              case '<': _vt_csi_private_less_than_dispatch(vt, input); break;
-             default: UNIMPL("CSI unknown collected string char %c", vt->sequence_state.collected[0]);
+             case ' ': _vt_csi_space_dispatch(vt, input); break;
+             default: UNIMPL("CSI unknown collected string char '%c'", vt->sequence_state.collected[0]);
           }
           return;
        } else {
@@ -2142,7 +2255,7 @@ void _vt_csi_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_CSI_FUNCTIONS == 14, "Not all functions handled");
+    static_assert(VT_NUM_CSI_FUNCTIONS == 15, "Not all functions handled");
     switch (func) {
         VT_CSI_FUNCTIONS_LIST
         case VT_NUM_CSI_FUNCTIONS: break;
@@ -2728,8 +2841,8 @@ int handle_signal(vt *vt, int signo)
                   .ws_col = vt->alternate_buffer ? vt->alternate_buffer->width : vt->primary_buffer.width,
                   .ws_row = vt->alternate_buffer ? vt->alternate_buffer->height : vt->primary_buffer.height,
                };
-               if (ioctl(vt->child_tty_fd, TIOCSWINSZ, &window) != 0) {
-                  perror("ioctl(child_tty, TIOCSWINSZ, &window)");
+               if (ioctl(vt->child_stdin_fd, TIOCSWINSZ, &window) != 0) {
+                  perror("ioctl(child_stdin_fd, TIOCSWINSZ, &window)");
                   return 1;
                }
                if (kill(vt->child_pid, signo) == -1) {
@@ -2942,7 +3055,7 @@ void vt_process_key(vt *vt)
             if (!vt->emitted_key.view.data) {
                UNIMPL("null here");
             }
-            if (vt_write(vt, vt->child_tty_fd, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
+            if (vt_write(vt, vt->child_stdin_fd, vt->emitted_key.view.data, vt->emitted_key.view.size) == -1) {
                return;
             }
       }
@@ -2966,24 +3079,21 @@ int vt_main_loop(vt *vt)
     bool stdin_eof = false;
     bool stdout_eof = false;
     bool stderr_eof = false;
-    bool tty_eof = false;
 
     while (true) {
        int fd;
        if (vt->child_pid) {
-          if (stdin_eof && stdout_eof && stderr_eof && tty_eof) break;
+          if (stdin_eof && stdout_eof && stderr_eof) break;
 
-          if (stdin_eof && stdout_eof && stderr_eof && tty_eof) break;
-
-          fprintf(stderr, "select(sigfd, stdin, stdout, stderr, tty)\n");
-          fd = _select(sigfd, STDIN_FILENO, vt->stdout[0], vt->stderr[0], vt->child_tty_fd);
+          fprintf(stderr, "select(sigfd, stdin, child_stdout, child_stderr)\n");
+          fd = _select(sigfd, STDIN_FILENO, vt->child_stdout_fd, vt->child_stderr_fd);
        } else {
           if (stdin_eof) break;
 
           fprintf(stderr, "select(sigfd, stdin)\n");
           fd = _select(sigfd, STDIN_FILENO);
        }
-       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown"))))));
+       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_stdout_fd ? "child stdout" : (fd == vt->child_stderr_fd ? "child stderr" : "unknown")))));
        if (fd == sigfd) {
           struct signalfd_siginfo siginfo;
           ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
@@ -2998,11 +3108,10 @@ int vt_main_loop(vt *vt)
              stdin_eof = true;
              stdout_eof = true;
              stderr_eof = true;
-             tty_eof = true;
-             close(vt->stdout[0]);
-             close(vt->stderr[0]);
-             fclose(vt->child_tty);
-             /* close(vt->child_tty_fd); */
+             if (vt->child_tty) { fclose(vt->child_tty); vt->child_tty = NULL; }
+             else if (vt->child_stdin_fd > 0) { close(vt->child_stdin_fd); vt->child_stdin_fd = -1; }
+             if (vt->child_stdout_fd > 0) { close(vt->child_stdout_fd); vt->child_stdout_fd = -1; }
+             if (vt->child_stderr_fd > 0) { close(vt->child_stderr_fd); vt->child_stderr_fd = -1; }
           }
 
           int ret = handle_signal(vt, siginfo.ssi_signo);
@@ -3018,23 +3127,23 @@ int vt_main_loop(vt *vt)
                  return 1;
 
               } else if (red == 0) {
-                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown")))));
+                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_stdout_fd ? "child stdout" : (fd == vt->child_stderr_fd ? "child stderr" : "unknown"))));
                  close(fd);
                  if (fd == STDIN_FILENO) {
                     stdin_eof = true;
-                 } else if (fd == vt->stdout[0]) {
+                 } else if (fd == vt->child_stdout_fd) {
                     stdout_eof = true;
-                 } else if (fd == vt->stderr[0]) {
+                    vt->child_stdout_fd = -1;
+                 } else if (fd == vt->child_stderr_fd) {
                     stderr_eof = true;
-                 } else if (fd == vt->child_tty_fd) {
-                    tty_eof = true;
+                    vt->child_stderr_fd = -1;
                  } else {
                     fprintf(stderr, "Unexpected fd\n");
                  }
                  break;
               }
 
-              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown")))));
+              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_stdout_fd ? "child stdout" : (fd == vt->child_stderr_fd ? "child stderr" : "unknown"))));
               bool allgraph = true;
               for (ssize_t i = 0; i < red; i ++) {
                   if (!isgraph(buf[i])) {
@@ -3067,7 +3176,7 @@ int vt_main_loop(vt *vt)
                  fprintf(stderr, ")\n");
               }
 
-              if (vt->child_tty_fd > 0) {
+              if (vt->child_stdin_fd > 0) {
                  if (fd == STDIN_FILENO) {
                     for (size_t i = 0; i < (unsigned)red; i ++) {
                        if (vt->emitted_key.key.type != VT_KEY_REQUEST) {
@@ -3147,7 +3256,7 @@ int vt_main_loop(vt *vt)
                        vt->emitted_key.key.type = VT_KEY_NONE;
                     }
                     vt_draw_window(vt);
-                 } else if (fd == vt->stderr[0] && false /* FIXME add option to send stderr to vt */) {
+                 } else if (fd == vt->child_stderr_fd && false /* FIXME add option to send stderr to vt */) {
                     size_t written = 0;
                     while (written != (unsigned)red) {
 
@@ -3226,53 +3335,72 @@ void vt_rebuild_if_source_newer(const char *program, char * const *argv)
 
 int vt_setup_child(vt *vt, char * const *argv)
 {
-   if (pipe2(vt->stdout, O_NONBLOCK) != 0) {
-      perror("pipe2(stdout)");
+   int master_in, master_out, master_err;
+   int slave_in,  slave_out,  slave_err;
+
+   struct winsize ws = {
+      .ws_col = vt->primary_buffer.width,
+      .ws_row = vt->primary_buffer.height,
+   };
+
+   struct termios ios = vt->original_ios;
+   if (openpty(&master_in,  &slave_in,  NULL, &ios, &ws) == -1 ||
+       openpty(&master_out, &slave_out, NULL, &ios, &ws) == -1 ||
+       openpty(&master_err, &slave_err, NULL, &ios, &ws) == -1) {
+      perror("openpty");
       return 1;
    }
 
-   if (pipe2(vt->stderr, O_NONBLOCK) != 0) {
-      perror("pipe2(stderr)");
-      return 1;
-   }
-
-   vt->child_ios = vt->original_ios;
-   struct winsize window = {.ws_col = vt->primary_buffer.width, .ws_row = vt->primary_buffer.height};
-   vt->child_pid = forkpty(&vt->child_tty_fd, NULL, &vt->child_ios, &window);
+   vt->child_pid = fork();
 
    if (vt->child_pid == -1) {
-      perror("fork()");
+      perror("fork");
       return 1;
    }
 
-   if (!vt->child_pid) {
-      if (dup2(vt->stdout[1], STDOUT_FILENO) == -1) {
-         perror("dup2(stdout)");
-         _exit(1);
-      }
+   if (vt->child_pid == 0) {
+      /* Child: become a new session leader so we can acquire a
+         controlling terminal.  Only stdin's slave is made the
+         controlling terminal — that's the one the kernel uses for
+         job-control signals.  The other two slaves are real PTYs so
+         isatty(1) and isatty(2) return true, they just aren't the
+         ctty. */
+      if (setsid() == -1) { perror("setsid"); _exit(1); }
+      if (ioctl(slave_err, TIOCSCTTY, 0) == -1) { perror("TIOCSCTTY"); _exit(1); }
 
-      if (dup2(vt->stderr[1], STDERR_FILENO) == -1) {
-         perror("dup2(stderr)");
-         _exit(1);
-      }
+      if (dup2(slave_in,  STDIN_FILENO)  == -1) { perror("dup2(stdin)");  _exit(1); }
+      if (dup2(slave_out, STDOUT_FILENO) == -1) { perror("dup2(stdout)"); _exit(1); }
+      if (dup2(slave_err, STDERR_FILENO) == -1) { perror("dup2(stderr)"); _exit(1); }
 
-      close(vt->stderr[0]);
-      close(vt->stdout[0]);
+      close(master_in);  close(master_out);  close(master_err);
+      close(slave_in);   close(slave_out);   close(slave_err);
+
+      /* setenv("TERM", "xterm-256color", 1); */
 
       int ret = execvp(*argv, argv);
-      if (ret == -1) {
-         perror("execvp");
-      }
+      if (ret == -1) perror("execvp");
       _exit(1);
    }
 
-   vt->child_tty = fdopen(vt->child_tty_fd, "w");
+   /* Parent: keep the master ends, close the slave ends. */
+   close(slave_in);
+   close(slave_out);
+   close(slave_err);
+
+   vt->child_stdin_fd  = master_in;
+   vt->child_stdout_fd = master_out;
+   vt->child_stderr_fd = master_err;
+
+   /* child_tty is used by fprintf helpers (mouse reporting etc.) that
+      write keystrokes/events to the child's stdin. */
+   vt->child_tty = fdopen(master_in, "w");
+   if (!vt->child_tty) { perror("fdopen(master_in)"); return 1; }
+
+   fcntl(master_out, F_SETFL, O_NONBLOCK);
+   fcntl(master_err, F_SETFL, O_NONBLOCK);
 
    fprintf(stderr, "Parent %d\n", getpid());
    fprintf(stderr, "Started child %d\n", vt->child_pid);
-
-   close(vt->stdout[1]);
-   close(vt->stderr[1]);
 
    return 0;
 }
