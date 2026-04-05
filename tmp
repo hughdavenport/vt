@@ -1,0 +1,498 @@
+tty is stdout
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 93x25
+inner window size 90x22
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |a|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |a|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |a|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |a|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |l|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\r')
+state VT_STATE_GROUND, execute VT_CONTROL_CR (Carriage Return)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\r')
+state VT_STATE_GROUND, execute VT_CONTROL_CR (Carriage Return)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\r')
+state VT_STATE_GROUND, execute VT_CONTROL_CR (Carriage Return)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\r')
+state VT_STATE_GROUND, execute VT_CONTROL_CR (Carriage Return)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\r')
+state VT_STATE_GROUND, execute VT_CONTROL_CR (Carriage Return)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): ('\n')
+state VT_STATE_GROUND, execute VT_CONTROL_LF (Line Feed)
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |a|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |a|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): |a|
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'A')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUU (Cursor Up), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'A'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'A')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUU (Cursor Up), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'A'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'D')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUB (Cursor Backward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'D'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'A')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUU (Cursor Up), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'A'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'D')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUB (Cursor Backward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'D'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'D')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUB (Cursor Backward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'D'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'A')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUU (Cursor Up), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'A'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'A')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUU (Cursor Up), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'A'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'D')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUB (Cursor Backward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'D'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 3 from fd 0 (stdin): ('\e', '[', 'C')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+state VT_STATE_CSI_ENTRY, csi function VT_CSI_CUF (Cursor Forward), args:
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_GROUND, input 'C'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 4 from fd 0 (stdin): ('\e', '[', '3', '~')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '3'
+state VT_STATE_CSI_PARAM, csi function VT_CSI_PRIVATE_TILDE (CSI Private Tilde), args: 3
+state VT_STATE_CSI_PARAM, csi private '~' VT_CSI_PRIVATE_TILDE_DELETE (Delete)
+ 3
+vt.c:2072: [31mUNIMPLEMENTED[m: VT_CSI_PRIVATE_TILDE_DELETE
