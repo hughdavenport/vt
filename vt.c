@@ -215,6 +215,7 @@ void vt_reset(vt *vt);
 #define VT_ESCAPE_FUNCTIONS_LIST \
    C(0x00)         X(VT_ESCAPE_NONE)    L("NONE")                     S(UNREACHABLE("Unexpected Escape function")) \
    C(0x37 /* 7 */) X(VT_ESCAPE_DECSC)   L("Save Cursor")              S(_vt_save_cursor(vt)) \
+   C(0x38 /* 8 */) X(VT_ESCAPE_DECRC)   L("Restore Cursor")           S(_vt_restore_cursor(vt)) \
    C(0x3D /* = */) X(VT_ESCAPE_DECKPAM) L("Keypad Application Modes") S(vt->keypad_mode = VT_KEYPAD_APPLICATION) \
    C(0x3E /* > */) X(VT_ESCAPE_DECKPNM) L("Keypad Numeric Modes")     S(vt->keypad_mode = VT_KEYPAD_NUMERIC) \
    C(0x4D /* M */) X(VT_ESCAPE_RI)      L("Reverse Line Feed")        S(_vt_reverse_line_feed(vt);) \
@@ -1444,6 +1445,29 @@ void _vt_save_cursor(vt *vt)
    *buffer->saved_cursor = buffer->cursor;
 }
 
+void _vt_restore_cursor(vt *vt)
+{
+   if (!vt) return;
+   if (vt->emitted_key.key.type == VT_KEY_REQUEST) return;
+   vt_buffer *buffer = vt->alternate_buffer ? vt->alternate_buffer : &vt->primary_buffer;
+   if (!buffer->cells) return;
+
+   if (buffer->saved_cursor) {
+       buffer->cursor = *buffer->saved_cursor;
+       free(buffer->saved_cursor);
+       buffer->saved_cursor = NULL;
+   } else {
+       buffer->cursor.x = 1;
+       buffer->cursor.y = 1;
+
+       /* FIXME reset origin mode DECOM */
+
+       SET_FREE(vt->current_attributes);
+
+       /* FIXME Maps the ASCII character set into GL, and the DEC Supplemental Graphic set into GR. */
+   }
+}
+
 void _vt_move_cursor_offset(vt *vt, int off_x, int off_y)
 {
    if (!vt) return;
@@ -2032,7 +2056,7 @@ void _vt_escape_dispatch(vt *vt, uint8_t input)
 #define X(name) case name:
 #define S(code) code; return;
     /* all cases must return */
-    static_assert(VT_NUM_ESCAPE_FUNCTIONS == 7, "Not all functions handled");
+    static_assert(VT_NUM_ESCAPE_FUNCTIONS == 8, "Not all functions handled");
     switch (func) {
         VT_ESCAPE_FUNCTIONS_LIST
         case VT_NUM_ESCAPE_FUNCTIONS: break;
