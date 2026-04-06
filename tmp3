@@ -1,0 +1,2168 @@
+tty is stdout
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 144x33
+inner window size 141x30
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '0', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 27x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '9', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 36 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '1', '4', 'M', '\e', '[', '<', '3', '5', ';', '2', '4', ';', '1', '4', 'M', '\e', '[', '<', '3', '5', ';', '2', '1', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 24x11 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 21x11 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 21, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 18x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '8', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 18, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 15x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 36 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '1', '4', 'M', '\e', '[', '<', '3', '5', ';', '1', '3', ';', '1', '4', 'M', '\e', '[', '<', '3', '5', ';', '1'*2, ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 13x11 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 13, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 10x11 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 8x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '9', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 9, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 6x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '8', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 8, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 5x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '7', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 7, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 4x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 6, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 3x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '5', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 5, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 2x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 4, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 1x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', ';', '1', '4', 'M', '\e', '[', '<', '3', '5', ';', '2', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 3, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 2, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 3, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', ';', '1', '3', 'M', '\e', '[', '<', '3', '5', ';', '6', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 4, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 1x10 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 6, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 3x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '8', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 8, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 5x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '0', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 10, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 7x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '3', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 13, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 10x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '4', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 14, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 11x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 13x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '1', '7', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 0, 17, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse Press at 14x8 with Left Button
+moving cursor on mouse press
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '1', '7', ';', '1'*2, 'm')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE_RELEASE (Mouse Release Report), args: 0, 17, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+emitted key Mouse Release at 14x8 of Left Button
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 13x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '8', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 18, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 15x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '9', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 19, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 16x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '0', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 20, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 17x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '1', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 21, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 18x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 24 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2'*2, ';', '1', '4', 'M', '\e', '[', '<', '3', '5', ';', '2', '3', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 22, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 19x11 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 23, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 20x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 24x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '9', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '1', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 31, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 28x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '4', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 34, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 31x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '6', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 36, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 33x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 36 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '8', ';', '1', '5', 'M', '\e', '[', '<', '3', '5', ';', '4', '0', ';', '1', '5', 'M', '\e', '[', '<', '3', '5', ';', '4', '1', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 38, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 35x12 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 40, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 37x12 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 41, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 38x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '3', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 43, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 40x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4'*2, ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 44, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 41x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '5', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 45, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 42x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '6', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 46, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 43x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '4', '6', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 0, 46, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse Press at 43x12 with Left Button
+moving cursor on mouse press
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '4', '6', ';', '1', '5', 'm')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE_RELEASE (Mouse Release Report), args: 0, 46, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+emitted key Mouse Release at 43x12 of Left Button
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '5', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 45, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 42x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4'*2, ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 44, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 41x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 24 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4'*2, ';', '1', '4', 'M', '\e', '[', '<', '3', '5', ';', '4', '3', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 44, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 41x11 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 43, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 40x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '3', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 43, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 40x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '2', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 42, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 39x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '1', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 41, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 38x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '0', ';', '1', '0', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 40, 10
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 37x7 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '0', ';', '9', 'M', '\e', '[', '<', '3', '5', ';', '3', '9', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 40, 9
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 37x6 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 39, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 36x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '9', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 39, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 36x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '9', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 39, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 36x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '0', ';', '6', 'M', '\e', '[', '<', '3', '5', ';', '4', '1', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 40, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 37x3 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 41, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 38x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '3', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 43, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 40x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '5', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 45, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 42x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '8', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 48, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 45x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 33 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '5', '0', ';', '6', 'M', '\e', '[', '<', '3', '5', ';', '5', '3', ';', '6', 'M', '\e', '[', '<', '3', '5', ';', '5'*2, ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 50, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 47x3 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 53, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 50x3 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 55, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 52x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '5', '7', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 57, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 54x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '5', '9', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 59, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 56x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '0', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 60, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 57x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '1', ';', '6', 'M', '\e', '[', '<', '3', '5', ';', '6', '2', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 61, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 58x3 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 62, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 59x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '3', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 63, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 60x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '4', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 64, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 61x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '6', '4', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 0, 64, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse Press at 61x3 with Left Button
+moving cursor on mouse press
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '6', '4', ';', '6', 'm')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE_RELEASE (Mouse Release Report), args: 0, 64, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+emitted key Mouse Release at 61x3 of Left Button
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '3', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 63, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 60x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '2', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 62, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 59x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '1', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 61, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 58x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '6', '0', ';', '7', 'M', '\e', '[', '<', '3', '5', ';', '5', '8', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 60, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 57x4 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 58, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 55x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '5'*2, ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 55, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 52x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '5', '2', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 52, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 49x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '9', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 49, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 46x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '5', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 45, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 42x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '2', ';', '8', 'M', '\e', '[', '<', '3', '5', ';', '3', '8', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 42, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 39x5 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 38, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 35x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '5', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 35, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 32x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '2', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 32, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 29x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '0', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 27x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 24x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '8', 'M', '\e', '[', '<', '3', '5', ';', '2', '4', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x5 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 21x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '3', ';', '8', 'M', '\e', '[', '<', '3', '5', ';', '2'*2, ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 23, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 20x5 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 22, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 19x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '1', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 21, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 18x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '0', ';', '8', 'M', '\e', '[', '<', '3', '5', ';', '1', '8', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 20, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 17x5 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 18, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 15x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '1', '7', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 0, 17, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse Press at 14x5 with Left Button
+moving cursor on mouse press
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '0', ';', '1', '7', ';', '8', 'm')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE_RELEASE (Mouse Release Report), args: 0, 17, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'm'
+emitted key Mouse Release at 14x5 of Left Button
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '9', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 9
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x6 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '9', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 9
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 13x6 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '1', '0', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 10
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 13x7 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '5', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 15, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 12x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '5', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 15, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 12x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '5', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 15, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 12x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '5', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 15, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 12x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '5', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 15, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 12x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 13x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '8', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 18, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 15x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '9', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 19, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 16x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '0', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 20, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 17x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 24 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '1', ';', '1', '7', 'M', '\e', '[', '<', '3', '5', ';', '2'*2, ';', '1', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 21, 17
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 18x14 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 22, 17
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 19x14 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '4', ';', '1', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 17
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 21x14 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '1', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 17
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x14 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '6', ';', '1', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 17
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x14 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '1', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 17
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 24x14 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 24x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 24 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '5', 'M', '\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x12 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 36 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '3', 'M', '\e', '[', '<', '3', '5', ';', '2', '9', ';', '1', '2', 'M', '\e', '[', '<', '3', '5', ';', '2', '9', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x10 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x9 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '9', ';', '1', '0', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 10
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x7 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '9', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 9
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x6 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 24x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '6', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '6', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '4', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 21x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2'*2, ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 22, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 19x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '0', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 20, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 17x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '8', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 18, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 15x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 13x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '5', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 15, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 12x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '3', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 13, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 10x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '2', ';', '6', 'M', '\e', '[', '<', '3', '5', ';', '1', '2', ';', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 12, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 9x3 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 12, 5
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 9x2 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1'*2, ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 8x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1'*2, ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1'*2, ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1'*2, ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2'*2, ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 22, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '4', ';', '1', 'M', '\e', '[', '<', '3', '5', ';', '2', '7', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '0', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3'*2, ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 33, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '5', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 35, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '8', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 38, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '0', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 40, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '1', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 41, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '4', '0', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 40, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '9', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 39, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '6', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 36, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3'*2, ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 33, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '0', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '6', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '3', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 23, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 20x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '0', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 20, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 17x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 33 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '4', ';', '4', 'M', '\e', '[', '<', '3', '5', ';', '1', '2', ';', '4', 'M', '\e', '[', '<', '3', '5', ';', '1', '0', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 14, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 11x1 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 12, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 9x1 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 10, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 7x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '0', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 10, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '0', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 10, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1'*2, ';', '2', 'M', '\e', '[', '<', '3', '5', ';', '1', '2', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 12, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '3', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 13, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '4', ';', '1', 'M', '\e', '[', '<', '3', '5', ';', '3'*2, ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 34, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 33, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '2', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 32, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '0', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '4', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '1', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 21, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 14x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 33 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '5', ';', '4', 'M', '\e', '[', '<', '3', '5', ';', '1', '3', ';', '4', 'M', '\e', '[', '<', '3', '5', ';', '1'*2, ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 15, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 12x1 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 13, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 10x1 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 8x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '9', ';', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 9, 5
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 6x2 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '8', ';', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 8, 5
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 5x2 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '8', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 8, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 5x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '8', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 8, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 10 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '9', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 9, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '0', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 10, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1'*2, ';', '2', 'M', '\e', '[', '<', '3', '5', ';', '1', '2', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 11, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 12, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '4', ';', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 14, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '6', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 16, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '1', '7', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 17, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '0', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 20, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '2', ';', '1', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 32, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 33 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3'*2, ';', '1', 'M', '\e', '[', '<', '3', '5', ';', '3', '4', ';', '2', 'M', '\e', '[', '<', '3', '5', ';', '3', '4', ';', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 33, 1
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 34, 2
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 34, 3
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '4', ';', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 34, 4
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 31x1 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 44 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '4', ';', '5', 'M', '\e', '[', '<', '3', '5', ';', '3'*2, ';', '5', 'M', '\e', '[', '<', '3', '5', ';', '3', '1', ';', '6', 'M', '\e', '[', '<', '3', '5', ';', '3', '0', ';', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 34, 5
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 31x2 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 33, 5
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 30x2 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 31, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 28x3 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 6
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 27x3 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '9', ';', '7', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x4 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 22 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '7', 'M', '\e', '[', '<', '3', '5', ';', '2', '6', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 7
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x4 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '8', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 8
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x5 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '9', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 9
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x6 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 11 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '4', ';', '9', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 9
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 21x6 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '4', ';', '1', '0', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 10
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 21x7 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '3', ';', '1'*2, 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 23, 11
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 20x8 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '3', ';', '1', '2', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 23, 12
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 20x9 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '3', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 23, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 20x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '3', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 23, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 20x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '4', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 24, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 21x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '5', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 25, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 22x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '6', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 26, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 23x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '7', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 27, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 24x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 36 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '6', 'M', '\e', '[', '<', '3', '5', ';', '2', '9', ';', '1', '6', 'M', '\e', '[', '<', '3', '5', ';', '3', '0', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x13 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x13 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 27x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '1', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 31, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 28x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '2', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 32, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 29x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '1', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 31, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 28x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 24 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '3', '0', ';', '1', '6', 'M', '\e', '[', '<', '3', '5', ';', '2', '9', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 30, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 27x13 (No Buttons)
+ignoring mouse event
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 29, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 26x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '6', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 16
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x13 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '5', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 15
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x12 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '3', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 13
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x10 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 12 from fd 0 (stdin): ('\e', '[', '<', '3', '5', ';', '2', '8', ';', '1', '4', 'M')
+transition from state VT_STATE_GROUND to state VT_STATE_ESCAPE, input '\e'
+transition from state VT_STATE_ESCAPE to state VT_STATE_CSI_ENTRY, input '['
+transition from state VT_STATE_CSI_ENTRY to state VT_STATE_CSI_PARAM, input '<'
+state VT_STATE_CSI_PARAM, csi '<' function VT_CSI_PRIVATE_LESS_THAN_MOUSE (Mouse Report), args: 35, 28, 14
+transition from state VT_STATE_CSI_PARAM to state VT_STATE_GROUND, input 'M'
+emitted key Mouse movement at 25x11 (No Buttons)
+ignoring mouse event
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x03)
+state VT_STATE_GROUND, execute VT_CONTROL_ETX (End of Text)
+select(sigfd, stdin)
+selected fd 5 (signal)
+signal 2 (Interrupt)
+ret = 130

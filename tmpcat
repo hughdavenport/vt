@@ -1,0 +1,14 @@
+tty is stdout
+outer window size was 0x0
+outer window size was 0x0
+inner window size was 0x0
+outer window size 68x34
+inner window size 65x31
+select(sigfd, stdin)
+selected fd 0 (stdin)
+red 1 from fd 0 (stdin): (0x03)
+state VT_STATE_GROUND, execute VT_CONTROL_ETX (End of Text)
+select(sigfd, stdin)
+selected fd 3 (signal)
+signal 2 (Interrupt)
+ret = 130
