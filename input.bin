@@ -1,0 +1,7 @@
+command: bash -i ll"foo\""aa
+dimensions: WxH
+input: enter (1), a (1), ' ', 0xAB (1)
+output: ...
+signals: INT (1), WINCH WxH (...)
+input: enter (1), a (1), ' ', 0xAB (1)
+signals: INT (1), WINCH WxH (...)

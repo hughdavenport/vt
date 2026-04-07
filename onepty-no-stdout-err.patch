@@ -1,0 +1,164 @@
+diff --git a/vt.c b/vt.c
+index 1e4d990..2f883e0 100644
+--- a/vt.c
++++ b/vt.c
+@@ -688,8 +688,6 @@ struct vt
+     vt_sequence_state sequence_state;
+     vt_attribute_set current_attributes;
+     pid_t child_pid;
+-    int stdout[2];
+-    int stderr[2];
+     int child_tty_fd;
+     FILE *child_tty;
+     vt_key_modifier emitted_key;
+@@ -851,8 +849,6 @@ void vt_reset(vt *vt)
+     VT_CSI_PRIVATE_QUESTION_DISABLE(VT_CSI_QUESTION_SETUP);
+ 
+     if (vt->child_pid) {
+-       if (vt->stdout[1] > 0) close(vt->stdout[0]);
+-       if (vt->stderr[1] > 0) close(vt->stderr[0]);
+        int wstatus;
+        int waited = waitpid(vt->child_pid, &wstatus, WNOHANG);
+        if (waited == -1) {
+@@ -3172,26 +3168,24 @@ int vt_main_loop(vt *vt)
+ 
+     int sigfd = _signalfd(SIGWINCH, SIGINT, vt->child_pid ? SIGCHLD : SIGKILL);
+     bool stdin_eof = false;
+-    bool stdout_eof = false;
+-    bool stderr_eof = false;
+-    bool tty_eof = false;
++    bool child_tty_eof = false;
+ 
+     while (true) {
+        int fd;
+        if (vt->child_pid) {
+-          if (stdin_eof && stdout_eof && stderr_eof && tty_eof) break;
++          if (stdin_eof && child_tty_eof) break;
+ 
+-          if (stdin_eof && stdout_eof && stderr_eof && tty_eof) break;
++          if (stdin_eof && child_tty_eof) break;
+ 
+-          fprintf(stderr, "select(sigfd, stdin, stdout, stderr, tty)\n");
+-          fd = _select(sigfd, STDIN_FILENO, vt->stdout[0], vt->stderr[0], vt->child_tty_fd);
++          fprintf(stderr, "select(sigfd, stdin, child_tty)\n");
++          fd = _select(sigfd, STDIN_FILENO, vt->child_tty_fd);
+        } else {
+           if (stdin_eof) break;
+ 
+           fprintf(stderr, "select(sigfd, stdin)\n");
+           fd = _select(sigfd, STDIN_FILENO);
+        }
+-       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown"))))));
++       fprintf(stderr, "selected fd %d (%s)\n", fd, (fd == sigfd ? "signal" : (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown"))));
+        if (fd == sigfd) {
+           struct signalfd_siginfo siginfo;
+           ssize_t red = read(sigfd, &siginfo, sizeof(siginfo));
+@@ -3204,11 +3198,7 @@ int vt_main_loop(vt *vt)
+ 
+           if (siginfo.ssi_signo == SIGCHLD) {
+              stdin_eof = true;
+-             stdout_eof = true;
+-             stderr_eof = true;
+-             tty_eof = true;
+-             close(vt->stdout[0]);
+-             close(vt->stderr[0]);
++             child_tty_eof = true;
+              fclose(vt->child_tty);
+              /* close(vt->child_tty_fd); */
+           }
+@@ -3226,23 +3216,19 @@ int vt_main_loop(vt *vt)
+                  return 1;
+ 
+               } else if (red == 0) {
+-                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown")))));
++                 fprintf(stderr, "got eof on fd %d (%s)\n", fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown")));
+                  close(fd);
+                  if (fd == STDIN_FILENO) {
+                     stdin_eof = true;
+-                 } else if (fd == vt->stdout[0]) {
+-                    stdout_eof = true;
+-                 } else if (fd == vt->stderr[0]) {
+-                    stderr_eof = true;
+                  } else if (fd == vt->child_tty_fd) {
+-                    tty_eof = true;
++                    child_tty_eof = true;
+                  } else {
+                     fprintf(stderr, "Unexpected fd\n");
+                  }
+                  break;
+               }
+ 
+-              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->stdout[0] ? "child stdout" : (fd == vt->stderr[0] ? "child stderr" : (fd == vt->child_tty_fd ? "child tty" : "unknown")))));
++              fprintf(stderr, "red %ld from fd %d (%s):", red, fd, (fd == STDIN_FILENO ? "stdin" : (fd == vt->child_tty_fd ? "child tty" : "unknown")));
+               bool allgraph = true;
+               for (ssize_t i = 0; i < red; i ++) {
+                   if (!isgraph(buf[i])) {
+@@ -3355,19 +3341,6 @@ int vt_main_loop(vt *vt)
+                        vt->emitted_key.key.type = VT_KEY_NONE;
+                     }
+                     vt_draw_window(vt);
+-                 } else if (fd == vt->stderr[0] && false /* FIXME add option to send stderr to vt */) {
+-                    size_t written = 0;
+-                    while (written != (unsigned)red) {
+-
+-                       ssize_t writ = write(STDERR_FILENO, buf + written, red - written);
+-                       if (writ == -1) {
+-                          perror("write(stderr)");
+-                          return 1;
+-                       }
+-                       written += writ;
+-                       if (written > (unsigned)red) UNREACHABLE("kernel wrote too much");
+-                    }
+-
+                  } else {
+                     for (size_t i = 0; i < (unsigned)red; i ++) {
+                        /* fprintf(stderr, "vt_process(.., 0x%02X)\n", buf[i]); */
+@@ -3431,16 +3404,6 @@ void vt_rebuild_if_source_newer(const char *program, char * const *argv)
+ 
+ int vt_setup_child(vt *vt, char * const *argv)
+ {
+-   if (pipe2(vt->stdout, O_NONBLOCK) != 0) {
+-      perror("pipe2(stdout)");
+-      return 1;
+-   }
+-
+-   if (pipe2(vt->stderr, O_NONBLOCK) != 0) {
+-      perror("pipe2(stderr)");
+-      return 1;
+-   }
+-
+    vt->child_ios = vt->original_ios;
+    struct winsize window = {.ws_col = vt->primary_buffer.width, .ws_row = vt->primary_buffer.height};
+    vt->child_pid = forkpty(&vt->child_tty_fd, NULL, &vt->child_ios, &window);
+@@ -3451,19 +3414,16 @@ int vt_setup_child(vt *vt, char * const *argv)
+    }
+ 
+    if (!vt->child_pid) {
+-      if (dup2(vt->stdout[1], STDOUT_FILENO) == -1) {
++      if (dup2(vt->child_tty_fd, STDOUT_FILENO) == -1) {
+          perror("dup2(stdout)");
+          _exit(1);
+       }
+ 
+-      if (dup2(vt->stderr[1], STDERR_FILENO) == -1) {
++      if (dup2(vt->child_tty_fd, STDERR_FILENO) == -1) {
+          perror("dup2(stderr)");
+          _exit(1);
+       }
+ 
+-      close(vt->stderr[0]);
+-      close(vt->stdout[0]);
+-
+       int ret = execvp(*argv, argv);
+       if (ret == -1) {
+          perror("execvp");
+@@ -3476,9 +3436,6 @@ int vt_setup_child(vt *vt, char * const *argv)
+    fprintf(stderr, "Parent %d\n", getpid());
+    fprintf(stderr, "Started child %d\n", vt->child_pid);
+ 
+-   close(vt->stdout[1]);
+-   close(vt->stderr[1]);
+-
+    return 0;
+ }
+ 
